@@ -237,3 +237,45 @@
     background: rgba(138, 43, 226, 0.2);
     box-shadow: 0 0 20px rgba(138, 43, 226, 0.2);
 }
+
+/* fragment */
+/* Dialog ko center aur fixed width dene ke liye */
+.simpleLoginDialog {
+    width: 380px !important;
+    max-width: 95% !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Header styling - Indigo/White theme */
+.simpleLoginDialog .sapMDialogTitle {
+    color: #3f51b5 !important;
+    font-weight: bold !important;
+    padding-top: 20px !important;
+}
+
+/* Input Fields Spacing */
+.loginFieldGroup .sapMInputBase {
+    height: 42px !important;
+    margin-top: 6px !important;
+}
+
+/* Login Button Indigo Color */
+.loginSubmitBtn .sapMBtnInner {
+    background-color: #4f46e5 !important;
+    border-color: #4f46e5 !important;
+    color: white !important;
+}
+
+/* Popup ke andar ka scroll band karne ke liye */
+.simpleLoginDialog .sapMDialogScrollCont {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Mobile Compatibility */
+@media (max-width: 450px) {
+    .simpleLoginDialog {
+        width: 90% !important;
+    }
+}
