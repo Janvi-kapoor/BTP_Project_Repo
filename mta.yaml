@@ -1,0 +1,148 @@
+_schema-version: 3.3.0
+ID: Route_Optimizer
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: Route_Optimizer-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: Route_Optimizer-auth
+  - name: Route_Optimizer-db
+  - name: Route_Optimizer-connectivity
+  - name: Route_Optimizer-destination
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: Route_Optimizer-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: Route_Optimizer-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: Route_Optimizer
+  type: approuter.nodejs
+  path: app/router
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: Route_Optimizer-auth
+  - name: Route_Optimizer-destination
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: notification-content-deployment
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: Route_Optimizer-destination
+  parameters:
+    disk-quota: 1GB
+    memory: 256MB
+    no-route: true
+    no-start: true
+    tasks:
+    - command: node node_modules/@cap-js/notifications/lib/content-deployment.js
+      disk-quota: 1GB
+      memory: 256MB
+      name: notification-content-deployment
+- name: Route_Optimizer-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: Route_Optimizer-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - project1.zip
+      name: project1
+      target-path: resources/
+- name: project1
+  type: html5
+  path: app/project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: Route_Optimizer-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      oauth2-configuration:
+        credential-types:
+        - binding-secret
+        - x509
+        redirect-uris:
+        - https://*~{app-api/app-uri}/**
+      tenant-mode: dedicated
+      xsappname: Route_Optimizer-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+  requires:
+  - name: app-api
+- name: Route_Optimizer-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: Route_Optimizer-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-plan: lite
+- name: Route_Optimizer-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+    service: destination
+    service-plan: lite
+- name: Route_Optimizer-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: Route_Optimizer-html5-service
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production
