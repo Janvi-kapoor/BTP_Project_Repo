@@ -1,0 +1,8 @@
+<mvc:View controllerName="project1.controller.DriverDashboard" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+    <Page id="driverPage" title="Fleet Driver Portal">
+        <content>
+            <Title id="driverTitle" text="Welcome to Driver Partner Dashboard" class="sapUiMediumMargin" />
+            <Text id="driverDesc" text="Yahan aapko apne assigned trips aur route dikhenge." class="sapUiMediumMargin" />
+        </content>
+    </Page>
+</mvc:View>

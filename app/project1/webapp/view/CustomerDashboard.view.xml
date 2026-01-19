@@ -1,0 +1,7 @@
+<mvc:View controllerName="project1.controller.CustomerDashboard" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+    <Page id="_IDGenPage1" title="Customer Workspace">
+        <content>
+            <Title id="_IDGenTitle5" text="Welcome to Corporate Dashboard" class="sapUiMediumMargin" />
+            </content>
+    </Page>
+</mvc:View>

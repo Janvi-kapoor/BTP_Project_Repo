@@ -1,0 +1,8 @@
+<mvc:View controllerName="project1.controller.AdminDashboard" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+    <Page id="adminPage" title="Admin Control Tower">
+        <content>
+            <Title id="adminTitle" text="Welcome to Operations Admin Dashboard" class="sapUiMediumMargin" />
+            <Text id="adminDesc" text="Yahan se aap fleet aur logistics ko manage kar sakte hain." class="sapUiMediumMargin" />
+        </content>
+    </Page>
+</mvc:View>

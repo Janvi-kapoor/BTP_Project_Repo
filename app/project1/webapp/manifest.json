@@ -94,9 +94,30 @@
       "routes": [
         {
           "name": "RouteView1",
-          "pattern": ":?query:",
+          "pattern": "",
           "target": [
             "TargetView1"
+          ]
+        },
+        {
+          "name": "CustomerDashboard",
+          "pattern": "customer",
+          "target": [
+            "TargetCustomer"
+          ]
+        },
+        {
+          "name": "AdminDashboard",
+          "pattern": "admin",
+          "target": [
+            "TargetAdmin"
+          ]
+        },
+        {
+          "name": "DriverDashboard",
+          "pattern": "driver",
+          "target": [
+            "TargetDriver"
           ]
         }
       ],
@@ -104,6 +125,18 @@
         "TargetView1": {
           "id": "View1",
           "name": "View1"
+        },
+        "TargetCustomer": {
+          "id": "CustomerDashboard",
+          "name": "CustomerDashboard"
+        },
+        "TargetAdmin": {
+          "id": "AdminDashboard",
+          "name": "AdminDashboard"
+        },
+        "TargetDriver": {
+          "id": "DriverDashboard",
+          "name": "DriverDashboard"
         }
       }
     },
