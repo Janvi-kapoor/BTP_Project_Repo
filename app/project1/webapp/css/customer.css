@@ -1,0 +1,113 @@
+/* Sidebar - Indigo Purple Gradient Theme */
+.nexusSidebar {
+    background: linear-gradient(180deg, #3f51b5, #6366f1) !important;
+    border-right: none !important;
+}
+
+.nexusSidebar .sapTntNavListItem {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    margin: 12px 16px !important; /* Spacing badha di */
+    border-radius: 12px !important;
+    height: 48px !important;
+}
+
+.nexusSidebar .sapTntNavListItem .sapMText {
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    padding-left: 10px !important;
+}
+
+.nexusSidebar .sapTntNavListItemSelected {
+    background: linear-gradient(to right, #6366f1, #a855f7) !important; /* Glow Button Color */
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Main Dashboard Layout */
+.nexusToolPage .sapTntToolPageMain {
+    background-color: #f8fafc !important;
+}
+
+.contentPadding {
+    padding: 2rem !important;
+}
+
+/* Typography - Bold & Spacious */
+.mainTitleText {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+    font-size: 2.2rem !important; /* Title bada kiya */
+    letter-spacing: -0.5px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.subTitleText {
+    color: #64748b !important;
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+}
+
+/* KPI Cards - No Hover on Table, Only KPIs */
+.modernCard {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    padding: 30px !important;
+    border: 1px solid rgba(226, 232, 240, 0.8) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03) !important;
+}
+
+.kpiCardAnimate:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.cardValue {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    margin-top: 10px !important;
+}
+
+.cardLabel {
+    color: #64748b !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Live Inventory Table - Clean & Flat (No Hover Jump) */
+.tableCard {
+    padding: 0 !important;
+    margin-top: 2.5rem !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+}
+
+.tableHeader {
+    padding: 30px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tableTitle {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+/* Buttons - Glow Effect */
+.glow-button {
+    background: linear-gradient(to right, #6366f1, #a855f7) !important;
+    color: white !important;
+    border-radius: 14px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3) !important;
+}
+
+/* Responsive Table Fixes */
+@media (max-width: 768px) {
+    .mainTitleText { font-size: 1.6rem !important; }
+    .contentPadding { padding: 1rem !important; }
+    .nexusSidebar { width: 0 !important; }
+}

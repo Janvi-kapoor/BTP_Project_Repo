@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="project1.controller.NewBooking"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    
+    <VBox id="_IDGenVBox22" class="contentPadding animated fadeIn">
+        <VBox id="_IDGenVBox23" class="sapUiLargeMarginBottom">
+            <Title id="_IDGenTitle11" text="Create New Booking" level="H1" class="mainTitleText" />
+            <Text id="_IDGenText32" text="Enter shipment details to dispatch a new load" class="subTitleText" />
+        </VBox>
+
+        <VBox id="_IDGenVBox24" class="modernCard">
+            <f:SimpleForm id="_IDGenSimpleForm" editable="true" layout="ResponsiveGridLayout" labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1">
+                <f:content>
+                    <core:Title id="_IDGenTitle12" text="Consignment Information" />
+                    <Label id="_IDGenLabel2" text="Material Type" required="true" />
+                    <Input id="_IDGenInput" placeholder="e.g. Steel Coils, Electronics" class="nexusInput"/>
+
+                    <Label id="_IDGenLabel3" text="Total Tonnage (MT)" required="true" />
+                    <StepInput id="_IDGenStepInput" value="1" min="1" max="100" class="nexusInput"/>
+
+                    <core:Title id="_IDGenTitle13" text="Route Details" />
+                    <Label id="_IDGenLabel4" text="Origin Hub" />
+                    <Select id="_IDGenSelect" class="nexusInput">
+                        <items>
+                            <core:Item id="_IDGenItem" key="mumbai" text="Mumbai Hub" />
+                            <core:Item id="_IDGenItem1" key="delhi" text="Delhi DC" />
+                        </items>
+                    </Select>
+
+                    <Label id="_IDGenLabel5" text="Destination" />
+                    <Input id="_IDGenInput1" placeholder="Enter destination address" class="nexusInput"/>
+
+                    <Label id="_IDGenLabel6" text="Expected Delivery" />
+                    <DatePicker id="_IDGenDatePicker" class="nexusInput"/>
+                </f:content>
+            </f:SimpleForm>
+
+            <HBox id="_IDGenHBox6" justifyContent="End" class="sapUiMediumMarginTop">
+                <Button id="_IDGenButton8" text="Cancel" type="Transparent" class="sapUiSmallMarginEnd" />
+                <Button id="_IDGenButton9" text="Confirm &amp; Dispatch" press="onConfirmBooking" class="glow-button nexusButtonWidth" />
+            </HBox>
+        </VBox>
+    </VBox>
+</mvc:View>

@@ -77,6 +77,10 @@
         {
           "uri": "css/style.css"
         }
+        ,
+        {
+                "uri": "css/customer.css"
+            }
       ]
     },
     "routing": {
@@ -95,30 +99,27 @@
         {
           "name": "RouteView1",
           "pattern": "",
-          "target": [
-            "TargetView1"
-          ]
+          "target": ["TargetView1"]
         },
         {
           "name": "CustomerDashboard",
           "pattern": "customer",
-          "target": [
-            "TargetCustomer"
-          ]
+          "target": ["TargetCustomer"]
         },
         {
           "name": "AdminDashboard",
           "pattern": "admin",
-          "target": [
-            "TargetAdmin"
-          ]
+          "target": ["TargetAdmin"]
         },
         {
           "name": "DriverDashboard",
           "pattern": "driver",
-          "target": [
-            "TargetDriver"
-          ]
+          "target": ["TargetDriver"]
+        },
+        {
+      "name": "RouteNewBooking",
+      "pattern": "new-booking",
+      "target": ["TargetNewBooking"]
         }
       ],
       "targets": {
@@ -137,9 +138,13 @@
         "TargetDriver": {
           "id": "DriverDashboard",
           "name": "DriverDashboard"
-        }
+        },
+        "TargetNewBooking": 
+        { "id": "NewBooking",
+          "name": "NewBooking" }
       }
     },
+
     "rootView": {
       "viewName": "project1.view.App",
       "type": "XML",
