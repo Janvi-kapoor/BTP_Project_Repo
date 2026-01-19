@@ -61,10 +61,8 @@ sap.ui.define([
       onCloseLogin: function () {
     // Dialog ki ID fragment mein 'loginDialog' hai, isliye wahi use karni hogi
     var oDialog = this.byId("loginDialog");
-    
     if (oDialog) {
         oDialog.close();
-        
         // Input fields clear karein safely
         var oEmail = this.byId("emailInput");
         var oPass = this.byId("passwordInput");
@@ -73,7 +71,6 @@ sap.ui.define([
         if (oPass) oPass.setValue("");
     }
 },
-
 onLoginSubmit: function () {
     var sEmail = this.byId("emailInput").getValue();
     var sPass = this.byId("passwordInput").getValue();
@@ -84,7 +81,6 @@ onLoginSubmit: function () {
         
         // Success hone par popup band karein
         this.onCloseLogin();
-        
         // Agla step: Yahan hum navigation logic likhenge dashboard ke liye
     } else {
         sap.m.MessageToast.show("Please enter both email and password");
