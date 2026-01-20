@@ -1,0 +1,117 @@
+<mvc:View 
+    controllerName="project1.controller.NewBooking" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:f="sap.f" 
+    xmlns:form="sap.ui.layout.form" 
+    xmlns:u="sap.ui.unified" 
+    xmlns:core="sap.ui.core" 
+    height="100%">
+    
+    <f:DynamicPage id="_IDGenDynamicPage" preserveHeaderStateOnScroll="true" showFooter="true" class="sapUiNoContentPadding fullHeightPage">
+        <f:title>
+            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+                <f:heading>
+                    <VBox id="_IDGenVBox22" class="sapUiMediumMarginBegin sapUiSmallMarginTop">
+                        <Title id="_IDGenTitle19" text="New Bulk Shipment" level="H1" titleStyle="H1" class="customMainTitle"/>
+                        <Text id="_IDGenText43" text="Complete the wizard to initiate a new dispatch" class="customSubTitle"/>
+                    </VBox>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox id="_IDGenVBox23" width="100%" alignItems="Center" justifyContent="Start" class="wizardWrapper">
+                
+                <Wizard id="ShipmentWizard" 
+                        renderMode="Page" 
+                        width="100%"
+                        class="customWizard sapUiResponsivePadding--header"
+                        showNextButton="false"> <WizardStep id="consignmentStep" title="Consignment" icon="sap-icon://shipping-status" validated="true">
+                        <VBox id="_IDGenVBox24" class="stepInnerContent">
+                            <form:SimpleForm id="_IDGenSimpleForm" editable="true" layout="ResponsiveGridLayout" columnsL="1" columnsM="1">
+                                <form:content>
+                                    <core:Title id="_IDGenTitle6" text="General Information" />
+                                    <Label id="_IDGenLabel2" text="Sender Company"/>
+                                    <Input id="_IDGenInput" value="LogiChain Enterprises Pvt. Ltd." editable="false" class="customInput"/>
+                                    
+                                    <Label id="_IDGenLabel3" text="Receiver Entity" required="true"/>
+                                    <Input id="receiverInput" placeholder="Enter receiver company name" class="customInput"/>
+                                    
+                                    <Label id="_IDGenLabel4" text="Material Category"/>
+                                    <Select id="_IDGenSelect" width="100%">
+                                        <items>
+                                            <core:Item id="_IDGenItem" key="ind" text="Industrial Goods"/>
+                                            <core:Item id="_IDGenItem1" key="per" text="Perishables"/>
+                                        </items>
+                                    </Select>
+                                    
+                                    <Label id="_IDGenLabel5" text="Load Weight (Tons)"/>
+                                    <StepInput id="_IDGenStepInput" value="10" min="1" max="100"/>
+                                    
+                                    <Label id="_IDGenLabel6" text="Upload Manifest"/>
+                                    <u:FileUploader id="_IDGenFileUploader" width="100%" placeholder="Choose file..."/>
+                                </form:content>
+                            </form:SimpleForm>
+                        </VBox>
+                    </WizardStep>
+
+                    <WizardStep id="logisticsStep" title="Logistics" icon="sap-icon://locate-me">
+                        <VBox id="_IDGenVBox29" class="stepInnerContent">
+                            <form:SimpleForm id="_IDGenSimpleForm1" editable="true" layout="ResponsiveGridLayout">
+                                <form:content>
+                                    <core:Title id="_IDGenTitle11" text="Route Details" />
+                                    <Label id="_IDGenLabel7" text="Pickup Warehouse" required="true"/>
+                                    <Input id="_IDGenInput1" placeholder="Search warehouse..." showValueHelp="true" valueHelpIconSrc="sap-icon://map-pin"/>
+                                    
+                                    <Label id="_IDGenLabel8" text="Drop-off Destination" required="true"/>
+                                    <Input id="_IDGenInput2" placeholder="Search destination..." showValueHelp="true" valueHelpIconSrc="sap-icon://map-pin"/>
+                                    
+                                    <Label id="_IDGenLabel9" text="Truck Type"/>
+                                    <SegmentedButton id="_IDGenSegmentedButton" selectedKey="cont" width="100%">
+                                        <items>
+                                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem" text="Open Truck" key="open" icon="sap-icon://product"/>
+                                            <SegmentedButtonItem id="_IDGenSegmentedButtonItem1" text="Container" key="cont" icon="sap-icon://BusinessSuiteInAppSymbols/icon-container-loading"/>
+                                        </items>
+                                    </SegmentedButton>
+                                </form:content>
+                            </form:SimpleForm>
+                        </VBox>
+                    </WizardStep>
+
+                    <WizardStep id="pricingStep" title="Pricing" icon="sap-icon://money-bills">
+                        <VBox id="_IDGenVBox30" class="stepInnerContent">
+                             <Title id="_IDGenTitle12" text="Summary &amp; Costs" textAlign="Center" width="100%" class="sapUiSmallMarginBottom" />
+                             <Panel id="_IDGenPanel" headerText="Billing Summary" class="sapUiSmallMarginBottom">
+                                <HBox id="_IDGenHBox6" justifyContent="SpaceBetween"><Text id="_IDGenText32" text="Base Freight"/><Text id="_IDGenText34" text="₹ 8,500" /></HBox>
+                                <HBox id="_IDGenHBox9" justifyContent="SpaceBetween"><Text id="_IDGenText37" text="GST (18%)"/><Text id="_IDGenText38" text="₹ 1,530" /></HBox>
+                            
+                                <HBox id="_IDGenHBox10" justifyContent="SpaceBetween"><Title id="_IDGenTitle13" text="Total"/><Title id="_IDGenTitle15" text="₹ 10,030" /></HBox>
+                             </Panel>
+                        </VBox>
+                    </WizardStep>
+
+                    <WizardStep id="confirmStep" title="Review" icon="sap-icon://complete">
+                        <VBox id="_IDGenVBox31" class="stepInnerContent">
+                            <VBox id="_IDGenVBox32" alignItems="Center" class="sapUiMediumMarginTop">
+                                <core:Icon id="_IDGenIcon11" src="sap-icon://message-success" size="3rem" color="Positive" />
+                                <Title id="_IDGenTitle20" text="Ready for Dispatch" class="sapUiSmallMarginTop" />
+                                <Text id="_IDGenText39" text="Please review all information before final submission." />
+                            </VBox>
+                            <TextArea id="_IDGenTextArea" placeholder="Special Instructions..." width="100%" rows="4" class="sapUiMediumMarginTop"/>
+                        </VBox>
+                    </WizardStep>
+                </Wizard>
+            </VBox>
+        </f:content>
+
+        <f:footer>
+            <OverflowToolbar id="_IDGenOverflowToolbar1">
+                <ToolbarSpacer id="_IDGenToolbarSpacer6" />
+                <Button text="Back" type="Transparent" press="onPrevStep" id="backBtn" visible="false"/>
+                <Button text="Continue to Logistics" type="Emphasized" press="onNextStep" id="nextBtn"/>
+                <Button id="_IDGenButton8" text="Cancel" type="Transparent" press="onCancel" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

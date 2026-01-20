@@ -77,69 +77,88 @@
         {
           "uri": "css/style.css"
         }
+        ,
+        {
+                "uri": "css/customer.css"
+            },
+            {
+                "uri": "css/booking.css"
+            }
       ]
     },
-    "routing": {
-      "config": {
-        "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "transition": "slide",
-        "type": "View",
-        "viewType": "XML",
-        "path": "project1.view",
-        "async": true,
-        "viewPath": "project1.view"
-      },
-      "routes": [
-        {
-          "name": "RouteView1",
-          "pattern": "",
-          "target": [
-            "TargetView1"
-          ]
-        },
-        {
-          "name": "CustomerDashboard",
-          "pattern": "customer",
-          "target": [
-            "TargetCustomer"
-          ]
-        },
-        {
-          "name": "AdminDashboard",
-          "pattern": "admin",
-          "target": [
-            "TargetAdmin"
-          ]
-        },
-        {
-          "name": "DriverDashboard",
-          "pattern": "driver",
-          "target": [
-            "TargetDriver"
-          ]
-        }
-      ],
-      "targets": {
-        "TargetView1": {
-          "id": "View1",
-          "name": "View1"
-        },
-        "TargetCustomer": {
-          "id": "CustomerDashboard",
-          "name": "CustomerDashboard"
-        },
-        "TargetAdmin": {
-          "id": "AdminDashboard",
-          "name": "AdminDashboard"
-        },
-        "TargetDriver": {
-          "id": "DriverDashboard",
-          "name": "DriverDashboard"
-        }
-      }
+ "routing": {
+  "config": {
+    "routerClass": "sap.m.routing.Router",
+    "controlAggregation": "pages",
+    "controlId": "app",
+    "transition": "slide",
+    "type": "View",
+    "viewType": "XML",
+    "path": "project1.view",
+    "async": true,
+    "viewPath": "project1.view"
+  },
+  "routes": [
+    {
+      "name": "RouteView1",
+      "pattern": "",
+      "target": ["TargetView1"]
     },
+    {
+      "name": "CustomerDashboard",
+      "pattern": "customer",
+      "target": ["TargetCustomer"]
+    },
+    {
+      "name": "CustomerBooking",
+      "pattern": "customer/booking",
+      "target": ["TargetCustomer"]
+    },
+    {
+      "name": "CustomerTracking",
+      "pattern": "customer/tracking",
+      "target": ["TargetCustomer"]
+    },
+    {
+      "name": "CustomerHistory",
+      "pattern": "customer/history",
+      "target": ["TargetCustomer"]
+    },
+    {
+      "name": "AdminDashboard",
+      "pattern": "admin",
+      "target": ["TargetAdmin"]
+    },
+    {
+      "name": "DriverDashboard",
+      "pattern": "driver",
+      "target": ["TargetDriver"]
+    }
+  ],
+  "targets": {
+    "TargetView1": {
+      "id": "View1",
+      "name": "View1"
+    },
+    "TargetCustomer": {
+      "id": "CustomerDashboard",
+      "name": "CustomerDashboard"
+    },
+    "TargetAdmin": {
+      "id": "AdminDashboard",
+      "name": "AdminDashboard"
+    },
+    "TargetDriver": {
+      "id": "DriverDashboard",
+      "name": "DriverDashboard"
+    },
+    "TargetNewBooking": {
+      "id": "NewBooking",
+      "name": "NewBooking"
+    }
+  }
+}
+,
     "rootView": {
       "viewName": "project1.view.App",
       "type": "XML",

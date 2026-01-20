@@ -1,0 +1,10 @@
+<mvc:View
+    controllerName="project1.controller.TrackShipments"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    
+   
+</mvc:View>

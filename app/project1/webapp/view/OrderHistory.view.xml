@@ -1,0 +1,14 @@
+<mvc:View
+    controllerName="project1.controller.OrderHistory"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+     <VBox id="_IDGenVBox26"  class="sapUiLargeMarginBottom">
+            <Title id="_IDGenTitle16" text="Create New Booking" level="H1" class="mainTitleText" />
+            <Text id="_IDGenText17"  text="Enter shipment details to dispatch a new load" class="subTitleText" />
+        </VBox>
+    
+  
+</mvc:View>

@@ -1,0 +1,255 @@
+/* Header Base */
+.premiumHeader.sapMTB {
+    height: 4.5rem !important;
+    background: #ffffff !important;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.1) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 0 1.5rem !important;
+    display: flex;
+    align-items: center; /* Sab kuch vertically center karne ke liye */
+}
+
+/* Toggle Button Fix */
+.menuBtn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+}
+
+/* Company Name Gradient */
+.companyNameGradient {
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Profile Circle - The Perfect Alignment */
+.profileWrapper {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #ffffff; /* Inner white ring */
+    outline: 2px solid rgba(99, 102, 241, 0.2); /* Outer soft ring */
+    margin-left: 10px;
+    overflow: hidden;
+    padding: 0 !important; /* Extra space remove karne ke liye */
+}
+
+.profileWrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+}
+
+/* Avatar inside the circle fix */
+.premiumAvatar {
+    background: transparent !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.premiumAvatar .sapFAvatarCanvas {
+    background: transparent !important;
+}
+/* ====================================================================================================== */
+
+/* Action Buttons Icon Color */
+.headerActionBtn .sapMBtnIcon {
+    color: #475569 !important;
+    font-size: 1.4rem !important;
+}/* Sidebar - Indigo Purple Gradient Theme */
+.nexusSidebar {
+    background: linear-gradient(180deg, #a855f7) !important;
+    border-right: none !important;
+}
+/* Sidebar ka main background agar dark hai toh ye zaroori hai */
+.nexusSidebar {
+    background-color: #1e1b4b !important; /* Dark Indigo background */
+}
+
+/* Normal State: Jab item select nahi hai */
+.nexusSidebar .sapTntNavListItem {
+    background: transparent !important;
+    color: #cbd5e1 !important; /* Soft Grey/Blueish text */
+    margin: 8px 12px !important; 
+    border-radius: 12px !important;
+    transition: all 0.3s ease !important;
+    height: 50px !important;
+}
+
+/* Icon aur Text ka color grey karne ke liye */
+.nexusSidebar .sapTntNavListItem .sapUiIcon,
+.nexusSidebar .sapTntNavListItem .sapMText {
+    color: #cbd5e1 !important; 
+}
+
+/* Hover State: Glass effect */
+.nexusSidebar .sapTntNavListItem:hover {
+    background: rgba(255, 255, 255, 0.1) !important; /* Light Glass effect */
+    color: #ffffff !important;
+}
+
+.nexusSidebar .sapTntNavListItem:hover .sapUiIcon,
+.nexusSidebar .sapTntNavListItem:hover .sapMText {
+    color: #ffffff !important;
+}
+
+/* Selected State: Purple-Indigo Gradient */
+.nexusSidebar .sapTntNavListItemSelected {
+    background: linear-gradient(135deg, #6366f1, #a855f7) !important;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Selected State mein Text aur Icon hamesha White rahega */
+.nexusSidebar .sapTntNavListItemSelected .sapUiIcon,
+.nexusSidebar .sapTntNavListItemSelected .sapMText {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+
+/* Navigation List ki spacing */
+.nexusSidebar .sapTntNavList {
+    padding: 10px 0 !important;
+}
+
+/* ============================================================================== */
+
+/* Main Dashboard Layout */
+.nexusToolPage .sapTntToolPageMain {
+    background-color: #f8fafc !important;
+}
+
+.contentPadding {
+    padding: 2rem !important;
+}
+
+/* Typography - Bold & Spacious */
+.mainTitleText {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+    font-size: 2.2rem !important; /* Title bada kiya */
+    letter-spacing: -0.5px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.subTitleText {
+    color: #64748b !important;
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+}
+
+/* KPI Cards - No Hover on Table, Only KPIs */
+/* Card Base Styling */
+.modernCard {
+    background: #ffffff !important;
+    border-radius: 24px !important;
+    padding: 30px !important;
+    border: 1px solid rgba(99, 102, 241, 0.1) !important; /* Indigo border hint */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03) !important;
+    transition: all 0.4s ease;
+}
+
+/* KPI Card Hover Effect */
+.kpiCardAnimate:hover {
+    transform: translateY(-8px);
+    border: 1px solid rgba(99, 102, 241, 0.4) !important; /* Border gets darker on hover */
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* Icon Box - Isse Icon ke piche round color aayega */
+.iconBox {
+    width: 60px !important;
+    height: 60px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+}
+
+/* Indigo/Purple Theme for Icons */
+.purpleIcon {
+    background: rgba(99, 102, 241, 0.12) !important; /* Soft Indigo background */
+}
+
+.purpleIcon .sapUiIcon {
+    color: #6366f1 !important; /* Solid Indigo Icon */
+    font-size: 1.8rem !important;
+    font-weight: bold !important;
+}
+
+/* Blue variation (Optional, for variety) */
+.blueIcon {
+    background: rgba(59, 130, 246, 0.12) !important;
+}
+
+.blueIcon .sapUiIcon {
+    color: #3b82f6 !important;
+}
+
+/* Green variation (for success/money) */
+.greenIcon {
+    background: rgba(34, 197, 94, 0.12) !important;
+}
+
+.greenIcon .sapUiIcon {
+    color: #22c55e !important;
+}
+
+/* Text Styling */
+.cardValue {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+    font-size: 2.2rem !important;
+    margin-top: 8px !important;
+}
+
+.cardLabel {
+    color: #64748b !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.2px !important;
+}
+
+/* Live Inventory Table - Clean & Flat (No Hover Jump) */
+.tableCard {
+    padding: 0 !important;
+    margin-top: 2.5rem !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+}
+
+.tableHeader {
+    padding: 30px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.tableTitle {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+/* Buttons - Glow Effect */
+.glow-button {
+    background: linear-gradient(to right, #6366f1, #a855f7) !important;
+    color: white !important;
+    border-radius: 14px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3) !important;
+}
+
+/* Responsive Table Fixes */
+@media (max-width: 768px) {
+    .mainTitleText { font-size: 1.6rem !important; }
+    .contentPadding { padding: 1rem !important; }
+    .nexusSidebar { width: 0 !important; }
+}
