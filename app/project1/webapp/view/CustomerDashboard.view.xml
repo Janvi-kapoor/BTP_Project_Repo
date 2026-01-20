@@ -8,18 +8,61 @@
     displayBlock="true">
 
     <tnt:ToolPage id="toolPage" class="nexusToolPage">
-        <tnt:header>
-            <tnt:ToolHeader id="_IDGenToolHeader1" class="nexusHeader">
-                <Button id="_IDGenButton3" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress" class="menuBtn"/>
-                <HBox id="_IDGenHBox5" alignItems="Center" class="sapUiSmallMarginBegin">
-                    <core:Icon id="_IDGenIcon7" src="sap-icon://BusinessSuiteInAppSymbols/hexagon" class="logoIcon" color="#6366f1"/>
-                    <Title id="_IDGenTitle5" text="LogiChain NEXUS" class="logoText"/>
-                </HBox>
-                <ToolbarSpacer id="_IDGenToolbarSpacer4" />
-                <Button id="_IDGenButton6" icon="sap-icon://bell" type="Transparent" class="headerIcon"/>
-                <Avatar id="_IDGenAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="userAvatar sapUiSmallMarginEnd" />
-            </tnt:ToolHeader>
-        </tnt:header>
+       <tnt:header>
+
+    <tnt:ToolHeader id="_IDGenToolHeader1" class="nexusHeader premiumHeader">
+
+        <Button id="_IDGenButton3"
+
+                icon="sap-icon://menu2"
+
+                type="Transparent"
+
+                press="onSideNavButtonPress"
+
+                class="headerActionBtn menuBtn"/>
+
+       
+
+        <ToolbarSpacer id="_IDGenToolbarSpacer4" width="1rem" />
+
+
+
+        <HBox id="_IDGenHBox5" alignItems="Center" class="logoContainer">
+
+            <core:Icon id="_IDGenIcon7" src="sap-icon://BusinessSuiteInAppSymbols/hexagon" class="logoIcon rippleIcon" color="#6366f1"/>
+
+            <Title id="_IDGenTitle5" text="LogiChain NEXUS" class="companyNameGradient"/>
+
+        </HBox>
+
+
+
+        <ToolbarSpacer id="_IDGenToolbarSpacer5" />
+
+        <HBox id="_IDGenHBox7" alignItems="Center" displayInline="true">
+
+            <Button id="_IDGenButton6" icon="sap-icon://bell" type="Transparent" class="headerActionBtn notificationBtn"/>
+
+           
+
+            <HBox id="_IDGenHBox8" class="profileWrapper" alignItems="Center" justifyContent="Center" >
+
+                <Avatar id="_IDGenAvatar1" src="sap-icon://person-placeholder"
+
+                        displaySize="XS"
+
+                        class="premiumAvatar" />
+
+            </HBox>
+
+        </HBox>
+
+    </tnt:ToolHeader>
+
+</tnt:header>
+
+
 
         <tnt:sideContent>
             <tnt:SideNavigation id="_IDGenSideNavigation" class="nexusSidebar" itemSelect="onItemSelect">
@@ -39,7 +82,7 @@
                     <ScrollContainer id="_IDGenScrollContainer" vertical="true" horizontal="false" height="100%">
                         <VBox id="_IDGenVBox11" class="contentPadding">
                             <VBox id="_IDGenVBox12" class="sapUiLargeMarginBottom">
-                                <Title id="_IDGenTitle6" text="Operations Dashboard" level="H1" class="mainTitleText" />
+                                <Title id="_IDGenTitle7" text="Operations Dashboard" level="H1" class="mainTitleText" />
                                 <Text id="_IDGenText18" text="Real-time overview of your logistics operations" class="subTitleText" />
                             </VBox>
 
@@ -49,27 +92,27 @@
                                         <core:Icon id="_IDGenIcon8" src="sap-icon://shipping-status" size="1.5rem"/>
                                     </VBox>
                                     <Text id="_IDGenText19" text="Active Shipments" class="cardLabel"/>
-                                    <Title id="_IDGenTitle7" text="847" class="cardValue"/>
+                                    <Title id="_IDGenTitle8" text="847" class="cardValue"/>
                                 </VBox>
                                 <VBox id="_IDGenVBox15" class="modernCard kpiCardAnimate">
                                     <VBox id="_IDGenVBox16" class="iconBox blueIcon sapUiSmallMarginBottom">
                                         <core:Icon id="_IDGenIcon9" src="sap-icon://clock" size="1.5rem"/>
                                     </VBox>
                                     <Text id="_IDGenText20" text="Pending Dispatch" class="cardLabel"/>
-                                    <Title id="_IDGenTitle8" text="156" class="cardValue"/>
+                                    <Title id="_IDGenTitle9" text="156" class="cardValue"/>
                                 </VBox>
                                 <VBox id="_IDGenVBox17" class="modernCard kpiCardAnimate">
                                     <VBox id="_IDGenVBox18" class="iconBox greenIcon sapUiSmallMarginBottom">
                                         <core:Icon id="_IDGenIcon10" src="sap-icon://waiver" size="1.5rem"/>
                                     </VBox>
                                     <Text id="_IDGenText21" text="Monthly Spend" class="cardLabel"/>
-                                    <Title id="_IDGenTitle9" text="₹ 28,47,500" class="cardValue"/>
+                                    <Title id="_IDGenTitle10" text="₹ 28,47,500" class="cardValue"/>
                                 </VBox>
                             </layout:Grid>
 
                             <VBox id="_IDGenVBox19" class="modernCard tableCard sapUiMediumMarginTop">
                                 <VBox id="_IDGenVBox20" class="tableHeader">
-                                    <Title id="_IDGenTitle10" text="Live Inventory Movement" level="H2" class="tableTitle"/>
+                                    <Title id="_IDGenTitle14" text="Live Inventory Movement" level="H2" class="tableTitle"/>
                                     <Text id="_IDGenText22" text="Real-time tracking of all active shipments" class="tableSubTitle"/>
                                 </VBox>
                                 <Table id="_IDGenTable" items="{/shipments}" class="nexusTable">
@@ -98,11 +141,27 @@
                         </VBox>
                     </ScrollContainer>
                 </Page>
+ <Page id="bookingPage" showHeader="false">
 
-                <Page id="bookingPage" showHeader="false">
-                    <VBox id="_IDGenVBox25" class="contentPadding">
-                         <Title id="_IDGenTitle14" text="New Booking" level="H1" class="mainTitleText" />
-                         <Text id="_IDGenText34" text="Create a new shipment request here." class="subTitleText" />
+    <VBox id="_IDGenVBox25" class="contentPadding">
+
+        <mvc:XMLView id="_IDGenXMLViewNewBooking" viewName="project1.view.NewBooking" />
+
+    </VBox>
+
+</Page>
+
+                <Page id="trackPage" showHeader="false">
+                    <VBox id="_IDGenVBox27" class="contentPadding">
+                         <Title id="_IDGenTitle17" text="Track Shipments" level="H1" class="mainTitleText" />
+                         <Text id="_IDGenText35" text="Monitor your active shipments in real-time." class="subTitleText" />
+                         </VBox>
+                </Page>
+
+                <Page id="historyPage" showHeader="false">
+                    <VBox id="_IDGenVBox28" class="contentPadding">
+                         <Title id="_IDGenTitle18" text="Order History" level="H1" class="mainTitleText" />
+                         <Text id="_IDGenText36" text="Review your past completed shipments." class="subTitleText" />
                          </VBox>
                 </Page>
 

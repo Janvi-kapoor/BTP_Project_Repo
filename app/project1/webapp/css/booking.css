@@ -1,0 +1,43 @@
+/* Wizard ka main container jo card jaisa dikhega */
+.wizardContainerCard {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+/* Wizard ki height aur scrolling fix */
+.customWizard {
+    background: transparent !important;
+    height: auto !important;
+}
+
+/* SAPUI5 Wizard ki default choti height ko override karein */
+.sapMWizard.sapMWizardRenderModePage {
+    height: 100% !important;
+    min-height: 70vh; /* Screen ka 70% area cover karega */
+}
+
+/* Step ke andar ka form padding theek karne ke liye */
+.sapMWizardStepContainer {
+    padding: 2rem !important;
+}
+
+/* Background gradient for the whole page */
+.customMainTitle {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+}
+
+/* Input fields ko thoda modern dikhane ke liye */
+.sapMInputBaseInner {
+    border-radius: 8px !important;
+}
+
+/* Footer ko clean banayein */
+.sapMPageFooter .sapMTB {
+    background: #ffffff !important;
+    border-top: 1px solid #e2e8f0 !important;
+}
