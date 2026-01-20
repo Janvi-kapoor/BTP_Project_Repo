@@ -1,11 +1,13 @@
 using { logichain.db as db } from '../db/schema';
 
 service LogiChainService {
-
+    entity Users as projection on db.Users; // Ye add karein
+   // entity Drivers as projection on db.Drivers;
     // --- Admin Operations ---
     // Hum ise redirection target bana rahe hain taaki associations yahan point karein
     @odata.draft.enabled
     @cds.redirection.target
+
     entity AdminShipments as projection on db.Shipments;
     
     entity Fleet_Trucks as projection on db.Trucks;

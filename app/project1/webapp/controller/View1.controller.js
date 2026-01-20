@@ -75,35 +75,62 @@ sap.ui.define([
             }
         },
         onLoginSubmit: function () {
-    var sEmail = this.byId("emailInput").getValue();
-    var sPass = this.byId("passwordInput").getValue();
-    var oLoginModel = this.getView().getModel("loginModel");
-    var sType = oLoginModel.getProperty("/portalType");
+            var oView = this.getView();
+            var sEmail = oView.byId("emailInput").getValue();
+            var sPass = oView.byId("passwordInput").getValue();
+            var oLoginModel = oView.getModel("loginModel");
+            var sType = oLoginModel.getProperty("/portalType"); // ADMIN, CUSTOMER, or DRIVER
 
-    // Bina DB verify kare, sirf check karein ki fields khali na hon
-    if (sEmail && sPass) {
-        sap.m.MessageToast.show("Login Successful! Redirecting...");
-        
-        // Popup band karein
-        this.onCloseLogin();
+            if (!sEmail || !sPass) {
+                sap.m.MessageToast.show("Please enter Email and Password");
+                return;
+            }
 
-        // Direct navigate karein role ke hisaab se
-        var oRouter = this.getOwnerComponent().getRouter();
-        
-        if (sType === "CUSTOMER") {
-            oRouter.navTo("CustomerDashboard");
-        } else if (sType === "ADMIN") {
-            oRouter.navTo("AdminDashboard");
-        } else if (sType === "DRIVER") {
-            oRouter.navTo("DriverDashboard");
-        }
-    } else {
-        sap.m.MessageToast.show("Please enter any Email and Password to continue");
-    }
-},
+            // OData V4 Model
+            var oModel = this.getOwnerComponent().getModel();
+            var sEntitySet = (sType === "DRIVER") ? "/Fleet_Drivers" : "/Users";
+
+            // Filters taiyar karein
+            var aFilters = [
+                new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.EQ, sEmail),
+                new sap.ui.model.Filter("password", sap.ui.model.FilterOperator.EQ, sPass)
+            ];
+
+            // Agar Admin ya Customer hai toh Role filter bhi lagayein
+            if (sType !== "DRIVER") {
+                aFilters.push(new sap.ui.model.Filter("role", sap.ui.model.FilterOperator.EQ, sType));
+            }
+
+            // Busy Indicator start
+            sap.ui.core.BusyIndicator.show(0);
+
+            // OData V4 List Binding for Validation
+            var oListBinding = oModel.bindList(sEntitySet, null, null, aFilters);
+
+            oListBinding.requestContexts().then(function (aContexts) {
+                sap.ui.core.BusyIndicator.hide();
+
+                if (aContexts.length > 0) {
+                    // User mil gaya!
+                    var oUserData = aContexts[0].getObject();
+                    sap.m.MessageToast.show("Welcome " + (oUserData.name || oUserData.companyName));
+
+                    // Login successful actions
+                    this.onCloseLogin();
+                    this._navigateToDashboard(sType);
+                } else {
+                    // Data nahi mila
+                    sap.m.MessageToast.show("Invalid Credentials or Role. Please try again.");
+                }
+            }.bind(this)).catch(function (oError) {
+                sap.ui.core.BusyIndicator.hide();
+                sap.m.MessageBox.error("Database connection failed.");
+            });
+        },
 
         _navigateToDashboard: function (sType) {
             var oRouter = this.getOwnerComponent().getRouter();
+            // Manifest routes ke names matching hone chahiye
             if (sType === "CUSTOMER") oRouter.navTo("CustomerDashboard");
             else if (sType === "ADMIN") oRouter.navTo("AdminDashboard");
             else if (sType === "DRIVER") oRouter.navTo("DriverDashboard");
