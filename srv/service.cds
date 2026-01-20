@@ -9,7 +9,7 @@ service LogiChainService {
     @cds.redirection.target
 
     entity AdminShipments as projection on db.Shipments;
-    
+    entity Users as projection on db.Users;
     entity Fleet_Trucks as projection on db.Trucks;
     entity Fleet_Drivers as projection on db.Drivers;
     
