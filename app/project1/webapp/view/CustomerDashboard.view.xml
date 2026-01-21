@@ -141,16 +141,17 @@
                         </VBox>
                     </ScrollContainer>
                 </Page>
- <Page id="bookingPage" showHeader="false">
-
-    <VBox id="_IDGenVBox25" class="contentPadding">
-
-        <mvc:XMLView id="_IDGenXMLViewNewBooking" viewName="project1.view.NewBooking" />
-
-    </VBox>
-
+ <Page id="bookingPage" showHeader="false" class="sapUiNoContentPadding">
+    <content>
+        <VBox id="_IDGenVBox25" 
+              height="100%" 
+              width="100%" 
+              alignItems="Stretch" 
+              class="fullPageContainer">
+            <mvc:XMLView id="_IDGenXMLView" viewName="project1.view.NewBooking" height="100%" />
+        </VBox>
+    </content>
 </Page>
-
                 <Page id="trackPage" showHeader="false">
                     <VBox id="_IDGenVBox27" class="contentPadding">
                          <Title id="_IDGenTitle17" text="Track Shipments" level="H1" class="mainTitleText" />
