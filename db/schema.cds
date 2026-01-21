@@ -1,5 +1,4 @@
 namespace logichain.db;
-
 using {
     managed,
     cuid
@@ -93,6 +92,7 @@ entity TripAssignments : cuid, managed {
     otpCode             : Integer;
     startTime           : DateTime;
     actualDeliveryTime  : DateTime;
+    eta                 : String(20); 
     specialInstructions : String(500);
 }
 

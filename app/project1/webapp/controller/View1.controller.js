@@ -111,7 +111,8 @@ sap.ui.define([
                 sap.ui.core.BusyIndicator.hide();
 
                 if (aContexts.length > 0) {
-                    // User mil gaya!
+                    localStorage.clear();
+                    localStorage.setItem("userEmail", sEmail);
                     var oUserData = aContexts[0].getObject();
                     sap.m.MessageToast.show("Welcome " + (oUserData.name || oUserData.companyName));
 
