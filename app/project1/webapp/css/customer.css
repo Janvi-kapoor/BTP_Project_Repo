@@ -126,9 +126,24 @@
 .nexusToolPage .sapTntToolPageMain {
     background-color: #f8fafc !important;
 }
+/* Dashboard container ko full screen stretch karo */
+.fullPageContainer {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    background-color: #f8fafc !important; /* Light background jaisa image mein tha */
+}
 
-.contentPadding {
-    padding: 2rem !important;
+/* Ensure child view takes full space */
+.fullPageContainer > div {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* SAP Default padding remover */
+.sapUiNoContentPadding {
+    padding: 0 !important;
 }
 
 /* Typography - Bold & Spacious */

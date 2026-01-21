@@ -1,43 +1,355 @@
-/* Wizard ka main container jo card jaisa dikhega */
-.wizardContainerCard {
-    background: #ffffff !important;
-    border-radius: 16px !important;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
-    border: 1px solid #e2e8f0 !important;
-    overflow: hidden;
-    padding: 1rem;
-}
-
-/* Wizard ki height aur scrolling fix */
-.customWizard {
-    background: transparent !important;
-    height: auto !important;
-}
-
-/* SAPUI5 Wizard ki default choti height ko override karein */
-.sapMWizard.sapMWizardRenderModePage {
+/* ============================================================
+   1. CRITICAL LAYOUT RECOVERY (DO NOT REMOVE)
+   Ye section ensure karta hai ki Page Blank na ho
+   ============================================================ */
+html, body, .sapMPage, .sapMPageScroll {
     height: 100% !important;
-    min-height: 70vh; /* Screen ka 70% area cover karega */
+    width: 100% !important;
+    background-color: #f8fafc !important;
+    overflow-y: auto !important;
 }
 
-/* Step ke andar ka form padding theek karne ke liye */
-.sapMWizardStepContainer {
-    padding: 2rem !important;
+/* Wizard Container Reset */
+.customWizardContainer {
+    background: transparent !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    display: block !important;
 }
 
-/* Background gradient for the whole page */
-.customMainTitle {
-    color: #1e293b !important;
-    font-weight: 800 !important;
+.sapMWizard {
+    height: 100% !important;
+    background: transparent !important;
 }
 
-/* Input fields ko thoda modern dikhane ke liye */
+.sapMWizard .sapMWizardStepContainer {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important; /* Content ke hisab se height */
+    box-sizing: border-box !important;
+}
+
+/* ============================================================
+   2. CUSTOM WIZARD HEADER (THE CIRCLES)
+   ============================================================ */
+.customWizardHeader {
+    width: 90% !important;
+    max-width: 900px !important;
+    margin: 1rem auto 1.5rem auto !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+.stepIndicator {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: default; min-width: 80px; position: relative; z-index: 2;
+}
+
+.stepCircle {
+    width: 3.5rem !important; height: 3.5rem !important;
+    border-radius: 50% !important; background: #ffffff !important;
+    border: 2px solid #cbd5e1 !important; color: #94a3b8 !important;
+    display: flex !important; align-items: center; justify-content: center !important;
+    font-size: 1.25rem !important; font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+
+.stepText {
+    margin-top: 0.75rem !important; font-size: 0.9rem !important;
+    font-weight: 600 !important; color: #94a3b8 !important;
+}
+
+.stepLineContainer {
+    position: absolute !important; top: 1.75rem !important;
+    left: 50px !important; right: 50px !important; height: 4px !important;
+    background: #e2e8f0 !important; z-index: 1 !important;
+}
+
+/* Active/Completed State */
+.stepActive .stepCircle, .stepCompleted .stepCircle {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    border: none !important; color: white !important;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5) !important; transform: scale(1.1);
+}
+.stepActive .stepText, .stepCompleted .stepText { color: #6366f1 !important; }
+.stepProgressLine { background: linear-gradient(90deg, #6366f1, #a855f7) !important; height: 100% !important; border-radius: 4px; }
+
+/* ============================================================
+   3. THE BIG CARD (EXACT 800-LINE VERSION STYLE)
+   ============================================================ */
+.stepCard {
+    background: white !important;
+    width: 90% !important;
+    max-width: 1200px !important;
+    min-width: 900px !important;
+    margin: 1rem auto 3rem auto !important; /* Thoda gap bottom me */
+    padding: 4rem !important; /* ORIGINAL BIG SPACING */
+    border-radius: 24px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #f1f5f9 !important;
+    box-sizing: border-box !important;
+    display: block !important; /* Force Show */
+}
+
+/* ============================================================
+   4. INPUTS: PURPLE THEME (NO BLUE) & 54PX HEIGHT
+   ============================================================ */
+/* Input Base Container */
+.sapMInputBase {
+    margin-bottom: 2rem !important; /* Original Spacing */
+    height: 54px !important; /* Original Height */
+}
+
+/* The actual box */
+.sapMInputBaseContentWrapper {
+    height: 54px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 12px !important;
+    background: white !important;
+    padding: 0 1rem !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Hover & Focus (Purple Only) */
+.sapMInputBaseContentWrapper:hover {
+    border-color: #8b5cf6 !important; background: #fafafa !important;
+}
+
+.sapMInputBase.sapMFocus > .sapMInputBaseContentWrapper,
+.sapMInputBaseContentWrapper:focus-within,
+.sapMInputBaseContentWrapper.sapMInputBaseContentWrapperFocused {
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2) !important;
+    outline: none !important;
+}
+
+/* Removing SAP Default Blue Lines */
+.sapMInputBase::before, .sapMInputBase::after,
+.sapMInputBaseContentWrapper::before { display: none !important; border: none !important; }
+
+/* Inner Text Font */
 .sapMInputBaseInner {
-    border-radius: 8px !important;
+    height: 100% !important; font-size: 1rem !important;
+    font-weight: 500 !important; color: #1e293b !important; padding-top: 14px !important;
 }
 
-/* Footer ko clean banayein */
-.sapMPageFooter .sapMTB {
+/* FILE UPLOADER FIX (Overflow Problem Solved) */
+.sapUiUnifiedFileUploader { width: 100% !important; display: flex !important; }
+.sapUiUnifiedFileUploader .sapMInputBase { width: 100% !important; margin-bottom: 0 !important; }
+.sapUiUnifiedFileUploader .sapMBtn { margin-left: 0 !important; height: 54px !important; }
+.sapUiUnifiedFileUploader .sapMBtnInner {
+    border-top-left-radius: 0 !important; border-bottom-left-radius: 0 !important;
+    background: #f1f5f9 !important; color: #475569 !important; border: 1px solid #cbd5e1 !important;
+}
+
+/* ============================================================
+   5. BUTTONS (PILL SHAPE & CENTERED TEXT)
+   ============================================================ */
+.sapMBtnInner {
+    display: flex !important; justify-content: center !important; align-items: center !important;
+    outline: none !important; font-family: inherit !important;
+}
+
+/* Continue Button (Gradient Pill) */
+.gradientButton .sapMBtnInner {
+    background-image: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 50px !important;
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 24px 32px !important;
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4) !important;
+    min-width: 180px !important;
+}
+.gradientButton:hover .sapMBtnInner { transform: translateY(-2px); box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.5) !important; }
+
+/* Back Button */
+.backButton .sapMBtnInner {
+    border-radius: 50px !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+    padding: 24px 24px !important;
+    min-width: 120px !important;
+}
+
+/* ============================================================
+   6. PAGE 1: CONSIGNMENT (WEIGHT STEPPER - ANTI BLINK)
+   ============================================================ */
+.customStepperBox {
+    height: 54px !important; /* Match Input Height */
+    display: flex !important; align-items: center !important; justify-content: space-between !important;
+    border: 1px solid #cbd5e1 !important; border-radius: 12px !important;
+    background: white !important; padding: 0 0.5rem !important;
+    transition: border 0.2s ease !important;
+}
+.customStepperBox:hover { border-color: #7c3aed !important; }
+
+.centerNumberInput .sapMInputBaseContentWrapper { border: none !important; background: transparent !important; box-shadow: none !important; }
+.centerNumberInput input { font-size: 1.25rem !important; font-weight: 800 !important; color: #1e293b !important; text-align: center !important; pointer-events: none !important; }
+
+.circleBtn {
+    width: 2.5rem !important; height: 2.5rem !important; border-radius: 50% !important; margin: 0 !important; padding: 0 !important;
+    -webkit-tap-highlight-color: transparent !important; user-select: none !important; outline: none !important;
+}
+.circleBtn .sapMBtnInner {
+    width: 100% !important; height: 100% !important; border-radius: 50% !important;
+    background: #f1f5f9 !important; border: none !important; color: #475569 !important; transition: none !important;
+}
+.circleBtn:hover .sapMBtnInner { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important; color: white !important; }
+.circleBtn:active .sapMBtnInner { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important; color: white !important; transform: scale(0.92) !important; border: none !important; outline: none !important; }
+.circleBtn .sapMBtnFocusDiv { display: none !important; }
+
+/* ============================================================
+   7. PAGE 2: LOGISTICS (DETAILED CARDS)
+   ============================================================ */
+.truckCard {
     background: #ffffff !important;
-    border-top: 1px solid #e2e8f0 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 1.5rem 1rem !important;
+    text-align: center !important; cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    height: 100% !important; min-height: 160px !important;
+    display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+}
+.truckCard:hover { border-color: #a5b4fc !important; transform: translateY(-3px) !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important; }
+.selectedTruck { border: 2px solid #6366f1 !important; background-color: #eef2ff !important; }
+.selectedTruck .truckIcon { color: #6366f1 !important; }
+.truckIcon { font-size: 2.5rem !important; color: #64748b !important; margin-bottom: 0.75rem !important; }
+.truckTitle { font-weight: 700 !important; color: #1e293b !important; font-size: 1.1rem !important; }
+
+/* Segmented Button */
+.customSegmented { background: #f1f5f9 !important; padding: 4px !important; border-radius: 50px !important; border: none !important; }
+.customSegmented .sapMSegBBtn { border-radius: 50px !important; border: none !important; color: #64748b !important; font-weight: 600 !important; margin: 0 2px !important; }
+.customSegmented .sapMSegBBtnSel { background: #ffffff !important; color: #6366f1 !important; box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important; border: 1px solid #e2e8f0 !important; }
+
+/* ============================================================
+   8. PAGE 3 & 4: PRICING & REVIEW (GRID LAYOUTS)
+   ============================================================ */
+.pricingCard {
+    background: #ffffff !important; border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important; padding: 1.5rem !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+}
+.smallCard { min-height: 140px !important; justify-content: center !important; }
+.tallCard { height: 100% !important; min-height: 300px !important; display: flex !important; flex-direction: column !important; }
+
+/* Review Inner Cards */
+.summaryInnerCard {
+    background-color: #f8fafc !important; border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important; padding: 1.5rem !important; height: 100% !important;
+    transition: all 0.3s ease !important;
+}
+.summaryInnerCard:hover { background-color: #fff !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important; border-color: #cbd5e1 !important; transform: translateY(-2px); }
+
+/* Typography & Icons */
+.brownIconBox .sapMImg { background-color: #f5f3ff !important; color: #4f46e5 !important; border-radius: 8px !important; padding: 8px !important; }
+.orangeIconBox .sapMImg { background-color: #ffedd5 !important; color: #f97316 !important; border-radius: 50% !important; padding: 8px !important; }
+.goldIconBox .sapMImg { background-color: #fef3c7 !important; color: #d97706 !important; border-radius: 50% !important; padding: 8px !important; }
+
+.bigBoldText { font-size: 1.5rem !important; font-weight: 800 !important; color: #1e293b !important; }
+.purplePriceMain { color: #6366f1 !important; font-weight: 800 !important; font-size: 2.2rem !important; line-height: 1 !important; }
+.gradientLine { height: 6px !important; width: 100% !important; border-radius: 3px !important; background: linear-gradient(90deg, #6366f1 0%, #6366f1 60%, #e2e8f0 100%) !important; margin-top: 0.5rem !important; }/* ============================================================
+   PAGE 4: FINAL REVIEW & DISPATCH STYLING
+   ============================================================ */
+
+/* 1. The Summary Cards (Gray Box with Hover Effect) */
+.summaryInnerCard {
+    background-color: #f8fafc !important; /* Very light slate */
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 1.5rem !important;
+    height: 100% !important; /* Ensures all boxes are same height */
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.summaryInnerCard:hover {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 2. Icons inside Summary Cards */
+.summaryIcon {
+    font-size: 1.1rem !important;
+    margin-right: 0.75rem !important;
+    padding: 8px !important;
+    border-radius: 8px !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Icon Color Variants */
+.purpleIcon { color: #6366f1 !important; background: #eef2ff !important; }
+.blueIcon   { color: #3b82f6 !important; background: #eff6ff !important; }
+.greenIcon  { color: #10b981 !important; background: #ecfdf5 !important; }
+
+/* 3. Text Typography */
+.summaryHeader {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    margin: 0 !important;
+}
+
+.summaryContent {
+    padding-left: 0.5rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.summaryValue {
+    font-size: 0.95rem !important;
+    color: #475569 !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+    line-height: 1.5 !important;
+    font-weight: 500 !important;
+}
+
+/* 4. Price & Payment Specifics */
+.summaryPrice {
+    color: #6366f1 !important; /* Indigo Main */
+    font-weight: 800 !important;
+    font-size: 1.75rem !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.summarySubText {
+    font-size: 0.85rem !important;
+    color: #94a3b8 !important;
+}
+
+/* 5. Custom Text Area (Special Instructions) */
+.customTextArea .sapMInputBaseContentWrapper {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 10px !important;
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.customTextArea:focus-within .sapMInputBaseContentWrapper {
+    background: #ffffff !important;
+    border-color: #7c3aed !important; /* Purple Focus */
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1) !important;
+}
+
+.customTextArea textarea {
+    font-size: 0.95rem !important;
+    color: #334155 !important;
 }
