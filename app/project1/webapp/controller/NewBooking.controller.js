@@ -10,6 +10,24 @@ sap.ui.define([
         onInit: function () {
             // Variable initialization
             this._oNavContainer = null;
+
+            // ============================================================
+            // 1. TRUCK SELECTION INIT (Ye naya code hai)
+            // ============================================================
+            // Teeno Cards ki IDs
+            this._aTruckIDs = ["truckOpen", "truckContainer", "truckReefer"];
+
+            // Har card par click event lagana
+            this._aTruckIDs.forEach(function (sId) {
+                var oControl = this.byId(sId);
+                if (oControl) {
+                    oControl.addEventDelegate({
+                        onclick: function () {
+                            this.onTruckSelect(sId); // Click hone par ye chalega
+                        }.bind(this)
+                    });
+                }
+            }.bind(this));
         },
 
         onAfterRendering: function() {
@@ -50,6 +68,25 @@ sap.ui.define([
         },
 
         // ============================================================
+        // 2. TRUCK SELECTION LOGIC (Ye naya function hai)
+        // ============================================================
+        onTruckSelect: function (sSelectedID) {
+            // Sabhi cards se 'selectedTruck' class hata do
+            this._aTruckIDs.forEach(function (sId) {
+                var oCard = this.byId(sId);
+                if (oCard) {
+                    oCard.removeStyleClass("selectedTruck");
+                }
+            }.bind(this));
+        
+            // Sirf us card par 'selectedTruck' lagao jo click hua hai
+            var oSelectedCard = this.byId(sSelectedID);
+            if (oSelectedCard) {
+                oSelectedCard.addStyleClass("selectedTruck");
+            }
+        },
+
+        // ============================================================
         // NAVIGATION LOGIC (MOVING BETWEEN PAGES)
         // ============================================================
         
@@ -83,12 +120,12 @@ sap.ui.define([
             this._updateHeader(2);
         },
 
-        // Step 3 -> Step 4 (Final Review) - FIX ADDED HERE
+        // Step 3 -> Step 4 (Final Review)
         onToConfirm: function() {
             var oPage = this.byId("pageConfirm");
             if (this._oNavContainer && oPage) {
                 this._oNavContainer.to(oPage);
-                this._updateHeader(4); // IMPORTANT: Make Step 4 Active (Purple Gradient)
+                this._updateHeader(4); // IMPORTANT: Make Step 4 Active
             }
         },
 
@@ -102,13 +139,13 @@ sap.ui.define([
         // HEADER VISUAL UPDATER (THE CIRCLES)
         // ============================================================
         _updateHeader: function(iStep) {
-            // 1. Get references to circles (Make sure XML IDs match these)
+            // 1. Get references to circles
             var s1 = this.byId("step1Ind");
             var s2 = this.byId("step2Ind");
             var s3 = this.byId("step3Ind");
-            var s4 = this.byId("step4Ind"); // Ensure this ID exists in XML
+            var s4 = this.byId("step4Ind");
             
-            // Get references to connecting lines (Optional, if you have them)
+            // Get references to connecting lines
             var l1 = this.byId("line1");
             var l2 = this.byId("line2");
             var l3 = this.byId("line3");
@@ -118,13 +155,11 @@ sap.ui.define([
             }
 
             // 2. RESET ALL (Clean Slate)
-            // Remove Active/Completed classes from everyone
             [s1, s2, s3, s4].forEach(function(s) {
                 s.removeStyleClass("stepActive");
                 s.removeStyleClass("stepCompleted");
             });
 
-            // Reset Lines
             if(l1) l1.removeStyleClass("stepProgressLine");
             if(l2) l2.removeStyleClass("stepProgressLine");
             if(l3) l3.removeStyleClass("stepProgressLine");
@@ -134,13 +169,11 @@ sap.ui.define([
                 case 1:
                     s1.addStyleClass("stepActive");
                     break;
-
                 case 2:
                     s1.addStyleClass("stepCompleted");
                     if(l1) l1.addStyleClass("stepProgressLine");
                     s2.addStyleClass("stepActive");
                     break;
-
                 case 3:
                     s1.addStyleClass("stepCompleted");
                     s2.addStyleClass("stepCompleted");
@@ -148,7 +181,6 @@ sap.ui.define([
                     if(l2) l2.addStyleClass("stepProgressLine");
                     s3.addStyleClass("stepActive");
                     break;
-
                 case 4:
                     s1.addStyleClass("stepCompleted");
                     s2.addStyleClass("stepCompleted");
@@ -156,7 +188,7 @@ sap.ui.define([
                     if(l1) l1.addStyleClass("stepProgressLine");
                     if(l2) l2.addStyleClass("stepProgressLine");
                     if(l3) l3.addStyleClass("stepProgressLine");
-                    s4.addStyleClass("stepActive"); // Make Review Circle Gradient Purple
+                    s4.addStyleClass("stepActive");
                     break;
             }
         },
@@ -173,11 +205,11 @@ sap.ui.define([
                 }
             });
 
-            // 2. VISUAL FIX: Make the 4th Circle "Completed" (Solid Purple)
+            // 2. VISUAL FIX: Make the 4th Circle "Completed"
             var s4 = this.byId("step4Ind");
             if (s4) {
                 s4.removeStyleClass("stepActive");
-                s4.addStyleClass("stepCompleted"); // Changes Gradient to Solid Color
+                s4.addStyleClass("stepCompleted");
             }
         }
     });

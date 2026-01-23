@@ -13,67 +13,78 @@
     >
         <tnt:header>
             <tnt:ToolHeader
-                id="_IDGenToolHeader1"
-                class="nexusHeader premiumHeader"
+                id="mainHeader"
+                class="nexusHeader"
             >
                 <Button
-                    id="_IDGenButton3"
+                    id="sideNavBtn"
                     icon="sap-icon://menu2"
                     type="Transparent"
                     press="onSideNavButtonPress"
-                    class="headerActionBtn menuBtn"
+                    class="headerMenuBtn"
                 />
-
-                <ToolbarSpacer
-                    id="_IDGenToolbarSpacer4"
-                    width="1rem"
-                />
-
                 <HBox
-                    id="_IDGenHBox5"
+                    id="logoBox"
                     alignItems="Center"
                     class="logoContainer"
                 >
                     <core:Icon
                         id="_IDGenIcon7"
                         src="sap-icon://BusinessSuiteInAppSymbols/hexagon"
-                        class="logoIcon rippleIcon"
-                        color="#6366f1"
+                        class="logoIcon"
                     />
-
                     <Title
                         id="_IDGenTitle5"
                         text="LogiChain NEXUS"
-                        class="companyNameGradient"
+                        class="companyLogoText"
                     />
                 </HBox>
-
                 <ToolbarSpacer id="_IDGenToolbarSpacer5" />
-
                 <HBox
-                    id="_IDGenHBox7"
+                    id="rightSection"
                     alignItems="Center"
-                    displayInline="true"
                 >
                     <Button
-                        id="_IDGenButton6"
+                        id="_IDGenButton3"
                         icon="sap-icon://bell"
                         type="Transparent"
-                        class="headerActionBtn notificationBtn"
+                        class="headerIconBtn sapUiTinyMarginEnd"
+                        tooltip="Notifications"
                     />
-
+                    <core:Icon
+                        id="_IDGenIcon15"
+                        src="sap-icon://vertical-bar"
+                        class="separatorIcon sapUiTinyMarginEnd"
+                        color="#e2e8f0"
+                    />
                     <HBox
-                        id="_IDGenHBox8"
-                        class="profileWrapper"
+                        id="profileBox"
                         alignItems="Center"
-                        justifyContent="Center"
+                        class="profileSection"
                     >
                         <Avatar
-                            id="_IDGenAvatar1"
+                            id="_IDGenAvatar"
                             src="sap-icon://person-placeholder"
                             displaySize="XS"
-                            class="premiumAvatar"
+                            class="profileAvatar"
                         />
+                        <VBox
+                            id="_IDGenVBox11"
+                            alignItems="Start"
+                            justifyContent="Center"
+                            class="profileInfoBox sapUiTinyMarginBegin hideOnMobile"
+                        >
+                            <Text
+                                id="_IDGenText18"
+                                text="{companyName}"
+                                class="profileName"
+                            />
+                            <Text
+                                id="_IDGenText19"
+                                text="{email}"
+                                class="profileRole"
+                            />
+                        </VBox>
                     </HBox>
                 </HBox>
             </tnt:ToolHeader>
@@ -81,31 +92,34 @@
 
         <tnt:sideContent>
             <tnt:SideNavigation
-                id="_IDGenSideNavigation"
+                id="sideNavigation"
                 class="nexusSidebar"
                 itemSelect="onItemSelect"
             >
-                <tnt:NavigationList id="_IDGenNavigationList">
+                <tnt:NavigationList
+                    id="navList"
+                    class="sapTntNavListItem"
+                >
                     <tnt:NavigationListItem
-                        id="_IDGenNavigationListItem"
+                        id="navDash"
                         text="Dashboard"
                         icon="sap-icon://grid"
                         key="dash"
                     />
                     <tnt:NavigationListItem
-                        id="_IDGenNavigationListItem1"
+                        id="navBooking"
                         text="New Booking"
                         icon="sap-icon://add"
                         key="booking"
                     />
                     <tnt:NavigationListItem
-                        id="_IDGenNavigationListItem2"
+                        id="navTrack"
                         text="Track Shipments"
                         icon="sap-icon://map-2"
                         key="track"
                     />
                     <tnt:NavigationListItem
-                        id="_IDGenNavigationListItem3"
+                        id="navHistory"
                         text="Order History"
                         icon="sap-icon://history"
                         key="history"
@@ -119,252 +133,393 @@
                 <Page
                     id="dashPage"
                     showHeader="false"
+                    class="dashboardBackground"
                 >
                     <ScrollContainer
                         id="_IDGenScrollContainer"
+                        height="100%"
                         vertical="true"
                         horizontal="false"
-                        height="100%"
                     >
                         <VBox
-                            id="_IDGenVBox11"
-                            class="contentPadding"
+                            id="_IDGenVBox12"
+                            class="contentWrapper"
                         >
                             <VBox
-                                id="_IDGenVBox12"
-                                class="sapUiLargeMarginBottom"
+                                id="_IDGenVBox13"
+                                class="sapUiMediumMarginBottom"
                             >
                                 <Title
-                                    id="_IDGenTitle7"
-                                    text="Operations Dashboard"
+                                    id="_IDGenTitle6"
+                                    text="Operations Overview"
                                     level="H1"
-                                    class="mainTitleText"
+                                    class="pageTitle"
                                 />
                                 <Text
-                                    id="_IDGenText18"
-                                    text="Real-time overview of your logistics operations"
-                                    class="subTitleText"
+                                    id="_IDGenText20"
+                                    text="Welcome back, here is your daily logistics summary."
+                                    class="pageSubtitle"
                                 />
                             </VBox>
-
                             <layout:Grid
                                 id="_IDGenGrid1"
                                 containerQuery="true"
-                                defaultSpan="XL4 L4 M4 S12"
-                                class="kpiGrid"
+                                defaultSpan="XL4 L4 M6 S12"
+                                vSpacing="1rem"
+                                hSpacing="1rem"
                             >
                                 <VBox
-                                    id="_IDGenVBox13"
-                                    class="modernCard kpiCardAnimate"
+                                    id="_IDGenVBox14"
+                                    class="kpiCard"
                                 >
-                                    <VBox
-                                        id="_IDGenVBox14"
-                                        class="iconBox purpleIcon sapUiSmallMarginBottom"
+                                    <HBox
+                                        id="_IDGenHBox8"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Start"
                                     >
+                                        <VBox id="_IDGenVBox15">
+                                            <Text
+                                                id="_IDGenText21"
+                                                text="Active Shipments"
+                                                class="kpiLabel"
+                                            />
+                                            <Title
+                                                id="_IDGenTitle7"
+                                                text="{metrics>/active}"
+                                                class="kpiValue"
+                                            />
+                                        </VBox>
                                         <core:Icon
                                             id="_IDGenIcon8"
                                             src="sap-icon://shipping-status"
-                                            size="1.5rem"
+                                            class="kpiIcon iconPurple"
                                         />
-                                    </VBox>
-                                    <Text
-                                        id="_IDGenText19"
-                                        text="Active Shipments"
-                                        class="cardLabel"
-                                    />
-                                    <Title
-                                        id="_IDGenTitle8"
-                                        text="{metrics>/active}"
-                                        class="cardValue"
-                                    />
-                                </VBox>
-                                <VBox
-                                    id="_IDGenVBox15"
-                                    class="modernCard kpiCardAnimate"
-                                >
-                                    <VBox
-                                        id="_IDGenVBox16"
-                                        class="iconBox blueIcon sapUiSmallMarginBottom"
+                                    </HBox>
+                                    <HBox
+                                        id="_IDGenHBox14"
+                                        alignItems="Center"
+                                        class="sapUiTinyMarginTop"
                                     >
                                         <core:Icon
                                             id="_IDGenIcon9"
-                                            src="sap-icon://clock"
-                                            size="1.5rem"
+                                            src="sap-icon://trend-up"
+                                            class="trendIcon positive"
                                         />
-                                    </VBox>
-                                    <Text
-                                        id="_IDGenText20"
-                                        text="Pending Dispatch"
-                                        class="cardLabel"
-                                    />
-                                    <Title
-                                        id="_IDGenTitle9"
-                                        text="{metrics>/pending}"
-                                        class="cardValue"
-                                    />
+                                        <Text
+                                            id="_IDGenText22"
+                                            text="+12.5% this week"
+                                            class="trendText"
+                                        />
+                                    </HBox>
                                 </VBox>
                                 <VBox
-                                    id="_IDGenVBox17"
-                                    class="modernCard kpiCardAnimate"
+                                    id="_IDGenVBox16"
+                                    class="kpiCard"
                                 >
-                                    <VBox
-                                        id="_IDGenVBox18"
-                                        class="iconBox greenIcon sapUiSmallMarginBottom"
+                                    <HBox
+                                        id="_IDGenHBox15"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Start"
                                     >
+                                        <VBox id="_IDGenVBox17">
+                                            <Text
+                                                id="_IDGenText23"
+                                                text="Pending Dispatch"
+                                                class="kpiLabel"
+                                            />
+                                            <Title
+                                                id="_IDGenTitle8"
+                                                text="{metrics>/pending}"
+                                                class="kpiValue"
+                                            />
+                                        </VBox>
                                         <core:Icon
                                             id="_IDGenIcon10"
-                                            src="sap-icon://waiver"
-                                            size="1.5rem"
+                                            src="sap-icon://history"
+                                            class="kpiIcon iconBlue"
                                         />
-                                    </VBox>
-                                    <Text
-                                        id="_IDGenText21"
-                                        text="Monthly Spend"
-                                        class="cardLabel"
-                                    />
-                                    <Title
-                                        id="_IDGenTitle10"
-                                        text="₹ {metrics>/spend}"
-                                        class="cardValue"
-                                    />
+                                    </HBox>
+                                    <HBox
+                                        id="_IDGenHBox16"
+                                        alignItems="Center"
+                                        class="sapUiTinyMarginTop"
+                                    >
+                                        <core:Icon
+                                            id="_IDGenIcon12"
+                                            src="sap-icon://trend-down"
+                                            class="trendIcon negative"
+                                        />
+                                        <Text
+                                            id="_IDGenText24"
+                                            text="-8.3% pending"
+                                            class="trendText"
+                                        />
+                                    </HBox>
+                                </VBox>
+                                <VBox
+                                    id="_IDGenVBox18"
+                                    class="kpiCard"
+                                >
+                                    <HBox
+                                        id="_IDGenHBox17"
+                                        justifyContent="SpaceBetween"
+                                        alignItems="Start"
+                                    >
+                                        <VBox id="_IDGenVBox19">
+                                            <Text
+                                                id="_IDGenText25"
+                                                text="Monthly Spend"
+                                                class="kpiLabel"
+                                            />
+                                            <Title
+                                                id="_IDGenTitle9"
+                                                text="₹ {metrics>/spend}"
+                                                class="kpiValue"
+                                            />
+                                        </VBox>
+                                        <core:Icon
+                                            id="_IDGenIcon13"
+                                            src="sap-icon://money-bills"
+                                            class="kpiIcon iconGreen"
+                                        />
+                                    </HBox>
+                                    <HBox
+                                        id="_IDGenHBox18"
+                                        alignItems="Center"
+                                        class="sapUiTinyMarginTop"
+                                    >
+                                        <core:Icon
+                                            id="_IDGenIcon14"
+                                            src="sap-icon://trend-up"
+                                            class="trendIcon positive"
+                                        />
+                                        <Text
+                                            id="_IDGenText26"
+                                            text="+5.2% vs last month"
+                                            class="trendText"
+                                        />
+                                    </HBox>
                                 </VBox>
                             </layout:Grid>
-
                             <VBox
-                                id="_IDGenVBox19"
-                                class="modernCard tableCard sapUiMediumMarginTop"
+                                id="_IDGenVBox20"
+                                class="modernCard sapUiMediumMarginTop"
                             >
                                 <VBox
-                                    id="_IDGenVBox20"
-                                    class="tableHeader"
+                                    id="_IDGenVBox21"
+                                    class="sapUiSmallMargin"
                                 >
-                                    <Title
-                                        id="_IDGenTitle14"
-                                        text="Live Inventory Movement"
-                                        level="H2"
-                                        class="tableTitle"
-                                    />
-                                    <Text
-                                        id="_IDGenText22"
-                                        text="Real-time tracking of your active shipments"
-                                        class="tableSubTitle"
-                                    />
-                                </VBox>
-
-                                <Table
-                                    id="recentShipmentsTable"
-                                    items="{
+                                    <Table
+                                        id="recentShipmentsTable"
+                                        items="{
         path: '/AdminShipments',
         parameters: {
             '$expand': 'customer,assignment'
-        }
+        },
+        filters: [
+            {
+                path: 'status',
+                operator: 'NE',
+                value1: 'Delivered'
+            },
+            {
+                path: 'status',
+                operator: 'NE',
+                value1: 'Cancelled'
+            }
+        ]
     }"
-                                    class="nexusTable"
-                                >
-                                    <columns>
-                                        <Column id="_IDGenColumn1">
-                                            <Text id="_IDGenText23" text="Shipment ID" />
-                                        </Column>
-                                        <Column id="_IDGenColumn2">
-                                            <Text id="_IDGenText24" text="Material" />
-                                        </Column>
-                                        <Column id="_IDGenColumn3">
-                                            <Text id="_IDGenText25" text="Destination" />
-                                        </Column>
-                                        <Column id="_IDGenColumn4">
-                                            <Text id="_IDGenText26" text="Status" />
-                                        </Column>
-                                        <Column id="_IDGenColumn5">
-                                            <Text id="_IDGenText27" text="ETA" />
-                                        </Column>
-                                        <Column id="_IDGenColumn6" >
-                                            <Text id="_IDGenText28" text="Fare" />
-                                        </Column>
-                                    </columns>
-                                    <items>
-                                        <ColumnListItem
-                                            id="_IDGenColumnListItem"
-                                        >
-                                            <cells>
-                                                <Text id="_IDGenText29"
-                                                    text="{ID}"
-                                                    class="shipmentIdText"
+                                        class="nexusTable"
+                                    >
+                                        <headerToolbar>
+                                            <OverflowToolbar
+                                                id="_IDGenOverflowToolbar11"
+                                                class="bottomLineToolbar"
+                                                style="Clear"
+                                            >
+                                                <Title
+                                                    id="_IDGenTitleHistoryTable"
+                                                    text="Completed Orders"
+                                                    class="tableTitle"
                                                 />
-                                                <Text id="_IDGenText30"
-                                                    text="{materialCategory}"
+                                                <ToolbarSpacer
+                                                    id="_IDGenToolbarSpacerHistory"
                                                 />
-                                                <Text id="_IDGenText31" text="{dropLocation}" />
-                                                <ObjectStatus id="_IDGenObjectStatus"
-                                                    text="{status}"
-                                                    state="{= ${status} === 'Delivered' ? 'Success' : 'Warning' }"
+                                                <SearchField
+                                                    id="historySearchField"
+                                                    width="30%"
+                                                    search="onHistorySearch"
+                                                    placeholder="Search by Material..."
                                                 />
+                                                <MenuButton
+                                                    id="filterMenuButton"
+                                                    icon="sap-icon://filter"
+                                                    tooltip="Filter by Status"
+                                                    class="sapUiTinyMarginBegin"
+                                                >
+                                                    <Menu
+                                                        id="statusMenu"
+                                                        itemSelected="onStatusFilterChange"
+                                                    >
+                                                        <items>
+                                                            <MenuItem
+                                                                id="_IDGenMenuItem1"
+                                                                text="All Status"
+                                                                icon="sap-icon://multiselect-all"
+                                                                key="All"
+                                                            />
+                                                            <MenuItem
+                                                                id="_IDGenMenuItem2"
+                                                                text="In-Transit"
+                                                                icon="sap-icon://shipping-status"
+                                                                key="In-Transit"
+                                                            />
+                                                            <MenuItem
+                                                                id="_IDGenMenuItem3"
+                                                                text="Assigned"
+                                                                icon="sap-icon://employee"
+                                                                key="Assigned"
+                                                            />
+                                                            <MenuItem
+                                                                id="_IDGenMenuItem4"
+                                                                text="Pending"
+                                                                icon= "sap-icon://pending"
+                                                                key="Pending"
+                                                            />
+                                                        </items>
+                                                    </Menu>
+                                                </MenuButton>
+                                            </OverflowToolbar>
+                                        </headerToolbar>
 
-                                                <Text id="_IDGenText33"
-                                                    text="{= ${assignment/eta} ? ${assignment/eta} : 'Not Assigned' }"
+                                        <columns>
+                                            <Column
+                                                id="_IDGenColH1"
+                                                width="23%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText27"
+                                                    text="Shipment ID"
                                                 />
+                                            </Column>
+                                            <Column
+                                                id="_IDGenColH4"
+                                                width="23%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText28"
+                                                    text="Material"
+                                                />
+                                            </Column>
+                                            <Column
+                                                id="_IDGenColH2"
+                                                width="21%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText29"
+                                                    text="Destination"
+                                                />
+                                            </Column>
+                                            <Column
+                                                id="_IDGenColumn6"
+                                                width="12%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText30"
+                                                    text="Status"
+                                                />
+                                            </Column>
+                                            <Column
+                                                id="_IDGenColH5"
+                                                width="16%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText31"
+                                                    text="Fare"
+                                                />
+                                            </Column>
+                                            <Column
+                                                id="_IDGenColH6"
+                                                width="15%"
+                                            >
+                                                <Text
+                                                    id="_IDGenText33"
+                                                    text="ETA"
+                                                />
+                                            </Column>
+                                        </columns>
 
-                                                <Text id="_IDGenText40" text="₹ {totalFare}" />
-                                            </cells>
-                                        </ColumnListItem>
-                                    </items>
-                                </Table>
+                                        <items>
+                                            <ColumnListItem
+                                                id="_IDGenCLIHistory"
+                                                vAlign="Middle"
+                                            >
+                                                <cells>
+                                                    <Text
+                                                        id="_IDGenText35"
+                                                        text="{ID}"
+                                                        class="boldText orderIdText shipmentIdText"
+                                                    />
+                                                    <Text
+                                                        id="_IDGenText39"
+                                                        text="{materialCategory}"
+                                                    />
+                                                    <Text
+                                                        id="_IDGenText40"
+                                                        text="{dropLocation}"
+                                                        class="sapUiFontWeightBold myBoldText"
+                                                    />
+                                                    <Text
+                                                        id="_IDGenText41"
+                                                        text="{status}"
+                                                    />
+                                                    <Text
+                                                        id="_IDGenText42"
+                                                        text="₹ {totalFare}"
+                                                    />
+                                                    <Text
+                                                        id="_IDGenText60"
+                                                        text="{= ${assignment/eta} ? ${assignment/eta} : 'Not Assigned' }"
+                                                    />
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </VBox>
                             </VBox>
+                            <HBox
+                                id="_IDGenHBox23"
+                                height="60px"
+                            />
                         </VBox>
                     </ScrollContainer>
                 </Page>
- <Page id="bookingPage" showHeader="false" class="sapUiNoContentPadding">
-    <content>
-        <VBox id="_IDGenVBox25" 
-              height="100%" 
-              width="100%" 
-              alignItems="Stretch" 
-              class="fullPageContainer">
-            <mvc:XMLView id="_IDGenXMLView" viewName="project1.view.NewBooking" height="100%" />
-        </VBox>
-    </content>
-</Page>
-                <Page id="trackPage" showHeader="false">
-                    <VBox id="_IDGenVBox27" class="contentPadding">
-                         <Title id="_IDGenTitle17" text="Track Shipments" level="H1" class="mainTitleText" />
-                         <Text id="_IDGenText35" text="Monitor your active shipments in real-time." class="subTitleText" />
-                         </VBox>
+
                 <Page
                     id="bookingPage"
                     showHeader="false"
                 >
-                    <VBox
-                        id="_IDGenVBox25"
-                        class="contentPadding"
-                    >
-                        <mvc:XMLView
-                            id="_IDGenXMLViewNewBooking"
-                            viewName="project1.view.NewBooking"
-                        />
-                    </VBox>
+                    <mvc:XMLView
+                        id="_IDGenXMLView1"
+                        viewName="project1.view.NewBooking"
+                    />
                 </Page>
-
                 <Page
                     id="trackPage"
                     showHeader="false"
                 >
                     <VBox
-                        id="_IDGenVBox27"
+                        id="trackVBox"
                         class="contentPadding"
                     >
                         <Title
-                            id="_IDGenTitle17"
+                            id="_IDGenTitle15"
                             text="Track Shipments"
                             level="H1"
-                            class="mainTitleText"
-                        />
-                        <Text
-                            id="_IDGenText35"
-                            text="Monitor your active shipments in real-time."
-                            class="subTitleText"
+                            class="pageTitle"
                         />
                     </VBox>
                 </Page>
-
                 <Page
                     id="historyPage"
                     showHeader="false"
@@ -389,5 +544,4 @@
             </NavContainer>
         </tnt:mainContents>
     </tnt:ToolPage>
-    >>>>>>> 856864910ee6275e81e74b57d67f38d12f433d65
 </mvc:View>

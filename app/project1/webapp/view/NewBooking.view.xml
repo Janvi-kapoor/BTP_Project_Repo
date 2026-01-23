@@ -69,10 +69,10 @@
                             <layout:Grid id="conGrid" defaultSpan="L6 M6 S12" vSpacing="1" hSpacing="1">
                                 <VBox id="senderBox">
                                     <Label id="_IDGenLabel3" text="Sender Company" class="inputLabel"/>
-                                    <Input id="inputSender" placeholder="Enter sender company name" editable="false" class="customInput readOnlyInput"/>
+                                    <Input id="inputSender" placeholder="Enter sender company name"  class="customInput"/>
                                 </VBox>
                                 <VBox id="receiverBox">
-                                    <Label id="_IDGenLabel4" text="Receiver Entity" required="true" class="inputLabel"/>
+                                    <Label id="_IDGenLabel4" text="Receiver Company" required="true" class="inputLabel"/>
                                     <Input id="inputReceiver" placeholder="Enter receiver company name" class="customInput"/>
                                 </VBox>
                                 <VBox id="materialBox">

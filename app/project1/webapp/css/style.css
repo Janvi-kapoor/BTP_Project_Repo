@@ -49,7 +49,7 @@
     color: #0f172a !important;
     line-height: 1.1 !important;
 }
-.accentText { color: #6366f1 !important; }
+.accentText { color: #8047e1 !important; }
 .heroSubtitle { font-size: 1rem; color: #64748b; }
 
 /* Portal Grid: Center and Shrink Web View */
@@ -105,7 +105,7 @@
 
 /* Fixed Footer: Always at bottom */
 .nexusFooter {
-    background: #312e81 !important;
+    background: #435ccd !important;
     border: none !important;
     position: fixed;
     bottom: 0;
