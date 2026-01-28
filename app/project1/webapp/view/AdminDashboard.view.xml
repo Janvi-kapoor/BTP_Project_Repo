@@ -1,8 +1,61 @@
-<mvc:View controllerName="project1.controller.AdminDashboard" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
-    <Page id="adminPage" title="Admin Control Tower">
-        <content>
-            <Title id="adminTitle" text="Welcome to Operations Admin Dashboard" class="sapUiMediumMargin" />
-            <Text id="adminDesc" text="Yahan se aap fleet aur logistics ko manage kar sakte hain." class="sapUiMediumMargin" />
-        </content>
-    </Page>
+<mvc:View controllerName="project1.controller.AdminDashboard" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m" 
+    xmlns:tnt="sap.tnt" 
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout">
+    
+
+    <tnt:ToolPage id="adminToolPage">
+    
+   <tnt:header>
+    <tnt:ToolHeader id="mainHeader2" class="nexusHeader">
+       
+        <Button id="sideNavBtn2" icon="sap-icon://menu2" type="Transparent"
+                press="onSideNavButtonPress" class="headerMenuBtn">
+            <layoutData>
+                <OverflowToolbarLayoutData id="sideNavBtnLayoutData" priority="NeverOverflow" />
+            </layoutData>
+        </Button>
+
+
+        <HBox id="logoBox2" alignItems="Center" class="logoContainer">
+            <core:Icon id="_IDGenIcofn7" src="sap-icon://dimension" class="logoIcon"/>
+            <Title id="_IDGenTitle5f" text="LogiChain NEXUS" class="companyLogoText"/>
+            <!-- <Title id="_IDGenTitle5df" text="Admin Control center"/> -->
+        </HBox>
+    
+        <ToolbarSpacer id="_IDGenfrToolbarSpacer5" />
+        <HBox id="rightSection2" alignItems="Center">
+              <Button id="_IDGenButton9"  icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications"/>
+            <core:Icon id="_IDGenIcon29"  src="sap-icon://vertical-bar" class="separatorIcon sapUiTinyMarginEnd" color="#e2e8f0"/>
+             <HBox id="profileBox2" alignItems="Center" class="profileSection">
+               <Avatar id="_IDGengAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>
+               <VBox id="_IDGenVBjjhox11" alignItems="Start" justifyContent="Center" class="profileInfoBox sapUiTinyMarginBegin sapUiHideOnPhone">
+                    <Text id="_IDGuenText18" text="Acme Logistics Ltd." class="profileName"/>
+                    <Text id="_IDGuenText19" text="Ops Manager" class="profileRole"/>
+                </VBox>
+               </HBox>
+        </HBox>
+    </tnt:ToolHeader>
+</tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="_IDGenSideNavigation1"  itemSelect="onItemSelect" class="nexusSidebar" >
+                <tnt:item>
+                    <tnt:NavigationList id="_IDGenNavigationList">
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem1" text="Global Tower" icon="sap-icon://world" key="ControlTower" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem2" text="Smart Dispatcher" icon="sap-icon://shipping-status" key="SmartDispatcher" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem3" text="Fleet Master" icon="sap-icon://cargo-train" key="FleetMaster" />
+                      
+                    </tnt:NavigationList>
+                </tnt:item>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <NavContainer id="adminMainContent" height="100%" width="100%" />
+        </tnt:mainContents>
+
+    </tnt:ToolPage>
 </mvc:View>

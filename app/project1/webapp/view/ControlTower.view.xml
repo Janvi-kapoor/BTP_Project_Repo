@@ -1,0 +1,75 @@
+<mvc:View controllerName="project1.controller.ControlTower" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt" 
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    >
+
+    <VBox id="_IDGenVBox11" class="mainDashboardContent">
+        
+        <VBox id="_IDGenTitleeBox" class="pageHeaderSection">
+             <Title id="_IDGenTitle6" text="Control Tower" class="premiumTitle" />
+             <Text id="_IDGenText17" text="Real-time fleet monitoring and insights" class="premiumSubtitle" />
+        </VBox>
+
+        <HBox id="_IDGenHBox5" justifyContent="Start" wrap="Wrap" class="kpiContainer">
+            <GenericTile id="_IDGenGenericTile" header="Total Revenue" class="customTile alertTile">
+                <TileContent id="_IDGenTileContent" >
+                    <NumericContent 
+                        id="_IDGenNumericContent" 
+                        value="{dashboard>/stats/revenue}" 
+                        valueColor="Neutral"
+                        icon="sap-icon://money-bills"
+                        withMargin="false" 
+                        truncateValueTo="10"/>
+                </TileContent>
+            </GenericTile>
+
+            <GenericTile id="_IDGenGenericTile1" header="Total Commission" class="customTile">
+                <TileContent id="_IDGenTileContent1">
+                    <NumericContent 
+                        id="_IDGenNumericContent1" 
+                        value="{dashboard>/stats/commission}" 
+                        valueColor="Good" 
+                        icon="sap-icon://currency"
+                        withMargin="false"
+                        truncateValueTo="10" />
+                </TileContent>
+            </GenericTile>
+
+            <GenericTile id="_IDGenGenericTile2" header="Active Drivers" class="customTile">
+                <TileContent id="_IDGenTileContent2">
+                    <NumericContent 
+                        id="_IDGenNumericContent2" 
+                        value="{dashboard>/stats/activeDrivers}" 
+                        valueColor="Good" 
+                        icon="sap-icon://shipping-status"
+                        withMargin="false" />
+                </TileContent>
+            </GenericTile>
+        </HBox>
+
+        <layout:Grid id="_IDGenGrid1" defaultSpan="L8 M12 S12" vSpacing="1" hSpacing="0.5">
+            <VBox id="_IDGenVBox12" height="450px" class="dashboardMapStyle">
+            
+                <layoutData><layout:GridData id="_IDGenGridData" span="L8 M12 S12" /></layoutData>
+                <Title id="_IDGenTitle7" text="Live Fleet Map" level="H3" class="sectionTitle" />
+                <VBox id="_IDGenVBox13" alignItems="Center" justifyContent="Center" height="100%">
+                    <Label id="_IDGenLabel2" text="[ Map Visualization Area ]" class="mapPlaceholderText"/>
+                </VBox>
+            </VBox>
+
+            <VBox id="_IDGenVBox14" height="450px" class="notificationArea">
+                <layoutData><layout:GridData id="_IDGenGridData1" span="L4 M12 S12" /></layoutData>
+                <Title id="_IDGenTitle8" text="Live Notifications" level="H3" class="sectionTitle"/>
+                <ScrollContainer id="_IDGenScrollContainer" vertical="true" height="100%" class="notifScroll">
+                    <MessageStrip id="_IDGenMessageStrip1" text="Route Deviation - Truck #TRK-1042" type="Warning" showIcon="true" class="customMsgStrip warningStrip" />
+                    <MessageStrip id="_IDGenMessageStrip2" text="Engine Temp Alert - Truck #TRK-0891" type="Error" showIcon="true" class="customMsgStrip errorStrip" />
+                    <MessageStrip id="_IDGenMessageStrip3" text="Delivery Done - Order #ORD-4521" type="Success" showIcon="true" class="customMsgStrip SuccessStrip" />
+                    <MessageStrip id="_IDGenMessageStrip4" text="Traffic Delay on NH-48" type="Information" showIcon="true" class="customMsgStrip Strip"/>
+                </ScrollContainer>
+            </VBox>
+        </layout:Grid>
+    </VBox>
+</mvc:View>

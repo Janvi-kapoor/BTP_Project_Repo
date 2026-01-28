@@ -1,0 +1,106 @@
+<mvc:View controllerName="project1.controller.FleetMaster"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    class="adminDashboardBody">
+
+    <Page id="_IDGenPage2" title="Fleet Master" showHeader="false">
+        <content>
+            <VBox id="_IDGenVBox15" class="mainDashboardContent">
+                <VBox id="_IDGenVBox16" class="pageHeaderSection">
+                    <Title id="_IDGenTitle9" text="Fleet Master" titleStyle="H2" class="premiumTitle" />
+                    <Text id="_IDGenText18" text="Manage drivers and vehicle inventory" class="premiumSubtitle" />
+                </VBox>
+
+                <IconTabBar id="_IDGenIconTabBar" expanded="true" class="customFleetTabs">
+                    <items>
+                        <IconTabFilter id="_IDGenIconTabFilter" text="Drivers (5)" key="drivers">
+                            <Panel id="_IDGenPanel" class="fleetCard sapUiNoContentPadding">
+                                <headerToolbar>
+                                    <Toolbar id="_IDGenToolbar">
+                                        <Title id="_IDGenTitle10" text="Driver Registry" level="H3" />
+                                        <ToolbarSpacer id="_IDGenToolbarSpacer4" />
+                                        <Button id="_IDGenButton6" text="Add Driver" press=".onAddDriver"  icon="sap-icon://add" type="Emphasized" class="purpleBtn" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                
+                                <Table id="_IDGenTable" items="{/Drivers}" class="customFleetTable">
+                                    <columns>
+                                        <Column id="_IDGenColumn" width="250px"><Text id="_IDGenText19" text="DRIVER" /></Column>
+                                        <Column id="_IDGenColumn1" minScreenWidth="Tablet" demandPopin="true"><Text id="_IDGenText20" text="LICENSE NO." /></Column>
+                                        <Column id="_IDGenColumn2" minScreenWidth="Tablet" demandPopin="true"><Text id="_IDGenText21" text="RATING" /></Column>
+                                        <Column id="_IDGenColumn3" minScreenWidth="Desktop" demandPopin="true"><Text id="_IDGenText22" text="LAST LOCATION" /></Column>
+                                        <Column id="_IDGenColumn4" hAlign="End"><Text id="_IDGenText23" text="STATUS" /></Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem id="_IDGenColumnListItem1">
+                                         <cells>
+    <HBox id="_IDGenHBox6" alignItems="Center">
+        <Avatar id="_IDGenAvatar" initials="{path: 'name', formatter: '.formatInitials'}" displaySize="XS" class="sapUiTinyMarginEnd gradientAvatar .sapMText" />
+        <Text id="_IDGenText24" text="{name}" class="driverNameText" />
+    </HBox>
+    <Text id="_IDGenText25" text="{licenseNo}" />
+    <HBox id="_IDGenHBox7" alignItems="Center">
+        <RatingIndicator id="_IDGenRatingIndicator"  class="customStars" value="{rating}" maxValue="5"  enabled="false" />
+        <Text id="_IDGenText26" text="{rating}" class="sapUiTinyMarginBegin" />
+    </HBox>
+    <HBox id="_IDGenHBox8" alignItems="Center" class="locationPill">
+        <core:Icon id="_IDGenIcon7" src="sap-icon://map-2" size="12px"  class="sapUiTinyMarginEnd" />
+        <Link id="_IDGenLink" text="View Location" /> </HBox>
+    <ObjectStatus id="_IDGenObjectStatus1" class="customStatusPill" text="{status}" 
+        state="{= ${status} === 'AVAILABLE' ? 'Success' : 'Warning' }" />
+</cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </Panel>
+                        </IconTabFilter>
+                       <IconTabFilter id="_IDGenIconTabFilter1" text="Trucks (5)" key="trucks">
+    <Table id="_IDGenTable1" items="{/Trucks}" sticky="HeaderToolbar,ColumnHeaders" class="customFleetTable">
+        <headerToolbar>
+            <OverflowToolbar id="_IDGenOverflowToolbar1">
+                <Title id="_IDGenTitle13" text="Truck Inventory" />
+                <ToolbarSpacer id="_IDGenToolbarSpacer5" />
+                <SearchField id="_IDGenSearchField" width="30%" placeholder="Search Truck No..." />
+                <Button id="_IDGenButton7" text="Add Truck"  class="purpleBtn" type="Emphasized" icon="sap-icon://add"  press=".onAddTruck"/>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column id="_IDGenColumn6">
+                <Text id="_IDGenText27" text="Truck No." />
+            </Column>
+            <Column id="_IDGenColumn7" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="_IDGenText36" text="Type" />
+            </Column>
+            <Column id="_IDGenColumn8" minScreenWidth="Tablet" demandPopin="true">
+                <Text id="_IDGenText37" text="Capacity (Tons)" />
+            </Column>
+            <Column id="_IDGenColumn9" minScreenWidth="Desktop" demandPopin="true">
+                <Text id="_IDGenText38" text="Odometer (KM)" />
+            </Column>
+            <Column id="_IDGenColumn10" hAlign="End">
+                <Text id="_IDGenText39" text="Status" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem id="_IDGenColumnListItem" vAlign="Middle" type="Navigation">
+               <cells>
+    <ObjectIdentifier id="_IDGenObjectIdentifier" title="{truckNo}" />
+    <Text id="_IDGenText40" text="{vehicleType}" />
+    <Text id="_IDGenText41" text="{maxCapacityTons} " />
+    <Text id="_IDGenText42" text="{odometerKM} KM" />
+    <ObjectStatus id="_IDGenObjectStatus3" 
+        text="{status}" 
+        state="{= ${status} === 'AVAILABLE' ? 'Success' : (${status} === 'ON_TRIP' ? 'Warning' : 'Error') }" 
+         />
+</cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</IconTabFilter>
+                    </items>
+                </IconTabBar>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

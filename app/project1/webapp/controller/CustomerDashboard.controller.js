@@ -63,15 +63,11 @@ sap.ui.define(
         var oBinding = oTable.getBinding("items");
 
         if (oBinding) {
-          // 1. Email Filter
           var oEmailFilter = new sap.ui.model.Filter(
             "customer/email",
             sap.ui.model.FilterOperator.EQ,
             sEmail,
           );
-
-          // 2. Status Filter (Delivered aur Cancelled ko hatane ke liye)
-          // Dhyan dein: Agar database mein status CAPITAL hai toh yahan bhi CAPITAL likhen
           var oStatusFilter = new sap.ui.model.Filter({
             filters: [
               new sap.ui.model.Filter(
@@ -82,34 +78,24 @@ sap.ui.define(
               new sap.ui.model.Filter(
                 "status",
                 sap.ui.model.FilterOperator.NE,
-                "DELIVERED",
-              ),
-              new sap.ui.model.Filter(
-                "status",
-                sap.ui.model.FilterOperator.NE,
                 "Cancelled",
               ),
-              new sap.ui.model.Filter(
-                "status",
-                sap.ui.model.FilterOperator.NE,
-                "CANCELLED",
-              ),
             ],
-            and: true, // Saari conditions match honi chahiye (Neither Delivered NOR Cancelled)
-          });
-
-          // 3. Dono ko merge karein
-          var oFinalFilter = new sap.ui.model.Filter({
-            filters: [oEmailFilter, oStatusFilter],
             and: true,
           });
 
-          oBinding.filter(oFinalFilter);
+          // Apply filters, Expand relationships, and Force Refresh
+          oBinding.filter(
+            new sap.ui.model.Filter({
+              filters: [oEmailFilter, oStatusFilter],
+              and: true,
+            }),
+          );
 
-          // Expand lagana zaroori hai
           oBinding.changeParameters({ $expand: "customer,assignment" });
+          oBinding.refresh(); // Forces backend call even if data exists in cache
 
-          console.log("Final Filters Applied Successfully");
+          console.log("Recent Shipments Refreshed");
         }
       },
       onHistorySearch: function (oEvent) {
@@ -125,7 +111,7 @@ sap.ui.define(
 
         var aFinalFilters = [];
 
-        // 2. Email Filter (Security) - Aapke screenshot mein logistics@ril.com dikh raha hai
+        // 2. Email Filter (Security)
         if (sUserEmail) {
           aFinalFilters.push(
             new sap.ui.model.Filter(
@@ -136,13 +122,30 @@ sap.ui.define(
           );
         }
 
+        // --- 2.5 ADDED LOGIC: Cancelled aur Delivered ko exclude karna ---
+        aFinalFilters.push(
+          new sap.ui.model.Filter(
+            "status",
+            sap.ui.model.FilterOperator.NE,
+            "Cancelled",
+          ),
+        );
+        aFinalFilters.push(
+          new sap.ui.model.Filter(
+            "status",
+            sap.ui.model.FilterOperator.NE,
+            "Delivered",
+          ),
+        );
+        // -----------------------------------------------------------------
+
         // 3. Search Filter (Material Category)
         if (sQuery && sQuery.length > 0) {
           var oMaterialFilter = new sap.ui.model.Filter({
-            path: "materialCategory", // Agar error aaye toh yahan check karein ki 'material' hai ya 'materialCategory'
+            path: "materialCategory",
             operator: sap.ui.model.FilterOperator.Contains,
             value1: sQuery,
-            caseSensitive: false, // 'Consumer' ya 'consumer' dono match honge
+            caseSensitive: false,
           });
           aFinalFilters.push(oMaterialFilter);
         }
@@ -159,58 +162,51 @@ sap.ui.define(
         oBinding.changeParameters({ $expand: "customer,assignment" });
       },
       onStatusFilterChange: function (oEvent) {
-        var sUserEmail = localStorage.getItem("userEmail"); // Local storage se email
-        var oMenuItem = oEvent.getParameter("item"),
-          sSelectedKey = oMenuItem.getKey(),
-          oTable = this.byId("recentShipmentsTable"),
-          oBinding = oTable.getBinding("items");
+        var oMenuItem = oEvent.getParameter("item");
+        var sSelectedKey = oMenuItem.getKey();
+        var sSelectedText = oMenuItem.getText();
+        var oMenuButton = this.byId("historyFilterMenuButton2");
+        var oTable = this.byId("recentShipmentsTable"); // Apni Table ID confirm kar lein
+        var oBinding = oTable.getBinding("items");
+        var sEmail = window.localStorage.getItem("userEmail");
 
         if (!oBinding) return;
 
         var aFinalFilters = [];
 
-        // 1. Permanent Email Filter (Navigation path use karke: customer/email)
-        if (sUserEmail) {
+        // 1. Permanent Email Filter (Hamesha rahega)
+        if (sEmail) {
           aFinalFilters.push(
             new sap.ui.model.Filter(
               "customer/email",
               sap.ui.model.FilterOperator.EQ,
-              sUserEmail,
+              sEmail,
             ),
           );
         }
 
-        // 2. Status Logic
         if (sSelectedKey === "All") {
-          // All select karne par Delivered/Cancelled ko hide karne ka logic
-          var oExclusionFilter = new sap.ui.model.Filter({
-            filters: [
+          // --- LOGIC FOR "ALL" ---
+          // Isme Delivered aur Cancelled ko hide karna hai
+          var aExclusions = [
+            "Delivered",
+            "Cancelled",
+            "DELIVERED",
+            "CANCELLED",
+          ];
+          aExclusions.forEach(function (sStatus) {
+            aFinalFilters.push(
               new sap.ui.model.Filter(
                 "status",
                 sap.ui.model.FilterOperator.NE,
-                "Delivered",
+                sStatus,
               ),
-              new sap.ui.model.Filter(
-                "status",
-                sap.ui.model.FilterOperator.NE,
-                "DELIVERED",
-              ),
-              new sap.ui.model.Filter(
-                "status",
-                sap.ui.model.FilterOperator.NE,
-                "Cancelled",
-              ),
-              new sap.ui.model.Filter(
-                "status",
-                sap.ui.model.FilterOperator.NE,
-                "CANCELLED",
-              ),
-            ],
-            and: true,
+            );
           });
-          aFinalFilters.push(oExclusionFilter);
+
+          oMenuButton.setText(""); // Reset to icon only
         } else {
-          // Specific status (In-Transit, Pending) ke liye
+          // --- LOGIC FOR SPECIFIC (In-Transit, Pending, ConfirmPickup) ---
           aFinalFilters.push(
             new sap.ui.model.Filter(
               "status",
@@ -218,9 +214,11 @@ sap.ui.define(
               sSelectedKey,
             ),
           );
+
+          oMenuButton.setText("Status: " + sSelectedText); // Button par text dikhayega
         }
 
-        // 3. Filter Apply karein (Email AND Status)
+        // 2. Final Filter Application (AND logic ke saath)
         oBinding.filter(
           new sap.ui.model.Filter({
             filters: aFinalFilters,
@@ -228,39 +226,32 @@ sap.ui.define(
           }),
         );
 
-        // 4. Expand parameters taaki customer ka data load ho sake
-        oBinding.changeParameters({ $expand: "customer,assignment" });
-
-        console.log("Filter applied for: " + sSelectedKey);
+        console.log("Applied Filter for: " + sSelectedKey);
       },
       // Ye function tab chalega jab URL change hoga
       _onRouteMatched: function (oEvent) {
         var sRouteName = oEvent.getParameter("name");
         var oNavContainer = this.byId("pageNavContainer");
         var oSideNav = this.byId("_IDGenSideNavigation");
+
         if (sRouteName === "CustomerDashboard") {
+          // Refresh data every time we enter Dashboard
           this._onObjectMatched();
-        }
-        // URL check karke sahi page dikhao
-        if (sRouteName === "CustomerBooking") {
+          oNavContainer.to(this.byId("dashPage"));
+          if (oSideNav) oSideNav.setSelectedKey("dash");
+        } else if (sRouteName === "CustomerBooking") {
           oNavContainer.to(this.byId("bookingPage"));
-          oSideNav.setSelectedKey("booking"); // Sidebar button highlight karo
+          if (oSideNav) oSideNav.setSelectedKey("booking");
         } else if (sRouteName === "CustomerTracking") {
           oNavContainer.to(this.byId("trackPage"));
-          oSideNav.setSelectedKey("track");
+          if (oSideNav) oSideNav.setSelectedKey("track");
         } else if (sRouteName === "CustomerHistory") {
           oNavContainer.to(this.byId("historyPage"));
-          oSideNav.setSelectedKey("history");
-        } else {
-          // Default: Dashboard
-          oNavContainer.to(this.byId("dashPage"));
-          oSideNav.setSelectedKey("dash");
+          if (oSideNav) oSideNav.setSelectedKey("history");
         }
       },
       _loadDashboardMetrics: function (sEmail) {
         var oModel = this.getOwnerComponent().getModel();
-        console.log("fhir error kyu " + sEmail);
-        // OData V4 mein functions ke liye binding parameters zaroori hote hain
         var oContextBinding = oModel.bindContext(
           "/getDashboardMetrics(...)",
           null,
@@ -315,6 +306,25 @@ sap.ui.define(
         } else {
           oRouter.navTo("CustomerDashboard");
         }
+      },
+
+      // Handle shipment ID click to navigate to tracking page
+      onShipmentIdPress: function (oEvent) {
+        var oBindingContext = oEvent.getSource().getBindingContext();
+        var sShipmentId = oBindingContext.getProperty("ID");
+
+        console.log("Clicked Shipment ID:", sShipmentId);
+
+        // Save shipment ID to localStorage
+        localStorage.setItem("selectedShipmentId", sShipmentId);
+        console.log(
+          "Saved to localStorage:",
+          localStorage.getItem("selectedShipmentId"),
+        );
+
+        // Navigate to track page
+        var oRouter = this.getOwnerComponent().getRouter();
+        oRouter.navTo("CustomerTracking");
       },
     });
   },

@@ -1,0 +1,302 @@
+/* Track & Trace Dashboard Styles */
+
+/* Page Background */
+.trackPageBg {
+    background-color: #F5F7FA !important;
+    font-family: '72', 'Roboto', sans-serif !important;
+}
+
+/* Main Container */
+.mainTrackContainer {
+    padding: 24px;
+    gap: 24px;
+}
+
+/* Top Section Container */
+.topSectionContainer {
+    gap: 24px;
+    margin-bottom: 0;
+}
+
+/* Left Container - Timeline */
+.timelineContainer {
+    width: 320px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #F1F5F9;
+    position: relative;
+}
+
+.progressTitle {
+    color: #1E293B !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+    text-align: center;
+    margin-bottom: 8px !important;
+}
+
+.shipmentIdTitle {
+    color: #64748B !important;
+    font-weight: 500 !important;
+    margin-bottom: 8px !important;
+    font-size: 14px !important;
+    text-align: center;
+    margin-bottom: 12px !important;
+}
+
+.routeText {
+    color: #64748B !important;
+    font-size: 14px !important;
+    margin-bottom: 32px !important;
+    font-weight: 500 !important;
+    text-align: center;
+}
+
+/* Timeline Styles */
+.timelineBox {
+    position: relative;
+    padding-left: 0;
+}
+
+.timelineStep {
+    position: relative;
+    margin-bottom: 28px;
+    align-items: flex-start;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+.timelineIcon {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 16px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 3px solid white;
+    flex-shrink: 0;
+    margin-top: -2px;
+}
+
+.timelineIcon.completed {
+    background: #10B981 !important;
+    color: white !important;
+    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
+}
+
+.timelineIcon.current {
+    background: #6366F1 !important;
+    color: white !important;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.timelineIcon.pending {
+    background: #F1F5F9 !important;
+    color: #94A3B8 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+    }
+}
+
+.stepContent {
+    flex: 1;
+}
+
+.stepTitle {
+    font-weight: 600 !important;
+    color: #1E293B !important;
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+    line-height: 1.4;
+}
+
+.stepTime {
+    color: #64748B !important;
+    font-size: 12px !important;
+    margin-top: 4px !important;
+    font-weight: 400 !important;
+    line-height: 1.3;
+}
+
+/* Right Container - Map */
+.mapContainer {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #E5E7EB;
+    position: relative;
+}
+
+.mapHeader {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.mapTitle {
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+}
+
+.mapHeaderIcon {
+    color: #6366F1 !important;
+    font-size: 20px !important;
+}
+
+/* Distance Badge */
+.distanceBadge {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    gap: 24px;
+    z-index: 1000;
+}
+
+.distanceBox {
+    text-align: center;
+    min-width: 80px;
+}
+
+.distanceLabel {
+    font-size: 12px !important;
+    color: #6B7280 !important;
+    margin-bottom: 4px !important;
+}
+
+.distanceValue {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #1F2937 !important;
+}
+
+/* Driver Section */
+.driverSection {
+    margin-top: 16px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.driverCard {
+    background-color: #ffffff;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    min-height: 120px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 10 !important;
+    padding-right: 10 !important;
+}
+
+.noDriverCard {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #F1F5F9;
+    align-items: center;
+    gap: 16px;
+    height: 120px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
+
+.driverPhoneSection {
+    min-width: 400px;
+}
+
+.phoneWithIcon {
+    align-items: center;
+}
+
+.phoneIcon {
+    font-size: 18px !important;
+    color: #6366F1 !important;
+}
+
+.driverPhoneText {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+}
+
+.driverRatingText {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #F59E0B !important;
+}
+
+.noDriverIcon {
+    font-size: 32px !important;
+    color: #F59E0B !important;
+}
+
+.noDriverContent {
+    flex: 1;
+    gap: 4px;
+    min-width: 400px;
+}
+
+.noDriverTitle {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #1E293B !important;
+}
+
+.noDriverMessage {
+    font-size: 14px !important;
+    color: #64748B !important;
+    line-height: 1.4 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .topSectionContainer {
+        flex-direction: column;
+    }
+    
+    .timelineContainer {
+        width: 100%;
+    }
+    
+    .distanceBadge {
+        position: static;
+        margin-top: 16px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .driverCard {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+        padding: 20px;
+    }
+    
+    .actionButtons {
+        width: 100%;
+        justify-content: center;
+    }
+}

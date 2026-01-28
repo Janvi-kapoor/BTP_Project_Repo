@@ -1,0 +1,329 @@
+
+/* 1. Main Container (White Pill Track) */
+.customFleetTabs .sapMITBHead {
+    margin-bottom: 20px !important;
+    background: #ffffff !important;        
+    border-radius: 50px !important;        
+    padding: 5px !important;               
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02) !important;
+    
+    /* Layout styling */
+    display: flex !important;
+    width: 100% !important;
+}
+
+/* 2. Individual Tabs Base Style (Layout only) */
+.customFleetTabs .sapMITBFilter {
+    flex: 1 !important;               /* 50% width */
+    width: 50% !important;
+    margin: 0 !important;
+    height: 35px !important;
+    border-radius: 40px !important;   
+    border: none !important;
+    
+    /* Centering */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    padding-bottom: 10px;
+    
+    /* Smooth Transition for Hover effect */
+    transition: all 0.1s ease-in-out !important;
+}
+
+/* 3. TEXT COLOR: DEFAULT (Jab Mouse dur hai aur Selected nahi hai) */
+.customFleetTabs .sapMITBFilter .sapMITBText,
+.customFleetTabs .sapMITBFilter .sapMITBCount {
+    color: #64748b !important;        /* Dark Grey */
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: color 0.2s ease-in-out !important;
+}
+
+/* 4. THE MAGIC RULE: Selected OR Hover OR Active -> PURPLE GRADIENT */
+/* Chahe Select ho, Chahe Mouse Upar ho, Chahe Click kar rahe ho */
+.customFleetTabs .sapMITBSelected,
+.customFleetTabs .sapMITBFilter:hover,
+.customFleetTabs .sapMITBFilter:active {
+    background: #7b26fd !important; 
+    background: linear-gradient(90deg, #7b26fd 0%, #9c4dff 100%) !important;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+/* 5. THE MAGIC TEXT: Selected OR Hover OR Active -> WHITE TEXT */
+/* Background Purple hua to Text White hona hi chahiye */
+.customFleetTabs .sapMITBSelected .sapMITBText,
+.customFleetTabs .sapMITBSelected .sapMITBCount,
+.customFleetTabs .sapMITBFilter:hover .sapMITBText,
+.customFleetTabs .sapMITBFilter:hover .sapMITBCount,
+.customFleetTabs .sapMITBFilter:active .sapMITBText,
+.customFleetTabs .sapMITBFilter:active .sapMITBCount {
+    color: #ffffff !important;        /* Pure White */
+    font-weight: 700 !important;
+    text-shadow: none !important;
+}
+
+/* 6. CLEANUP (Remove SAP Default Blue Lines/Arrows) */
+.customFleetTabs .sapMITBContentArrow { display: none !important; }
+.customFleetTabs .sapMITBHead { border-bottom: none !important; }
+.customFleetTabs .sapMITBFilter:focus { outline: none !important; }
+
+/* ============================================================
+   2. CLEAN TABLE STYLING
+   ============================================================ */
+.customFleetTable {
+    background: transparent !important;
+}
+
+/* Header Row (UPPERCASE & LIGHT GREY) */
+.customFleetTable .sapMListTblHeader {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+.customFleetTable .sapMListTblHeader .sapMText {
+    color: #64748b !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Table Body Rows */
+.customFleetTable .sapMListTblRow {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 70px !important; /* Spacious rows */
+}
+
+/* Hover Effect on Rows */
+.customFleetTable .sapMListTblRow:hover {
+    background: #f8fafc !important;
+}
+
+
+/* ============================================================
+   3. COMPONENTS (Avatar, Button, Pills)
+   ============================================================ */
+
+/* Gradient Avatar (Purple Circle with White Text) */
+.gradientAvatar .sapFAvatar {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+}
+.gradientAvatar .sapFAvatarInitials {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+/* Purple Button (Add Driver) */
+.purpleBtn .sapMBtnInner {
+    background-color: #7c3aed !important;
+    border-color: #7c3aed !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    padding: 0 20px !important;
+}
+.purpleBtn:hover .sapMBtnInner {
+    background-color: #6d28d9 !important;
+}
+
+/* Location Pill (Light Purple Background) */
+.locationPill {
+    background-color: #f3e8ff !important;
+    border-radius: 50px !important;
+    padding: 6px 14px !important;
+    border: 1px solid #d8b4fe !important;
+    justify-content: center !important;
+    min-width: 120px !important; /* Thoda fix width */
+}
+.locationPill .sapUiIcon {
+    color: #7c3aed !important;
+    font-size: 0.9rem !important;
+}
+.locationPill .sapMLnk {
+    color: #6b21a8 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+/* 1. Star ka Size Chota karne ke liye */
+.customStars.sapMRatingIndicator {
+    font-size: 12px !important; /* Image ke hisab se small size */
+    height: unset !important;
+    line-height: unset !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* 2. Star ka Color (Selected/Filled stars) */
+.customStars .sapMRISel, 
+.customStars .sapMRIVisual {
+    color: #ffb900!important; /* Bright Golden Yellow jaisa image mein hai */
+    text-shadow: none !important; /* Default shadow hatao */
+}
+
+/* 3. Unselected Stars (Khali stars ka color) */
+.customStars .sapMRIUnsel {
+    color: #d1d5db !important; /* Halka grey color */
+    text-shadow: none !important;
+}
+
+/* 4. Agar star icons ke beech gap kam karna ho */
+.customStars .sapMRatingIndicatorIcon {
+    padding: 0 1px !important;
+}
+
+/* 5. Rating Number (Side wala text) styling */
+.ratingValueText {
+    color: #64748b !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+}
+
+/* SAP ke blue focus outline ko hatane ke liye */
+.customStars .sapMRISelector {
+    border: none !important;
+    outline: none !important;
+}
+/* ============================================================
+   FLEET TABLE DESIGN (TRUCK INVENTORY)
+   ============================================================ */
+
+/* 1. Table Container & Background */
+.customFleetTable {
+    background: transparent !important;
+    margin-top: 10px !important;
+}
+
+/* 2. Header Design (Uppercase, Light Grey) */
+.customFleetTable .sapMListTblHeader {
+    background: #f8fafc !important; /* Very light grey */
+    border-bottom: 1px solid #e2e8f0 !important;
+    height: 45px !important;
+}
+
+.customFleetTable .sapMListTblHeader .sapMText {
+    color: #64748b !important;      /* Slate Grey Text */
+    font-size: 0.75rem !important;  /* Small text */
+    font-weight: 700 !important;    /* Bold */
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 3. Row Styling (Spacious & White) */
+.customFleetTable .sapMListTblRow {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 75px !important; /* Row Height bada diya */
+    vertical-align: middle !important;
+}
+
+/* Row Hover Effect */
+.customFleetTable .sapMListTblRow:hover {
+    background: #f8fafc !important; /* Hover pe halka grey */
+}
+
+/* ============================================================
+   COLUMN SPECIFIC STYLING (Magic happens here)
+   ============================================================ */
+
+/* COLUMN 1: TRUCK NO (Bold & Dark) */
+.customFleetTable tr td:nth-child(1) .sapMObjectIdentifierTitle {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important; /* Dark Slate */
+}
+
+/* COLUMN 2: TYPE / NUMBER PLATE (Monospace Code Style) */
+.customFleetTable tr td:nth-child(2) .sapMText {
+    font-family: 'Courier New', Courier, monospace !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+    background: #f1f5f9 !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 1px !important;
+}
+
+/* COLUMN 3: CAPACITY (Purple Badge / 20T Style) */
+.customFleetTable tr td:nth-child(3) .sapMText {
+    display: inline-block !important;
+    background-color: #f3e8ff !important; /* Light Purple Bg */
+    color: #7e22ce !important;            /* Dark Purple Text */
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    padding: 5px 12px !important;
+    border-radius: 6px !important;        /* Rounded Rectangle */
+    min-width: 60px !important;
+    text-align: center !important;
+}
+
+/* COLUMN 4: ODOMETER (With Fake Progress Bar) */
+.customFleetTable tr td:nth-child(4) .sapMText {
+    color: #334155 !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    position: relative !important;
+    display: block !important;
+    padding-bottom: 8px !important; /* Space for bar */
+}
+
+
+
+/* COLUMN 5: STATUS (Pills - Green/Orange) */
+/* Base Pill Style */
+.customFleetTable .sapMObjStatus {
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    padding: 5px 15px !important;
+    border-radius: 50px !important; /* Full Round Pill */
+    text-align: center !important;
+    min-width: 100px !important;
+    display: inline-block !important;
+}
+
+/* SUCCESS STATE (Available) -> Green Pill */
+.customFleetTable .sapMObjStatusStateSuccess .sapMObjStatusText {
+    color: #15803d !important; /* Dark Green Text */
+}
+.customFleetTable .sapMObjStatusStateSuccess {
+    background-color: #dcfce7 !important; /* Light Green Bg */
+    border: 1px solid #bbf7d0 !important;
+}
+
+/* WARNING STATE (On Trip) -> Orange Pill */
+.customFleetTable .sapMObjStatusStateWarning .sapMObjStatusText {
+    color: #c2410c !important; /* Dark Orange Text */
+}
+.customFleetTable .sapMObjStatusStateWarning {
+    background-color: #ffedd5 !important; /* Light Orange Bg */
+    border: 1px solid #fed7aa !important;
+}
+
+/* ERROR STATE (Maintenance) -> Red Pill */
+.customFleetTable .sapMObjStatusStateError .sapMObjStatusText {
+    color: #b91c1c !important; 
+}
+.customFleetTable .sapMObjStatusStateError {
+    background-color: #fee2e2 !important; 
+    border: 1px solid #fecaca !important;
+}
+
+/* ============================================================
+   BUTTON STYLE (Add Truck)
+   ============================================================ */
+
+/* Purple Button (Add Driver) */
+.purpleBtn .sapMBtnInner {
+    background-color: #7c3aed !important;
+    border-color: #7c3aed !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    padding: 0 20px !important;
+}
+.purpleBtn:hover .sapMBtnInner {
+    background-color: #6d28d9 !important;
+}

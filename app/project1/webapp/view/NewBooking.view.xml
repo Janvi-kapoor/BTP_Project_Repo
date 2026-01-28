@@ -1,243 +1,794 @@
-<mvc:View 
-    controllerName="project1.controller.NewBooking" 
-    xmlns:mvc="sap.ui.core.mvc" 
-    xmlns="sap.m" 
-    xmlns:f="sap.f" 
+<mvc:View
+    controllerName="project1.controller.NewBooking"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
     xmlns:layout="sap.ui.layout"
-    xmlns:core="sap.ui.core" 
-    height="100%">
-    
-    <f:DynamicPage id="dynamicPageId" headerExpanded="true" showFooter="false" backgroundDesign="Transparent" class="sapUiNoContentPadding">
+    xmlns:core="sap.ui.core"
+    height="100%"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        headerExpanded="true"
+        showFooter="false"
+        backgroundDesign="Transparent"
+        class="sapUiNoContentPadding"
+    >
         <f:title>
-            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1" backgroundDesign="Transparent">
+            <f:DynamicPageTitle
+                id="_IDGenDynamicPageTitle1"
+                backgroundDesign="Transparent"
+            >
                 <f:heading>
-                    <VBox id="_IDGenVBox22" class="sapUiMediumMarginBegin sapUiSmallMarginTop">
-                        <Title id="_IDGenTitle19" text="New Bulk Shipment" level="H1" titleStyle="H1" class="customMainTitle"/>
-                        <Text id="_IDGenText43" text="Complete the wizard to initiate a new dispatch" class="customSubTitle"/>
+                    <VBox
+                        id="_IDGenVBox22"
+                        class="sapUiMediumMarginBegin sapUiSmallMarginTop"
+                    >
+                        <Title
+                            id="_IDGenTitle19"
+                            text="New Bulk Shipment"
+                            level="H1"
+                            titleStyle="H1"
+                            class="customMainTitle"
+                        />
+                        <Text
+                            id="_IDGenText43"
+                            text="Complete the wizard to initiate a new dispatch"
+                            class="customSubTitle"
+                        />
                     </VBox>
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
 
         <f:content>
-            <VBox id="mainWrapper" width="100%" height="100%" alignItems="Stretch" justifyContent="Start" class="sapUiMediumMarginTop">
-                
-                <HBox id="customHeader" class="customWizardHeader" alignItems="Center" justifyContent="SpaceBetween">
-                    <VBox id="step1Ind" class="stepIndicator stepActive">
-                <HBox id="_IDGenHBox9" class="stepCircle">
-            <core:Icon id="_IDGenIcon11" src="sap-icon://product" size="1.5rem" color="inherit"/>
-        </HBox>
-        <Text id="_IDGenText55" text="Consignment" class="stepText"/>
-    </VBox>
-                
-
-                    <VBox id="step2Ind" class="stepIndicator">
-                        <HBox id="_IDGenHBox10" class="stepCircle">
-                        <core:Icon id="_IDGenIcon23" src="sap-icon://shipping-status" size="1.5rem" color="inherit"/></HBox>
-                        <Text id="_IDGenText56" text="Logistics" class="stepText"/>
+            <VBox
+                id="mainWrapper"
+                width="100%"
+                height="100%"
+                alignItems="Stretch"
+                justifyContent="Start"
+                class="sapUiMediumMarginTop"
+            >
+                <HBox
+                    id="customHeader"
+                    class="customWizardHeader"
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                >
+                    <VBox
+                        id="step1Ind"
+                        class="stepIndicator stepActive"
+                    >
+                        <HBox
+                            id="_IDGenHBox9"
+                            class="stepCircle"
+                        >
+                            <core:Icon
+                                id="_IDGenIcon11"
+                                src="sap-icon://product"
+                                size="1.5rem"
+                                color="inherit"
+                            />
+                        </HBox>
+                        <Text
+                            id="_IDGenText55"
+                            text="Consignment"
+                            class="stepText"
+                        />
                     </VBox>
-                    
-                     
-                 
-                    <VBox id="step3Ind" class="stepIndicator">
-                        <HBox id="_IDGenHBox19" class="stepCircle">
-                        <core:Icon id="_IDGenIcon24" src="sap-icon://money-bills" size="1.5rem" color="inherit" /></HBox>
-                        <Text id="_IDGenText57" text="Pricing" class="stepText"/>
-                    </VBox>
-                    
-                     
 
-                    <VBox id="step4Ind" class="stepIndicator">
-                        <HBox id="_IDGenHBox21" class="stepCircle">
-                         <core:Icon id="_IDGenIcon25" src="sap-icon://complete"  size="1.5rem" color="inherit" /></HBox>
-                        <Text id="_IDGenText58" text="Review" class="stepText"/>
+                    <VBox
+                        id="step2Ind"
+                        class="stepIndicator"
+                    >
+                        <HBox
+                            id="_IDGenHBox10"
+                            class="stepCircle"
+                        >
+                            <core:Icon
+                                id="_IDGenIcon23"
+                                src="sap-icon://shipping-status"
+                                size="1.5rem"
+                                color="inherit"
+                            />
+                        </HBox>
+                        <Text
+                            id="_IDGenText56"
+                            text="Logistics"
+                            class="stepText"
+                        />
+                    </VBox>
+
+                    <VBox
+                        id="step3Ind"
+                        class="stepIndicator"
+                    >
+                        <HBox
+                            id="_IDGenHBox19"
+                            class="stepCircle"
+                        >
+                            <core:Icon
+                                id="_IDGenIcon24"
+                                src="sap-icon://money-bills"
+                                size="1.5rem"
+                                color="inherit"
+                            />
+                        </HBox>
+                        <Text
+                            id="_IDGenText57"
+                            text="Pricing"
+                            class="stepText"
+                        />
+                    </VBox>
+
+                    <VBox
+                        id="step4Ind"
+                        class="stepIndicator"
+                    >
+                        <HBox
+                            id="_IDGenHBox21"
+                            class="stepCircle"
+                        >
+                            <core:Icon
+                                id="_IDGenIcon25"
+                                src="sap-icon://complete"
+                                size="1.5rem"
+                                color="inherit"
+                            />
+                        </HBox>
+                        <Text
+                            id="_IDGenText58"
+                            text="Review"
+                            class="stepText"
+                        />
                     </VBox>
                 </HBox>
 
-                <NavContainer id="wizardNavContainer" width="100%" height="85vh" initialPage="pageConsignment">
-
-                    <Page id="pageConsignment" showHeader="false" backgroundDesign="Transparent">
-                        <VBox id="consignmentStepContainer" class="stepCard">
-                            <HBox id="conHeader" alignItems="Center" class="sapUiMediumMarginBottom">
-                                <Avatar id="conAvatar" src="sap-icon://package" displaySize="S" class="brownIconBox sapUiSmallMarginEnd"/>
+                <NavContainer
+                    id="wizardNavContainer"
+                    width="100%"
+                    height="85vh"
+                    initialPage="pageConsignment"
+                >
+                    <Page
+                        id="pageConsignment"
+                        showHeader="false"
+                        backgroundDesign="Transparent"
+                    >
+                        <VBox
+                            id="consignmentStepContainer"
+                            class="stepCard"
+                        >
+                            <HBox
+                                id="conHeader"
+                                alignItems="Center"
+                                class="sapUiMediumMarginBottom"
+                            >
+                                <Avatar
+                                    id="conAvatar"
+                                    src="sap-icon://package"
+                                    displaySize="S"
+                                    class="brownIconBox sapUiSmallMarginEnd"
+                                />
                                 <VBox id="conTitleBox">
-                                    <Title id="conMainTitle" text="Consignment Details" level="H3" class="cardTitle"/>
-                                    <Text id="conSubTitle" text="Enter shipment information" class="subText"/>
+                                    <Title
+                                        id="conMainTitle"
+                                        text="Consignment Details"
+                                        level="H3"
+                                        class="cardTitle"
+                                    />
+                                    <Text
+                                        id="conSubTitle"
+                                        text="Enter shipment information"
+                                        class="subText"
+                                    />
                                 </VBox>
                             </HBox>
 
-                            <layout:Grid id="conGrid" defaultSpan="L6 M6 S12" vSpacing="1" hSpacing="1">
+                            <layout:Grid
+                                id="conGrid"
+                                defaultSpan="L6 M6 S12"
+                                vSpacing="1"
+                                hSpacing="1"
+                            >
                                 <VBox id="senderBox">
-                                    <Label id="_IDGenLabel3" text="Sender Company" class="inputLabel"/>
-                                    <Input id="inputSender" placeholder="Enter sender company name"  class="customInput"/>
+                                    <Label
+                                        id="_IDGenLabel3"
+                                        text="Sender Company"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputSender"
+                                        placeholder="Enter sender company name"
+                                        class="customInput"
+                                    />
                                 </VBox>
                                 <VBox id="receiverBox">
-                                    <Label id="_IDGenLabel4" text="Receiver Company" required="true" class="inputLabel"/>
-                                    <Input id="inputReceiver" placeholder="Enter receiver company name" class="customInput"/>
+                                    <Label
+                                        id="_IDGenLabel4"
+                                        text="Receiver Company"
+                                        required="true"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputReceiver"
+                                        placeholder="Enter receiver company name"
+                                        class="customInput"
+                                    />
+                                </VBox>
+                                <VBox id="receiverEmail">
+                                    <Label
+                                        id="_IDGenLabel6"
+                                        text="Receiver Company Email"
+                                        required="true"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputReceiver2"
+                                        placeholder="Enter receiver email"
+                                        class="customInput"
+                                    />
+                                </VBox>
+                                <VBox id="receiverNumber">
+                                    <Label
+                                        id="_IDGenLabel19"
+                                        text="Receiver Company Phone Number"
+                                        required="true"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputReceiver3"
+                                        placeholder="Enter receiver phone number"
+                                        class="customInput"
+                                    />
                                 </VBox>
                                 <VBox id="materialBox">
-                                    <Label id="_IDGenLabel5" text="Material Category" class="inputLabel"/>
-                                    <Input id="inputMaterial" placeholder="e.g. Industrial Goods" class="customInput"/>
+                                    <Label
+                                        id="_IDGenLabel5"
+                                        text="Material Category"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputMaterial"
+                                        placeholder="e.g. Industrial Goods"
+                                        class="customInput"
+                                    />
                                 </VBox>
                                 <VBox id="weightBox">
-                                    <Label id="_IDGenLabel2" text="Load Weight (Tons)" class="inputLabel"/>
-                                    <HBox id="customStepper" class="customStepperBox">
-                                        <Button id="btnMinus" icon="sap-icon://less" press="onDecrement" class="circleBtn"/>
-                                        <Input id="inputWeight" value="10" type="Number" editable="false" class="centerNumberInput"/>
-                                        <Button id="btnPlus" icon="sap-icon://add" press="onIncrement" class="circleBtn"/>
+                                    <Label
+                                        id="_IDGenLabel2"
+                                        text="Load Weight (Tons)"
+                                        class="inputLabel"
+                                    />
+                                    <HBox
+                                        id="customStepper"
+                                        class="customStepperBox"
+                                    >
+                                        <Button
+                                            id="btnMinus"
+                                            icon="sap-icon://less"
+                                            press="onDecrement"
+                                            class="circleBtn"
+                                        />
+                                        <Input
+                                            id="inputWeight"
+                                            value="10"
+                                            type="Number"
+                                            editable="false"
+                                            class="centerNumberInput"
+                                        />
+                                        <Button
+                                            id="btnPlus"
+                                            icon="sap-icon://add"
+                                            press="onIncrement"
+                                            class="circleBtn"
+                                        />
                                     </HBox>
                                 </VBox>
                             </layout:Grid>
 
-                            <HBox id="step1Buttons" justifyContent="End" alignItems="Center" class="sapUiLargeMarginTop">
-                                <Button id="btnToLogistics" text="Continue to Logistics" icon="sap-icon://arrow-right" iconFirst="false" class="gradientButton" press="onToLogistics"/>
+                            <HBox
+                                id="step1Buttons"
+                                justifyContent="End"
+                                alignItems="Center"
+                                class="sapUiLargeMarginTop"
+                            >
+                                <Button
+                                    id="btnToLogistics"
+                                    text="Continue to Logistics"
+                                    icon="sap-icon://arrow-right"
+                                    iconFirst="false"
+                                    class="gradientButton"
+                                    press="onToLogistics"
+                                />
                             </HBox>
                         </VBox>
                     </Page>
 
-                    <Page id="pageLogistics" showHeader="false" backgroundDesign="Transparent">
-                        <VBox id="logisticsStepContainer" class="stepCard">
-                            <HBox id="logHeader" alignItems="Center" class="sapUiMediumMarginBottom">
-                                <Avatar id="logAvatar" src="sap-icon://shipping-status" displaySize="S" class="orangeIconBox sapUiSmallMarginEnd"/>
+                    <Page
+                        id="pageLogistics"
+                        showHeader="false"
+                        backgroundDesign="Transparent"
+                    >
+                        <VBox
+                            id="logisticsStepContainer"
+                            class="stepCard"
+                        >
+                            <HBox
+                                id="logHeader"
+                                alignItems="Center"
+                                class="sapUiMediumMarginBottom"
+                            >
+                                <Avatar
+                                    id="logAvatar"
+                                    src="sap-icon://shipping-status"
+                                    displaySize="S"
+                                    class="orangeIconBox sapUiSmallMarginEnd"
+                                />
                                 <VBox id="logTitleBox">
-                                    <Title id="logMainTitle" text="Logistics &amp; Route" level="H3" class="cardTitle"/>
-                                    <Text id="logSubTitle" text="Configure pickup, delivery, and vehicle type" class="subText"/>
+                                    <Title
+                                        id="logMainTitle"
+                                        text="Logistics &amp; Route"
+                                        level="H3"
+                                        class="cardTitle"
+                                    />
+                                    <Text
+                                        id="logSubTitle"
+                                        text="Configure pickup, delivery, and vehicle type"
+                                        class="subText"
+                                    />
                                 </VBox>
                             </HBox>
 
-                            <layout:Grid id="locGrid" defaultSpan="L6 M6 S12" vSpacing="1" hSpacing="1">
+                            <layout:Grid
+                                id="locGrid"
+                                defaultSpan="L6 M6 S12"
+                                vSpacing="1"
+                                hSpacing="1"
+                            >
                                 <VBox id="pickupBox">
-                                    <Label id="_IDGenLabel7" text="Pickup Warehouse" required="true" class="inputLabel"/>
-                                    <Input id="inputPickup" placeholder="Search warehouse location..." showValueHelp="true" class="customInputIcon"/>
+                                    <Label
+                                        id="_IDGenLabel7"
+                                        text="Pickup Warehouse"
+                                        required="true"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputPickup"
+                                        placeholder="Search warehouse location..."
+                                        showValueHelp="true"
+                                        class="customInputIcon"
+                                        valueHelpRequest="onOpenMap"
+                                    />
                                 </VBox>
                                 <VBox id="dropBox">
-                                    <Label id="_IDGenLabel8" text="Drop-off Destination" required="true" class="inputLabel"/>
-                                    <Input id="inputDrop" placeholder="Search destination..." showValueHelp="true" class="customInputIcon"/>
+                                    <Label
+                                        id="_IDGenLabel8"
+                                        text="Drop-off Destination"
+                                        required="true"
+                                        class="inputLabel"
+                                    />
+                                    <Input
+                                        id="inputDrop"
+                                        placeholder="Search destination..."
+                                        showValueHelp="true"
+                                        class="customInputIcon"
+                                        valueHelpRequest="onOpenMap"
+                                    />
+                                </VBox>
+                            </layout:Grid>
+                            <Label
+                                id="_IDGenLabel9"
+                                text="Truck Type"
+                                class="inputLabel sapUiSmallMarginTop"
+                            />
+                            <layout:Grid
+                                id="truckGrid"
+                                defaultSpan="L4 M4 S12"
+                                vSpacing="1"
+                                hSpacing="1"
+                                class="sapUiTinyMarginTop"
+                            >
+                                <VBox
+                                    id="truckOpen"
+                                    class="truckCard"
+                                >
+                                    <core:Icon
+                                        id="_IDGenIcon20"
+                                        src="sap-icon://cargo-train"
+                                        class="truckIcon"
+                                    />
+                                    <Title
+                                        id="_IDGenTitle11"
+                                        text="Open Truck"
+                                        level="H5"
+                                        class="truckTitle"
+                                    />
+                                    <Text
+                                        id="_IDGenText52"
+                                        text="For general cargo"
+                                        class="truckDesc"
+                                    />
+                                </VBox>
+                                <VBox
+                                    id="truckContainer"
+                                    class="truckCard selectedTruck"
+                                >
+                                    <core:Icon
+                                        id="_IDGenIcon21"
+                                        src="sap-icon://shipping-status"
+                                        class="truckIcon"
+                                    />
+                                    <Title
+                                        id="_IDGenTitle12"
+                                        text="Container"
+                                        level="H5"
+                                        class="truckTitle"
+                                    />
+                                    <Text
+                                        id="_IDGenText53"
+                                        text="Weather protected"
+                                        class="truckDesc"
+                                    />
+                                </VBox>
+                                <VBox
+                                    id="truckReefer"
+                                    class="truckCard"
+                                >
+                                    <core:Icon
+                                        id="_IDGenIcon22"
+                                        src="sap-icon://temperature"
+                                        class="truckIcon"
+                                    />
+                                    <Title
+                                        id="_IDGenTitle29"
+                                        text="Refrigerated"
+                                        level="H5"
+                                        class="truckTitle"
+                                    />
+                                    <Text
+                                        id="_IDGenText54"
+                                        text="Temperature control"
+                                        class="truckDesc"
+                                    />
                                 </VBox>
                             </layout:Grid>
 
-                            <Label id="_IDGenLabel9" text="Truck Type" class="inputLabel sapUiSmallMarginTop"/>
-                            <layout:Grid id="truckGrid" defaultSpan="L4 M4 S12" vSpacing="1" hSpacing="1" class="sapUiTinyMarginTop">
-                                <VBox id="truckOpen" class="truckCard">
-                                    <core:Icon id="_IDGenIcon20" src="sap-icon://cargo-train" class="truckIcon"/>
-                                    <Title id="_IDGenTitle11" text="Open Truck" level="H5" class="truckTitle"/>
-                                    <Text id="_IDGenText52" text="For general cargo" class="truckDesc"/>
-                                </VBox>
-                                <VBox id="truckContainer" class="truckCard selectedTruck">
-                                    <core:Icon id="_IDGenIcon21" src="sap-icon://shipping-status" class="truckIcon"/>
-                                    <Title id="_IDGenTitle12" text="Container" level="H5" class="truckTitle"/>
-                                    <Text id="_IDGenText53" text="Weather protected" class="truckDesc"/>
-                                </VBox>
-                                <VBox id="truckReefer" class="truckCard">
-                                    <core:Icon id="_IDGenIcon22" src="sap-icon://temperature" class="truckIcon"/>
-                                    <Title id="_IDGenTitle29" text="Refrigerated" level="H5" class="truckTitle"/>
-                                    <Text id="_IDGenText54" text="Temperature control" class="truckDesc"/>
-                                </VBox>
-                            </layout:Grid>
-
-                            <Label id="_IDGenLabel15" text="Priority Level" class="inputLabel sapUiSmallMarginTop"/>
-                            <SegmentedButton id="prioritySeg" width="100%" selectedKey="std" class="customSegmented sapUiTinyMarginTop">
+                            <Label
+                                id="_IDGenLabel15"
+                                text="Priority Level"
+                                class="inputLabel sapUiSmallMarginTop"
+                            />
+                            <SegmentedButton
+                                id="prioritySeg"
+                                width="100%"
+                                selectedKey="std"
+                                class="customSegmented sapUiTinyMarginTop"
+                                selectionChange="onPriorityChange"
+                            >
                                 <items>
-                                    <SegmentedButtonItem id="_IDGenSegmentedButtonItem1" key="std" text="Standard" />
-                                    <SegmentedButtonItem id="_IDGenSegmentedButtonItem2" key="exp" text="Express" />
-                                    <SegmentedButtonItem id="_IDGenSegmentedButtonItem3" key="urg" text="Urgent" />
+                                    <SegmentedButtonItem
+                                        id="_IDGenSegmentedButtonItem1"
+                                        key="std"
+                                        text="Standard"
+                                    />
+                                    <SegmentedButtonItem
+                                        id="_IDGenSegmentedButtonItem2"
+                                        key="exp"
+                                        text="Express"
+                                    />
+                                    <SegmentedButtonItem
+                                        id="_IDGenSegmentedButtonItem3"
+                                        key="urg"
+                                        text="Urgent"
+                                    />
                                 </items>
                             </SegmentedButton>
 
-                            <HBox id="step2Buttons" justifyContent="SpaceBetween" alignItems="Center" class="sapUiLargeMarginTop">
-                                <Button id="btnBackStep2" text="Back" icon="sap-icon://nav-back" class="backButton" press="onBackToConsignment"/>
-                                <Button id="btnToPricing" text="Continue to Pricing" icon="sap-icon://arrow-right" iconFirst="false" class="gradientButton" press="onToPricing"/>
+                            <HBox
+                                id="step2Buttons"
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                                class="sapUiLargeMarginTop"
+                            >
+                                <Button
+                                    id="btnBackStep2"
+                                    text="Back"
+                                    icon="sap-icon://nav-back"
+                                    class="backButton"
+                                    press="onBackToConsignment"
+                                />
+                                <Button
+                                    id="btnToPricing"
+                                    text="Continue to Pricing"
+                                    icon="sap-icon://arrow-right"
+                                    iconFirst="false"
+                                    class="gradientButton"
+                                    press="onToPricing"
+                                />
                             </HBox>
                         </VBox>
                     </Page>
 
-                    <Page id="pagePricing" showHeader="false" backgroundDesign="Transparent">
-                        <VBox id="pricingStepContainer" class="stepCard">
-                            <HBox id="pricingHeader" alignItems="Center" class="sapUiMediumMarginBottom">
-                                <Avatar id="pricingAvatar" src="sap-icon://money-bills" displaySize="S" class="goldIconBox sapUiSmallMarginEnd"/>
+                    <Page
+                        id="pagePricing"
+                        showHeader="false"
+                        backgroundDesign="Transparent"
+                    >
+                        <VBox
+                            id="pricingStepContainer"
+                            class="stepCard"
+                        >
+                            <HBox
+                                id="pricingHeader"
+                                alignItems="Center"
+                                class="sapUiMediumMarginBottom"
+                            >
+                                <Avatar
+                                    id="pricingAvatar"
+                                    src="sap-icon://money-bills"
+                                    displaySize="S"
+                                    class="goldIconBox sapUiSmallMarginEnd"
+                                />
                                 <VBox id="pricingTitleBox">
-                                    <Title id="pricingMainTitle" text="Pricing &amp; ETA Simulation" level="H3" class="cardTitle"/>
-                                    <Text id="pricingSubTitle" text="Review cost breakdown and delivery timeline" class="subText"/>
+                                    <Title
+                                        id="pricingMainTitle"
+                                        text="Pricing &amp; ETA Simulation"
+                                        level="H3"
+                                        class="cardTitle"
+                                    />
+                                    <Text
+                                        id="pricingSubTitle"
+                                        text="Review cost breakdown and delivery timeline"
+                                        class="subText"
+                                    />
                                 </VBox>
                             </HBox>
 
-                            <layout:Grid id="pricingGrid" defaultSpan="L6 M6 S12" vSpacing="1" hSpacing="1">
+                            <layout:Grid
+                                id="pricingGrid"
+                                defaultSpan="L6 M6 S12"
+                                vSpacing="1"
+                                hSpacing="1"
+                            >
                                 <VBox id="leftColumn">
-                                    <VBox id="cardDistance" class="pricingCard smallCard sapUiSmallMarginBottom">
-                                        <HBox id="distHeader" alignItems="Center" class="sapUiTinyMarginBottom">
-                                            <HBox id="iconBox1" class="iconCircle" justifyContent="Center" alignItems="Center">
-                                                <core:Icon id="_IDGenIcon17" src="sap-icon://map" color="#6366f1" size="1.2rem"/>
+                                    <VBox
+                                        id="cardDistance"
+                                        class="pricingCard smallCard sapUiSmallMarginBottom"
+                                    >
+                                        <HBox
+                                            id="distHeader"
+                                            alignItems="Center"
+                                            class="sapUiTinyMarginBottom"
+                                        >
+                                            <HBox
+                                                id="iconBox1"
+                                                class="iconCircle"
+                                                justifyContent="Center"
+                                                alignItems="Center"
+                                            >
+                                                <core:Icon
+                                                    id="_IDGenIcon17"
+                                                    src="sap-icon://map"
+                                                    color="#6366f1"
+                                                    size="1.2rem"
+                                                />
                                             </HBox>
-                                            <VBox id="distTextBox" class="sapUiSmallMarginBegin">
-                                                <Label id="_IDGenLabel11" text="Total Distance" class="subText"/>
-                                                <Title id="_IDGenTitle13" text="850 KM" level="H2" class="bigBoldText"/>
+                                            <VBox
+                                                id="distTextBox"
+                                                class="sapUiSmallMarginBegin"
+                                            >
+                                                <Label
+                                                    id="_IDGenLabel11"
+                                                    text="Total Distance"
+                                                    class="subText"
+                                                />
+                                                <Title
+                                                    id="_IDGenTitle13"
+                                                    text="850 KM"
+                                                    level="H2"
+                                                    class="bigBoldText"
+                                                />
                                             </VBox>
                                         </HBox>
-                                        <VBox id="visualLineContainer" width="100%" class="sapUiSmallMarginTop">
-                                            <core:HTML id="_IDGenHTML1" content='&lt;div class="gradientLine"&gt;&lt;/div&gt;' />
-                                            <HBox id="_IDGenHBox11" justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
-                                                <Label id="_IDGenLabel12" text="Pickup" class="miniLabel"/>
-                                                <Label id="_IDGenLabel13" text="Destination" class="miniLabel"/>
+                                        <VBox
+                                            id="visualLineContainer"
+                                            width="100%"
+                                            class="sapUiSmallMarginTop"
+                                        >
+                                            <core:HTML
+                                                id="_IDGenHTML1"
+                                                content='&lt;div class="gradientLine"&gt;&lt;/div&gt;'
+                                            />
+                                            <HBox
+                                                id="_IDGenHBox11"
+                                                justifyContent="SpaceBetween"
+                                                class="sapUiTinyMarginTop"
+                                            >
+                                                <Label
+                                                    id="_IDGenLabel12"
+                                                    text="Pickup"
+                                                    class="miniLabel"
+                                                />
+                                                <Label
+                                                    id="_IDGenLabel13"
+                                                    text="Destination"
+                                                    class="miniLabel"
+                                                />
                                             </HBox>
                                         </VBox>
                                     </VBox>
 
-                                    <VBox id="cardTime" class="pricingCard smallCard">
-                                        <HBox id="timeHeader" alignItems="Center">
-                                            <HBox id="iconBox2" class="iconCircle" justifyContent="Center" alignItems="Center">
-                                                <core:Icon id="_IDGenIcon18" src="sap-icon://history" color="#6366f1" size="1.2rem"/>
+                                    <VBox
+                                        id="cardTime"
+                                        class="pricingCard smallCard"
+                                    >
+                                        <HBox
+                                            id="timeHeader"
+                                            alignItems="Center"
+                                        >
+                                            <HBox
+                                                id="iconBox2"
+                                                class="iconCircle"
+                                                justifyContent="Center"
+                                                alignItems="Center"
+                                            >
+                                                <core:Icon
+                                                    id="_IDGenIcon18"
+                                                    src="sap-icon://history"
+                                                    color="#6366f1"
+                                                    size="1.2rem"
+                                                />
                                             </HBox>
-                                            <VBox id="timeTextBox" class="sapUiSmallMarginBegin">
-                                                <Label id="_IDGenLabel14" text="Estimated Transit" class="subText"/>
-                                                <Title id="_IDGenTitle25" text="2 Days 4 Hours" level="H2" class="bigBoldText"/>
+                                            <VBox
+                                                id="timeTextBox"
+                                                class="sapUiSmallMarginBegin"
+                                            >
+                                                <Label
+                                                    id="_IDGenLabel14"
+                                                    text="Estimated Transit"
+                                                    class="subText"
+                                                />
+                                                <Title
+                                                    id="_IDGenTitle25"
+                                                    text="2 Days 4 Hours"
+                                                    level="H2"
+                                                    class="bigBoldText"
+                                                />
                                             </VBox>
                                         </HBox>
                                     </VBox>
                                 </VBox>
 
                                 <VBox id="rightColumn">
-                                    <VBox id="cardBill" class="pricingCard tallCard" justifyContent="SpaceBetween">
+                                    <VBox
+                                        id="cardBill"
+                                        class="pricingCard tallCard"
+                                        justifyContent="SpaceBetween"
+                                    >
                                         <VBox id="billTop">
-                                            <HBox id="billHeader" alignItems="Center" class="sapUiMediumMarginBottom">
-                                                <HBox id="iconBox3" class="iconCircle" justifyContent="Center" alignItems="Center">
-                                                    <core:Icon id="_IDGenIcon19" src="sap-icon://credit-card" color="#6366f1" size="1.2rem"/>
+                                            <HBox
+                                                id="billHeader"
+                                                alignItems="Center"
+                                                class="sapUiMediumMarginBottom"
+                                            >
+                                                <HBox
+                                                    id="iconBox3"
+                                                    class="iconCircle"
+                                                    justifyContent="Center"
+                                                    alignItems="Center"
+                                                >
+                                                    <core:Icon
+                                                        id="_IDGenIcon19"
+                                                        src="sap-icon://credit-card"
+                                                        color="#6366f1"
+                                                        size="1.3rem"
+                                                    />
                                                 </HBox>
-                                                <Title id="_IDGenTitle26" text="Bill Summary" level="H4" class="sapUiSmallMarginBegin cardTitle"/>
+                                                <Title
+                                                    id="_IDGenTitle26"
+                                                    text="Bill Summary"
+                                                    level="H4"
+                                                    class="sapUiSmallMarginBegin cardTitle"
+                                                />
                                             </HBox>
 
-                                            <HBox id="_IDGenHBox12" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
-                                                <Text id="_IDGenText32" text="Base Freight (10 tons × ₹850)" class="billLabel"/>
-                                                <Text id="_IDGenText34" text="₹ 8,500" class="billValue"/>
+                                            <HBox
+                                                id="_IDGenHBox12"
+                                                justifyContent="SpaceBetween"
+                                                class="sapUiTinyMarginBottom"
+                                            >
+                                                <Text
+                                                    id="_IDGenText32"
+                                                    text="Base Freight"
+                                                    class="billLabel"
+                                                />
+                                                <Text
+                                                    id="_IDGenText34"
+                                                    text="₹ 8,500"
+                                                    class="billValue"
+                                                />
                                             </HBox>
-                                            <HBox id="_IDGenHBox13" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                                                <Text id="_IDGenText37" text="GST (18%)" class="billLabel"/>
-                                                <Text id="_IDGenText38" text="₹ 1,530" class="billValue"/>
+                                            <HBox
+                                                id="_IDGenHBox13"
+                                                justifyContent="SpaceBetween"
+                                                class="sapUiSmallMarginBottom"
+                                            >
+                                                <Text
+                                                    id="_IDGenText37"
+                                                    text="GST (18%)"
+                                                    class="billLabel"
+                                                />
+                                                <Text
+                                                    id="_IDGenText38"
+                                                    text="₹ 1,530"
+                                                    class="billValue"
+                                                />
                                             </HBox>
-                                            <core:HTML id="_IDGenHTML2" content='&lt;div class="dashedDivider"&gt;&lt;/div&gt;' />
+                                            <core:HTML
+                                                id="_IDGenHTML2"
+                                                content='&lt;div class="dashedDivider"&gt;&lt;/div&gt;'
+                                            />
                                         </VBox>
 
-                                        <VBox id="billBottom" class="sapUiMediumMarginTop">
-                                            <HBox id="_IDGenHBox20" justifyContent="SpaceBetween" alignItems="End">
-                                                <Title id="_IDGenTitle27" text="Total Payable" level="H4" class="cardTitle"/>
-                                                <Title id="_IDGenTitle28" text="₹ 10,030" level="H1" class="purplePriceMain"/>
+                                        <VBox
+                                            id="billBottom"
+                                            class="sapUiMediumMarginTop"
+                                        >
+                                            <HBox
+                                                id="_IDGenHBox20"
+                                                justifyContent="SpaceBetween"
+                                                alignItems="End"
+                                            >
+                                                <Title
+                                                    id="_IDGenTitle27"
+                                                    text="Total Payable"
+                                                    level="H4"
+                                                    class="cardTitle"
+                                                />
+                                                <Title
+                                                    id="_IDGenTitle28"
+                                                    text="₹ 10,030"
+                                                    level="H1"
+                                                    class="purplePriceMain"
+                                                />
                                             </HBox>
-                                            <Text id="_IDGenText51" text="Billed to Corporate Credit Line • Net 30 Terms" class="miniLabel sapUiTinyMarginTop"/>
+                                            <Text
+                                                id="_IDGenText51"
+                                                text="Billed to Corporate Credit Line • Net 30 Terms"
+                                                class="miniLabel sapUiTinyMarginTop"
+                                            />
                                         </VBox>
                                     </VBox>
                                 </VBox>
                             </layout:Grid>
 
-                           <HBox id="step4Buttons" justifyContent="SpaceBetween" alignItems="Center" class="sapUiLargeMarginTop">
+                            <HBox
+                                id="step4Buttons"
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                                class="sapUiLargeMarginTop"
+                            >
+                                <Button
+                                    id="btnBackStep4"
+                                    text="Back"
+                                    icon="sap-icon://nav-back"
+                                    class="backButton"
+                                    press="onBackToPricing"
+                                />
 
-                                <Button id="btnBackStep4" text="Back" icon="sap-icon://nav-back" class="backButton" press="onBackToPricing"/>
-
-                                <Button id="btnFinalSubmit" text="Confirm &amp; Initiate" icon="sap-icon://accept"   iconFirst="false" class="gradientButton"  press="onConfirmDispatch"/>
-
+                                <Button
+                                    id="btnFinalSubmit"
+                                    text="Confirm &amp; Initiate"
+                                    icon="sap-icon://accept"
+                                    iconFirst="false"
+                                    class="gradientButton"
+                                    press="onConfirmDispatch"
+                                />
                             </HBox>
                         </VBox>
                     </Page>
-
-
                 </NavContainer>
             </VBox>
         </f:content>

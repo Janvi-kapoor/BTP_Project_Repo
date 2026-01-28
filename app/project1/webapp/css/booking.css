@@ -353,3 +353,9 @@ html, body, .sapMPage, .sapMPageScroll {
     font-size: 0.95rem !important;
     color: #334155 !important;
 }
+.leaflet-pane {
+    z-index: 400 !important;
+}
+.leaflet-top, .leaflet-bottom {
+    z-index: 1000 !important;
+}

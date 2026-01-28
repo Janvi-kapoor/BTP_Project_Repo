@@ -1,0 +1,86 @@
+/* Sidebar - Indigo Purple Gradient Theme */
+
+/* 1. Main Background Force */
+.nexusSidebar,
+.nexusSidebar aside {
+    background: linear-gradient(180deg, #3e4fb3 0%, #2d3a8c 100%) !important;
+    border: none !important;
+}
+
+/* 2. Remove ANY Default Grey from SAP */
+.nexusSidebar div,
+.nexusSidebar li,
+.nexusSidebar ul {
+    background-color: transparent !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 3. Navigation Item Styling */
+.nexusSidebar .sapTntNavLIItem {
+    margin: 8px 10px !important;
+    border-radius: 12px !important;
+    height: 3.2rem !important;
+    display: flex !important;
+    align-items: center !important;
+    padding-left: 15px !important;
+    background-color: transparent !important;
+    transition: background-color 0.3s ease !important;
+}
+
+/* 4. Text & Icon Positioning */
+.nexusSidebar .sapMText {
+    color: #c8cadb !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    margin-left: 12px !important;
+    white-space: nowrap !important;
+    transition: color 0.3s ease !important;
+}
+
+.nexusSidebar .sapUiIcon {
+    color: #dddff2 !important;
+    font-size: 1.1rem !important;
+    min-width: 1.1rem !important;
+    transition: color 0.3s ease !important;
+}
+
+/* 5. HOVER EFFECT */
+.nexusSidebar .sapTntNavLIItem:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.nexusSidebar .sapTntNavLIItem:hover .sapMText,
+.nexusSidebar .sapTntNavLIItem:hover .sapUiIcon {
+    color: #ffffff !important;
+}
+
+/* 6. SELECTED ITEM */
+.nexusSidebar .sapTntNavLIItemSelected {
+    background: linear-gradient(90deg, #6366f1, #4f46e5) !important;
+    box-shadow: 0px 4px 12px rgba(99, 102, 241, 0.3) !important;
+}
+
+.nexusSidebar .sapTntNavLIItemSelected .sapMText,
+.nexusSidebar .sapTntNavLIItemSelected .sapUiIcon {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+
+/* 7. Collapsed State */
+.nexusSidebar.sapTntSideNavigationNotExpanded .sapMText {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.nexusSidebar.sapTntSideNavigationNotExpanded .sapTntNavLIItem {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    margin: 12px 8px !important;
+}
+
+/* 8. Remove focus outline */
+.nexusSidebar *:focus {
+    outline: none !important;
+}

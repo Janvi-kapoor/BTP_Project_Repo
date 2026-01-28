@@ -92,7 +92,7 @@
 
         <tnt:sideContent>
             <tnt:SideNavigation
-                id="sideNavigation"
+                id="_IDGenSideNavigation"
                 class="nexusSidebar"
                 itemSelect="onItemSelect"
             >
@@ -146,7 +146,7 @@
                             class="contentWrapper"
                         >
                             <VBox
-                                id="_IDGenVBox13"
+                                id="_IDGenVBox27"
                                 class="sapUiMediumMarginBottom"
                             >
                                 <Title
@@ -155,8 +155,9 @@
                                     level="H1"
                                     class="pageTitle"
                                 />
+
                                 <Text
-                                    id="_IDGenText20"
+                                    id="_IDGenText45"
                                     text="Welcome back, here is your daily logistics summary."
                                     class="pageSubtitle"
                                 />
@@ -352,42 +353,37 @@
                                                     placeholder="Search by Material..."
                                                 />
                                                 <MenuButton
-                                                    id="filterMenuButton"
+                                                    id="historyFilterMenuButton2"
                                                     icon="sap-icon://filter"
-                                                    tooltip="Filter by Status"
-                                                    class="sapUiTinyMarginBegin"
                                                 >
-                                                    <Menu
-                                                        id="statusMenu"
-                                                        itemSelected="onStatusFilterChange"
-                                                    >
-                                                        <items>
-                                                            <MenuItem
-                                                                id="_IDGenMenuItem1"
-                                                                text="All Status"
-                                                                icon="sap-icon://multiselect-all"
-                                                                key="All"
-                                                            />
-                                                            <MenuItem
-                                                                id="_IDGenMenuItem2"
-                                                                text="In-Transit"
-                                                                icon="sap-icon://shipping-status"
-                                                                key="In-Transit"
-                                                            />
-                                                            <MenuItem
-                                                                id="_IDGenMenuItem3"
-                                                                text="Assigned"
-                                                                icon="sap-icon://employee"
-                                                                key="Assigned"
-                                                            />
-                                                            <MenuItem
-                                                                id="_IDGenMenuItem4"
-                                                                text="Pending"
-                                                                icon= "sap-icon://pending"
-                                                                key="Pending"
-                                                            />
-                                                        </items>
-                                                    </Menu>
+                                                    <menu>
+                                                        <Menu id="_IDGenMenu2"
+                                                            itemSelected="onStatusFilterChange"
+                                                        >
+                                                            <items>
+                                                                <MenuItem id="_IDGenMenuItem1"
+                                                                    text="All Status"
+                                                                    key="All"
+                                                                    icon="sap-icon://multiselect-all"
+                                                                />
+                                                                <MenuItem id="_IDGenMenuItem2"
+                                                                    text="In-Transit"
+                                                                    key="In-Transit"
+                                                                    icon="sap-icon://shipping-status"
+                                                                />
+                                                                <MenuItem id="_IDGenMenuItem3"
+                                                                    text="Pending"
+                                                                    key="Pending"
+                                                                    icon="sap-icon://pending"
+                                                                />
+                                                                <MenuItem id="_IDGenMenuItem4"
+                                                                    text="Confirm Pickup"
+                                                                    key="ConfirmPickup"
+                                                                    icon="sap-icon://shipping-status"
+                                                                />
+                                                            </items>
+                                                        </Menu>
+                                                    </menu>
                                                 </MenuButton>
                                             </OverflowToolbar>
                                         </headerToolbar>
@@ -455,10 +451,11 @@
                                                 vAlign="Middle"
                                             >
                                                 <cells>
-                                                    <Text
+                                                    <Link
                                                         id="_IDGenText35"
                                                         text="{ID}"
-                                                        class="boldText orderIdText shipmentIdText"
+                                                        class="boldText orderIdText shipmentIdText clickableShipmentId"
+                                                        press="onShipmentIdPress"
                                                     />
                                                     <Text
                                                         id="_IDGenText39"
@@ -508,38 +505,19 @@
                     id="trackPage"
                     showHeader="false"
                 >
-                    <VBox
-                        id="trackVBox"
-                        class="contentPadding"
-                    >
-                        <Title
-                            id="_IDGenTitle15"
-                            text="Track Shipments"
-                            level="H1"
-                            class="pageTitle"
-                        />
-                    </VBox>
+                    <mvc:XMLView
+                        id="_IDGenXMLView2"
+                        viewName="project1.view.TrackShipments"
+                    />
                 </Page>
                 <Page
                     id="historyPage"
                     showHeader="false"
                 >
-                    <VBox
-                        id="_IDGenVBox28"
-                        class="contentPadding"
-                    >
-                        <Title
-                            id="_IDGenTitle18"
-                            text="Order History"
-                            level="H1"
-                            class="mainTitleText"
-                        />
-                        <Text
-                            id="_IDGenText36"
-                            text="Review your past completed shipments."
-                            class="subTitleText"
-                        />
-                    </VBox>
+                    <mvc:XMLView
+                        id="_IDGenXMLView3"
+                        viewName="project1.view.OrderHistory"
+                    />
                 </Page>
             </NavContainer>
         </tnt:mainContents>
