@@ -14,7 +14,7 @@
 
                 <IconTabBar id="_IDGenIconTabBar" expanded="true" class="customFleetTabs">
                     <items>
-                        <IconTabFilter id="_IDGenIconTabFilter" text="Drivers (5)" key="drivers">
+                        <IconTabFilter id="_IDGenIconTabFilter" text="Drivers" key="drivers">
                             <Panel id="_IDGenPanel" class="fleetCard sapUiNoContentPadding">
                                 <headerToolbar>
                                     <Toolbar id="_IDGenToolbar">
@@ -55,7 +55,7 @@
                                 </Table>
                             </Panel>
                         </IconTabFilter>
-                       <IconTabFilter id="_IDGenIconTabFilter1" text="Trucks (5)" key="trucks">
+                       <IconTabFilter id="_IDGenIconTabFilter1" text="Trucks" key="trucks">
     <Table id="_IDGenTable1" items="{/Trucks}" sticky="HeaderToolbar,ColumnHeaders" class="customFleetTable">
         <headerToolbar>
             <OverflowToolbar id="_IDGenOverflowToolbar1">

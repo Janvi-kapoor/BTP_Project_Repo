@@ -1381,108 +1381,168 @@ body, html {
     justify-content: center !important;
 }
 
-/* ============================================================
-   PROFESSIONAL DIALOG FIXES
-   ============================================================ */
-
-/* Dialog Border & Shadow */
-.professionalDialog {
-    border-radius: 16px !important;
-    overflow: hidden !important;
-    border: 2px solid #6366f1 !important;
-    background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2) !important;
+/* Live Fleet Monitor Styles */
+.fleetMonitorArea {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    padding: 16px !important;
 }
 
-/* Header Styling */
-.professionalDialog .sapMDialogTitle {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    font-weight: 800 !important;
-    font-size: 1.4rem !important;
-    padding: 1rem !important;
+.fleetMonitorList {
+    background: #ffffff !important;
+    border-radius: 8px !important;
+}
+
+.fleetListItem {
+    border-bottom: 1px solid #e5e7eb !important;
+    padding: 12px 16px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    background: #ffffff !important;
+    border-radius: 6px !important;
+    margin-bottom: 4px !important;
+    pointer-events: auto !important;
+}
+
+.fleetListItem:hover {
+    background-color: #f8fafc !important;
+}
+
+.fleetItemContainer {
+    width: 100% !important;
+    pointer-events: auto !important;
+}
+
+.fleetItemContainer {
+    width: 100% !important;
+    pointer-events: auto !important;
+    padding: 4px !important;
+}
+
+.fleetTopRow {
+    width: 100% !important;
+    margin-bottom: 8px !important;
+}
+
+.fullWidthBtn {
+    width: 100% !important;
+    margin-top: 8px !important;
+}
+
+.fullWidthBtn .sapMBtnInner {
+    width: 100% !important;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+.fullWidthBtn:hover .sapMBtnInner {
+    background: linear-gradient(135deg, #5b21b6 0%, #9333ea 100%) !important;
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+.driverInfoContainer {
+    flex: 1 !important;
+    gap: 12px !important;
+    pointer-events: auto !important;
+}
+
+.driver-circle {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    pointer-events: none !important;
+}
+
+.driverDetailsBox {
+    flex: 1 !important;
+}
+
+.driverNameText {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    color: #1f2937 !important;
+    margin-bottom: 2px !important;
+}
+
+.truckNumberText {
+    font-size: 12px !important;
+    color: #6b7280 !important;
+    font-weight: 500 !important;
+}
+
+.contactInfoBox {
+    text-align: right !important;
+}
+
+.contactInfoBox {
     text-align: center !important;
 }
 
-/* Form Container */
-.professionalForm {
-    background: #f3e8ff !important;
-    padding: 1.5rem !important;
-}
-
-/* Labels */
-.professionalLabel {
-    color: #6b21a8 !important;
+.contactNumberText {
+    font-size: 12px !important;
+    color: #4f46e5 !important;
     font-weight: 600 !important;
-    font-size: 0.9rem !important;
-    margin-bottom: 0.5rem !important;
-    display: block !important;
 }
 
-/* Input Fields - Keep original size */
-.professionalInput .sapMInputBaseInner {
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-    background: #ffffff !important;
+.viewFleetBtn {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+    min-width: 70px !important;
+    margin-top: 4px !important;
 }
 
-.professionalInput:focus-within .sapMInputBaseInner {
-    border-color: #6b21a8 !important;
-    box-shadow: 0 0 0 2px rgba(107, 33, 168, 0.1) !important;
-}
-
-/* Select Fields */
-.professionalSelect .sapMSelectInner {
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-    background: #ffffff !important;
-}
-
-.professionalSelect:focus-within .sapMSelectInner {
-    border-color: #6b21a8 !important;
-    box-shadow: 0 0 0 2px rgba(107, 33, 168, 0.1) !important;
-}
-
-/* Step Input */
-.professionalStepInput .sapMStepInputInput {
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-}
-
-.professionalStepInput:focus-within .sapMStepInputInput {
-    border-color: #6b21a8 !important;
-    box-shadow: 0 0 0 2px rgba(107, 33, 168, 0.1) !important;
-}
-
-/* Field Spacing */
-.professionalInput, .professionalSelect, .professionalStepInput {
-    margin-bottom: 1rem !important;
-}
-
-/* Save Button - Keep original size */
-.professionalSaveBtn .sapMBtnInner {
-    background: #6366f1 !important;
+.viewFleetBtn .sapMBtnInner {
+    background-color: #6366f1 !important;
     border: none !important;
-    border-radius: 6px !important;
     color: #ffffff !important;
+    border-radius: 4px !important;
     font-weight: 600 !important;
 }
 
-/* Cancel Button - Keep original size */
-.professionalCancelBtn .sapMBtnInner {
-    background: #f3f4f6 !important;
-    border: 1px solid #d1d5db !important;
-    border-radius: 6px !important;
-    color: #374151 !important;
-    font-weight: 600 !important;
+/* Truck marker styling */
+.truck-marker {
+    background: transparent !important;
+    border: none !important;
+    font-size: 16px !important;
+    text-align: center !important;
+    line-height: 20px !important;
 }
 
-/* Dialog Footer */
-.professionalDialog .sapMDialogActions {
-    background: #f9fafb !important;
-    border-top: 1px solid #e5e7eb !important;
-    padding: 1rem !important;
+.truck-marker-highlight {
+    background: transparent !important;
+    border: none !important;
+    font-size: 24px !important;
+    text-align: center !important;
+    line-height: 30px !important;
+    animation: bounce 0.5s ease-in-out !important;
+}
+
+@keyframes bounce {
+    0%, 20%, 60%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    80% {
+        transform: translateY(-5px);
+    }
 }

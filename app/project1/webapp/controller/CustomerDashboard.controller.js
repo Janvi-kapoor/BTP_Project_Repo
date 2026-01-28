@@ -27,7 +27,6 @@ sap.ui.define(
       _onObjectMatched: function () {
         var sUserEmail = localStorage.getItem("userEmail"); // dist.ops@hul.com
         var oModel = this.getOwnerComponent().getModel();
-
         var sPath = "/Users('" + sUserEmail + "')"; // Agar Email Key hai toh
         // Agar Email Key nahi hai, toh filter aise hi rahega:
         var oListBinding = oModel.bindList(

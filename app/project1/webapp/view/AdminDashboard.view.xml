@@ -32,8 +32,8 @@
              <HBox id="profileBox2" alignItems="Center" class="profileSection">
                <Avatar id="_IDGengAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>
                <VBox id="_IDGenVBjjhox11" alignItems="Start" justifyContent="Center" class="profileInfoBox sapUiTinyMarginBegin sapUiHideOnPhone">
-                    <Text id="_IDGuenText18" text="Acme Logistics Ltd." class="profileName"/>
-                    <Text id="_IDGuenText19" text="Ops Manager" class="profileRole"/>
+                    <Text id="_IDGuenText18" class="profileName"/>
+                    <Text id="_IDGuenText19" class="profileRole"/>
                 </VBox>
                </HBox>
         </HBox>

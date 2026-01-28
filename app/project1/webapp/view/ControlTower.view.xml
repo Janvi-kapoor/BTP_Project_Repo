@@ -55,21 +55,62 @@
             
                 <layoutData><layout:GridData id="_IDGenGridData" span="L8 M12 S12" /></layoutData>
                 <Title id="_IDGenTitle7" text="Live Fleet Map" level="H3" class="sectionTitle" />
-                <VBox id="_IDGenVBox13" alignItems="Center" justifyContent="Center" height="100%">
-                    <Label id="_IDGenLabel2" text="[ Map Visualization Area ]" class="mapPlaceholderText"/>
-                </VBox>
+                <core:HTML id="adminMapContainer" content="&lt;div id='adminLeafletMap' style='width: 100%; height: 380px;'&gt;&lt;/div&gt;" />
             </VBox>
 
-            <VBox id="_IDGenVBox14" height="450px" class="notificationArea">
+            <VBox id="_IDGenVBox14" height="450px" class="fleetMonitorArea">
                 <layoutData><layout:GridData id="_IDGenGridData1" span="L4 M12 S12" /></layoutData>
-                <Title id="_IDGenTitle8" text="Live Notifications" level="H3" class="sectionTitle"/>
-                <ScrollContainer id="_IDGenScrollContainer" vertical="true" height="100%" class="notifScroll">
-                    <MessageStrip id="_IDGenMessageStrip1" text="Route Deviation - Truck #TRK-1042" type="Warning" showIcon="true" class="customMsgStrip warningStrip" />
-                    <MessageStrip id="_IDGenMessageStrip2" text="Engine Temp Alert - Truck #TRK-0891" type="Error" showIcon="true" class="customMsgStrip errorStrip" />
-                    <MessageStrip id="_IDGenMessageStrip3" text="Delivery Done - Order #ORD-4521" type="Success" showIcon="true" class="customMsgStrip SuccessStrip" />
-                    <MessageStrip id="_IDGenMessageStrip4" text="Traffic Delay on NH-48" type="Information" showIcon="true" class="customMsgStrip Strip"/>
+                <Title id="_IDGenTitle8" text="Live Fleet Monitor" level="H3" class="sectionTitle"/>
+                <ScrollContainer id="_IDGenScrollContainer" vertical="true" height="100%" class="fleetScroll">
+                    <List id="fleetList" items="{fleet>/activeFleet}" class="fleetMonitorList">
+                        <CustomListItem class="fleetListItem">
+                            <VBox class="fleetItemContainer">
+                                <HBox justifyContent="SpaceBetween" alignItems="Center" class="fleetTopRow">
+                                    <HBox alignItems="Center" class="driverInfoContainer">
+                                        <core:HTML content="&lt;div class='driver-circle'&gt;{fleet>driverInitials}&lt;/div&gt;" class="driverCircle"/>
+                                        <VBox class="driverDetailsBox">
+                                            <Text text="{fleet>driverName}" class="driverNameText"/>
+                                            <Text text="{fleet>truckId}" class="truckNumberText"/>
+                                        </VBox>
+                                    </HBox>
+                                    <VBox alignItems="Center" class="contactInfoBox">
+                                        <Text text="{fleet>driverContact}" class="contactNumberText"/>
+                                    </VBox>
+                                </HBox>
+                                <Button text="View Details" press="onViewFleetDetails" type="Emphasized" class="viewFleetBtn fullWidthBtn"/>
+                            </VBox>
+                        </CustomListItem>
+                    </List>
                 </ScrollContainer>
             </VBox>
         </layout:Grid>
+        
+        <!-- Fleet Details Side Panel -->
+        <Panel id="fleetDetailsPanel" class="fleetDetailsPanel" visible="false">
+            <headerToolbar>
+                <Toolbar id="detailsToolbar">
+                    <Title id="detailsTitle" text="Fleet Details" class="detailsPanelTitle"/>
+                    <ToolbarSpacer id="detailsSpacer"/>
+                    <Button id="closeDetailsBtn" icon="sap-icon://decline" press="onCloseDetails" type="Transparent"/>
+                </Toolbar>
+            </headerToolbar>
+            <content>
+                <VBox id="detailsContent" class="detailsContentBox">
+                    <VBox id="locationDetails" class="locationDetailsBox">
+                        <Label id="pickupLabel" text="Pickup Location:" class="detailLabel"/>
+                        <Text id="pickupLocation" text="{selectedFleet>/pickupLocation}" class="detailText"/>
+                        
+                        <Label id="dropLabel" text="Drop Location:" class="detailLabel"/>
+                        <Text id="dropLocation" text="{selectedFleet>/dropLocation}" class="detailText"/>
+                        
+                        <Label id="currentLabel" text="Current Location:" class="detailLabel"/>
+                        <Text id="currentLocation" text="{selectedFleet>/currentLocation}" class="detailText"/>
+                        
+                        <Label id="contactLabel" text="Driver Contact:" class="detailLabel"/>
+                        <Text id="driverContact" text="{selectedFleet>/driverContact}" class="detailText"/>
+                    </VBox>
+                </VBox>
+            </content>
+        </Panel>
     </VBox>
 </mvc:View>

@@ -11,7 +11,6 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("AdminDashboard").attachPatternMatched(this._onAdminMatched, this);
 
-            // 1. Mobile Check on Load: Start Collapsed
             if (Device.system.phone) {
                 var oToolPage = this.byId("adminToolPage");
                 if (oToolPage) {
@@ -19,23 +18,43 @@ sap.ui.define([
                 }
             }
         },
-
-        // 🟢 BUTTON CLICK FIX (Isse click 100% pakda jayega)
+        
         onAfterRendering: function() {
             var oBtn = this.byId("sideNavBtn2");
             var that = this;
 
             if (oBtn) {
-                // Purane events clear karke Browser Event lagaya
                 oBtn.$().off("tap click touchstart");
-
                 oBtn.attachBrowserEvent("click touchstart", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
-                    // Seedha Toggle Function Call
                     that.onSideNavButtonPress();
                 });
+            }
+            
+            this._loadUserProfile();
+        },
+        
+        _loadUserProfile: function() {
+            var sUserEmail = localStorage.getItem("userEmail");
+            if (sUserEmail) {
+                var oModel = this.getOwnerComponent().getModel();
+                var oListBinding = oModel.bindList("/Users", null, [], [
+                    new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.EQ, sUserEmail)
+                ]);
+
+                oListBinding.requestContexts(0, 1).then(function (aContexts) {
+                    if (aContexts.length > 0) {
+                        var oUserData = aContexts[0].getObject();
+                        var oCompanyText = this.byId("_IDGuenText18");
+                        var oEmailText = this.byId("_IDGuenText19");
+                        
+                        if (oCompanyText && oEmailText) {
+                            oCompanyText.setText(oUserData.companyName || "Admin User");
+                            oEmailText.setText(oUserData.email || "admin@company.com");
+                        }
+                    }
+                }.bind(this));
             }
         },
 
