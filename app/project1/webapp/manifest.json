@@ -86,6 +86,19 @@
         {
           "uri": "css/admin-dashboard.css"
         }
+        ,
+        {
+          "uri": "css/driver-activeMission-tab.css"
+        },
+        {
+          "uri": "css/DriverPerformance.css"
+        },
+        {
+          "uri": "css/DriverDashboard.css"
+        },
+        {
+          "uri": "css/DriverSecure.css"
+        }
       ]
     },
     "routing": {
@@ -173,6 +186,37 @@
             "TargetAdmin",
             "TargetSmartDispatcher"
           ]
+        },
+        {
+          "name": "DriverMission",
+          "pattern": "driver/mission",
+          "target": [
+            "TargetDriver"
+          ]
+        },
+        {
+          "name": "DriverNav",
+          "pattern": "driver/navigation",
+          "target": [
+            "TargetDriver",
+            "TargetNav"
+          ]
+        },
+        {
+          "name": "DriverSecure",
+          "pattern": "driver/secure",
+          "target": [
+            "TargetDriver",
+            "TargetSecure"
+          ]
+        },
+        {
+          "name": "DriverPerformance",
+          "pattern": "driver/performance",
+          "target": [
+            "TargetDriver",
+            "TargetPerformance"
+          ]
         }
       ],
       "targets": {
@@ -215,6 +259,27 @@
           "name": "SmartDispatcher",
           "parent": "TargetAdmin",
           "controlId": "adminMainContent",
+          "controlAggregation": "pages"
+        },
+        "TargetNav": {
+          "id": "DriverNav",
+          "name": "DriverNav",
+          "parent": "TargetDriver",
+          "controlId": "driverNavContainer",
+          "controlAggregation": "pages"
+        },
+        "TargetSecure": {
+          "id": "DriverSecure",
+          "name": "DriverSecure",
+          "parent": "TargetDriver",
+          "controlId": "driverNavContainer",
+          "controlAggregation": "pages"
+        },
+        "TargetPerformance": {
+          "id": "DriverPerformance",
+          "name": "DriverPerformance",
+          "parent": "TargetDriver",
+          "controlId": "driverNavContainer",
           "controlAggregation": "pages"
         }
       }

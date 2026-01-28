@@ -65,4 +65,94 @@ service LogiChainService {
     // Additional helper functions
     function getAvailableTrucks(loadWeight: Decimal(5,2)) returns array of Trucks;
     action confirmDelivery(tripID: UUID, enteredOTP: Integer) returns String;
+        // --- Core Master Entities ---
+
+    @cds.redirection.target
+    entity TripAssignments as projection on db.TripAssignments;
+
+    // Driver authentication and earnings
+    action authenticateDriver(email: String, password: String) returns {
+        success: Boolean;
+        driverID: UUID;
+        driverName: String;
+        message: String;
+    };
+    
+    action calculateDriverEarnings(driverID: UUID) returns {
+        totalEarnings: Decimal(15,2);
+        completedTrips: Integer;
+    };
+
+    // DRIVER PORTAL API
+    @readonly
+    entity ActiveMission as projection on db.Shipments {
+        key ID,
+        pickupLocation,
+        dropLocation,
+        materialCategory,
+        loadWeightTons,
+        status,
+        null as truckNo : String,
+        null as driverName : String,
+        null as driverID : UUID
+    } where status = 'Assigned' or status = 'In-Transit';
+    
+    // Driver Performance Entity
+    @readonly
+    entity DriverPerformance as projection on db.Shipments {
+        key ID,
+        totalFare,
+        status,
+        createdAt,
+        null as driverID : UUID
+    } where status = 'Delivered';
+
+    // Get driver-specific active missions
+    action getDriverMissions(driverID: UUID) returns array of {
+        ID: String;
+        pickupLocation: String;
+        dropLocation: String;
+        materialCategory: String;
+        loadWeightTons: Decimal(5,2);
+        status: String;
+        truckNo: String;
+        driverName: String;
+    };
+
+    // --- Live Navigation APIs ---
+    function getNavigationData(tripID: UUID) returns {
+        distanceRemaining: String;
+        estimatedArrival: String;
+        currentStatus: String;
+        checkpoints: array of {
+            location: String;
+            time: String;
+            status: String;
+            latitude: Decimal(9,6);
+            longitude: Decimal(9,6);
+        };
+    };
+
+    action updateLocation(tripID: UUID, latitude: Decimal(9,6), longitude: Decimal(9,6)) returns String;
+    action startMission(shipmentID: String) returns String;
+
+    action getDriverPerformance(driverID: UUID) returns {
+        totalDistance: Integer;
+        truckType: String;
+        totalFare: Decimal(15,2);
+    };
+
+    // Driver Stats Function
+    function getDriverStats(driverID: UUID) returns {
+        totalEarnings: Decimal(15,2);
+        completedTrips: Integer;
+        safetyRating: Decimal(3,1);
+    };
+
+    action confirmPickup(shipmentID: String) returns String;
+    action updateDriverLocation(driverID: UUID, latitude: Decimal(9,6), longitude: Decimal(9,6)) returns String;
+
+    // --- Secure Delivery Actions ---
+    action sendOTP(phoneNumber: String) returns { success: Boolean; otp: String; message: String; };
+    action completeDelivery(shipmentId: String, otpVerified: Boolean) returns { success: Boolean; message: String; shipmentId: String; };
 }

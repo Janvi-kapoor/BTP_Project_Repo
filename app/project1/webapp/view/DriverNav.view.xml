@@ -1,0 +1,120 @@
+<mvc:View controllerName="project1.controller.DriverNav"
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    
+    <!-- Scrollable Container -->
+    <ScrollContainer id="_IDGenScrollContainer2" height="100vh" vertical="true" horizontal="false">
+        <!-- Full Screen Map Background Container -->
+        <VBox id="_IDGenVBox26" class="liveNav-mapBackground">
+        
+        <!-- Floating Header Strip with Glassmorphism -->
+        <HBox id="_IDGenHBox16" class="liveNav-glassHeader" justifyContent="SpaceBetween" alignItems="Center">
+            <HBox id="_IDGenHBox18" alignItems="Center" class="liveNav-metric">
+                <core:Icon id="_IDGenIcon14" src="sap-icon://map-2" class="liveNav-metricIcon"/>
+                <VBox id="_IDGenVBox27" class="liveNav-metricContent">
+                    <Text id="_IDGenText48" text="Total Distance" class="liveNav-metricLabel"/>
+                    <Text id="_IDGenText50" text="{perfModel>/totalDistance} KM" class="liveNav-metricValue"/>
+                </VBox>
+            </HBox>
+            
+            <HBox id="_IDGenHBox19" alignItems="Center" class="liveNav-metric">
+                <core:Icon id="_IDGenIcon18" src="sap-icon://shipping-status" class="liveNav-metricIcon"/>
+                <VBox id="_IDGenVBox32" class="liveNav-metricContent">
+                    <Text id="_IDGenText51" text="Assigned Truck" class="liveNav-metricLabel"/>
+                    <Text id="_IDGenText52" text="{perfModel>/truckType}" class="liveNav-metricValue liveNav-purpleText"/>
+                </VBox>
+            </HBox>
+        </HBox>
+
+        <!-- Main Content Area -->
+        <HBox id="_IDGenHBox20" class="liveNav-contentArea">
+            
+            <!-- Floating Timeline Card (Left Side) -->
+            <VBox id="_IDGenVBox33" class="liveNav-timelineCard">
+                <VBox id="_IDGenVBox34" class="liveNav-cardHeader">
+                    <Title id="_IDGenTitle20" text="Shipment Status" level="H4" class="liveNav-cardTitle"/>
+                    <Text id="_IDGenText53" text="Track your shipment progress" class="liveNav-cardSubtitle"/>
+                </VBox>
+                
+                <!-- Status Timeline -->
+               <VBox id="_IDGenVBox35" class="liveNav-timelineContainer">
+    
+    <HBox id="_IDGenHBox21" alignItems="Center" class="liveNav-timelineItem">
+        <VBox id="_IDGenVBox36" alignItems="Center" class="liveNav-stepIndicator">
+            <core:Icon id="_IDGenIcon19" src="{= ${missionData>/status} === 'Assigned' ? 'sap-icon://accept' : 'sap-icon://accept' }" 
+                       class="{= ${missionData>/status} === 'Assigned' ? 'liveNav-stepIcon liveNav-active' : 'liveNav-stepIcon liveNav-completed' }"/>
+            <VBox id="_IDGenVBox37" class="{= ${missionData>/status} === 'Assigned' ? 'liveNav-stepLine' : 'liveNav-stepLine liveNav-completedLine' }"/>
+        </VBox>
+        <VBox id="_IDGenVBox38" class="liveNav-stepContent">
+            <Text id="_IDGenText55" text="Assigned" class="liveNav-stepTitle"/>
+            <Text id="_IDGenText56" text="Driver assigned" class="liveNav-stepTime"/>
+        </VBox>
+    </HBox>
+    
+    <HBox id="_IDGenHBox22" alignItems="Center" class="liveNav-timelineItem">
+        <VBox id="_IDGenVBox39" alignItems="Center" class="liveNav-stepIndicator">
+            <core:Icon id="_IDGenIcon20" src="sap-icon://navigation-right-arrow" 
+                       class="{= ${missionData>/status} === 'In-Transit' ? 'liveNav-stepIcon liveNav-active' : 
+                                (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
+            <VBox id="_IDGenVBox40" class="{= ${missionData>/status} === 'In-Transit' ? 'liveNav-stepLine' : 
+                            (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'liveNav-stepLine liveNav-completedLine' : 'liveNav-stepLine' }"/>
+        </VBox>
+        <VBox id="_IDGenVBox41" class="liveNav-stepContent">
+            <Text id="_IDGenText57" text="In-Transit" class="liveNav-stepTitle"/>
+            <Text id="_IDGenText58" text="En route to destination" class="liveNav-stepTime"/>
+        </VBox>
+    </HBox>
+    
+    <HBox id="_IDGenHBox23" alignItems="Center" class="liveNav-timelineItem">
+        <VBox id="_IDGenVBox42" alignItems="Center" class="liveNav-stepIndicator">
+            <core:Icon id="_IDGenIcon21" src="sap-icon:// shipping-status" 
+                       class="{= ${missionData>/status} === 'ConfirmPickup' ? 'liveNav-stepIcon liveNav-active' : 
+                                ${missionData>/status} === 'Delivered' ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
+            <VBox id="_IDGenVBox43" class="{= ${missionData>/status} === 'ConfirmPickup' ? 'liveNav-stepLine' : 
+                            ${missionData>/status} === 'Delivered' ? 'liveNav-stepLine liveNav-completedLine' : 'liveNav-stepLine' }"/>
+        </VBox>
+        <VBox id="_IDGenVBox44" class="liveNav-stepContent">
+            <Text id="_IDGenText59" text="Pickup Complete" class="liveNav-stepTitle"/>
+            <Text id="_IDGenText60" text="Driver reached &amp; picked up" class="liveNav-stepTime"/>
+        </VBox>
+    </HBox>
+    
+    <HBox id="_IDGenHBox24" alignItems="Center" class="liveNav-timelineItem">
+        <VBox id="_IDGenVBox45" alignItems="Center" class="liveNav-stepIndicator">
+            <core:Icon id="_IDGenIcon22" src="sap-icon://complete" 
+                       class="{= ${missionData>/status} === 'Delivered' ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
+        </VBox>
+        <VBox id="_IDGenVBox46" class="liveNav-stepContent">
+            <Text id="_IDGenText61" text="Delivered" class="liveNav-stepTitle"/>
+            <Text id="_IDGenText74" text="Package delivered" class="liveNav-stepTime"/>
+        </VBox>
+    </HBox>
+</VBox>
+                <!-- Action Buttons -->
+                <VBox id="_IDGenVBox47" class="liveNav-actionSection">
+                    <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay"/>
+                    <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Interactive Map Area (Right Side) -->
+            <VBox id="_IDGenVBox48" class="liveNav-mapArea">
+                <!-- Map Header -->
+                <HBox id="_IDGenHBox25" class="liveNav-mapHeader" justifyContent="SpaceBetween" alignItems="Center">
+                    <Title id="_IDGenTitle22" text="Live Route Tracking" level="H5" class="liveNav-mapTitle"/>
+                    <HBox id="_IDGenHBox26" class="liveNav-mapControls">
+                        <Button id="_IDGenButton12" icon="sap-icon://my-location" type="Transparent" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
+                        <Button id="_IDGenButton13" icon="sap-icon://refresh" type="Transparent" class="liveNav-mapBtn" tooltip="Refresh Location"/>
+                        <Button id="_IDGenButton14" icon="sap-icon://full-screen" type="Transparent" class="liveNav-mapBtn" tooltip="Full Screen"/>
+                    </HBox>
+                </HBox>
+                
+                <!-- Map Container -->
+                <VBox id="_IDGenVBox49" class="liveNav-mapContainer">
+                    <core:HTML id="mapContainer" content="&lt;div id='map' style='height: 600px; width: 100%; border-radius: 12px;'&gt;&lt;/div&gt;"/>
+                </VBox>
+            </VBox>
+            
+        </HBox>
+    </VBox>
+    </ScrollContainer>
+</mvc:View>

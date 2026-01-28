@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
+    <Dialog id="addDriverDialog" title="Add New Driver" contentWidth="400px">
+        <content>
+            <form:SimpleForm id="_IDGenSimpleForm" editable="true" layout="ResponsiveGridLayout">
+                <form:content>
+                    <Label id="_IDGenLabel5" text="Full Name" required="true"/>
+                    <Input id="inputName" value="{newDriver>/name}" placeholder="Ex: Rahul Sharma" />
+
+                    <Label id="_IDGenLabel6" text="License No." required="true"/>
+                    <Input id="inputLicense" value="{newDriver>/licenseNo}" placeholder="DL-XXXX-XXXX" />
+
+                    <Label id="_IDGenLabel7" text="Rating" />
+                    <StepInput id="_IDGenStepInput" value="{newDriver>/rating}" min="0" max="5" step="0.5" />
+                    <Label id="_IDGenLabel9" text="Email Address" required="true"/>
+<Input id="_IDGenInput1" value="{newDriver>/email}" type="Email" placeholder="driver@company.com" />
+
+<Label id="_IDGenLabel10" text="Initial Password" required="true"/>
+<Input id="_IDGenInput2" value="{newDriver>/password}" type="Password" placeholder="Set temporary password" />
+
+<Label id="_IDGenLabel11" text="Phone Number" />
+<Input id="_IDGenInput3" value="{newDriver>/phone}" type="Tel" placeholder="+91-XXXXXXXXXX" />
+
+                    <Label id="_IDGenLabel8" text="Status" />
+                    <Select id="_IDGenSelect2" selectedKey="{newDriver>/status}">
+                        <core:Item id="_IDGenItem2" key="AVAILABLE" text="Available" />
+                        <core:Item id="_IDGenItem3" key="BUSY" text="Busy" />
+                        <core:Item id="_IDGenItem4" key="OFF_DUTY" text="Off Duty" />
+                    </Select>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <beginButton>
+            <Button id="_IDGenButton9" text="Save" type="Emphasized" press=".onSaveDriver" />
+        </beginButton>
+        <endButton>
+            <Button id="_IDGenButton10" text="Cancel" press=".onCancelDriver" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

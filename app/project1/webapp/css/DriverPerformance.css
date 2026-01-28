@@ -1,0 +1,284 @@
+/* DriverPerformance Page Styles - Modern Gradient Design */
+
+.performancePageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    min-height: 100vh;
+}
+
+.performanceHeaderBox {
+    margin-bottom: 8px;
+    align-items: center;
+    gap: 16px;
+}
+
+.performanceHeaderIcon {
+    font-size: 28px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+}
+
+.mainTitleText {
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+    margin: 0 !important;
+}
+
+.performanceSubtitle {
+    font-size: 16px !important;
+    color: #6B7280 !important;
+    font-weight: 400 !important;
+    margin-bottom: 32px !important;
+}
+
+.performanceCardsWrapper {
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.performanceCard {
+    background: white;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 20px;
+    padding: 24px;
+    flex: 1;
+    min-width: 280px;
+    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 140px;
+}
+
+.performanceCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+.performanceCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+}
+
+.cardHeader {
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.cardIcon {
+    font-size: 20px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+}
+
+.cardLabel {
+    font-size: 14px !important;
+    color: #6B7280 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cardValue {
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    color: #111827 !important;
+    margin: 8px 0 !important;
+    line-height: 1.2 !important;
+}
+
+.cardSubtext {
+    font-size: 14px !important;
+    color: #6B7280 !important;
+    font-weight: 500 !important;
+}
+
+/* Trip History Table Styles */
+.tripHistoryContainer {
+    background: white;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.tripHistoryContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+.tripHistoryHeading {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+    margin: 0 !important;
+}
+
+.tableToolbar {
+    background: linear-gradient(135deg, #f7f6fc 0%, #ede9fe 100%) !important;
+    border: none !important;
+    padding: 20px 24px !important;
+    border-radius: 20px 20px 0 0 !important;
+}
+
+.tripHistoryTable {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.tripHistoryTable .sapMListTblHeaderCell {
+    background: #f8fafc !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    padding: 16px 20px !important;
+    height: auto !important;
+}
+
+.tableHeader {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #374151 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tripHistoryTable .sapMListTblCell {
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: auto !important;
+}
+
+.tableCell {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+}
+
+.tripHistoryTable .sapMListTblRow:hover {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+}
+
+.tripHistoryTable .sapMListTblRow:last-child .sapMListTblCell {
+    border-bottom: none !important;
+}
+
+/* Animation for cards */
+.performanceCard {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.performanceCard:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.performanceCard:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.performanceCard:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .performancePageContainer {
+        padding: 16px;
+    }
+    
+    .performanceCardsWrapper {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .performanceCard {
+        min-width: unset;
+        padding: 20px;
+        min-height: 120px;
+    }
+    
+    .mainTitleText {
+        font-size: 24px !important;
+    }
+    
+    .cardValue {
+        font-size: 28px !important;
+    }
+    
+    .tableToolbar {
+        padding: 16px !important;
+    }
+    
+    .tripHistoryTable .sapMListTblHeaderCell,
+    .tripHistoryTable .sapMListTblCell {
+        padding: 12px 16px !important;
+    }
+    
+    .tableHeader,
+    .tableCell {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .performancePageContainer {
+        padding: 12px;
+    }
+    
+    .performanceCard {
+        padding: 16px;
+    }
+    
+    .cardValue {
+        font-size: 24px !important;
+    }
+    
+    .tripHistoryTable .sapMListTblHeaderCell,
+    .tripHistoryTable .sapMListTblCell {
+        padding: 8px 12px !important;
+    }
+}

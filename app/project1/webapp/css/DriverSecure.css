@@ -1,0 +1,492 @@
+/* DriverSecure Page Styling */
+.driverSecurePage {
+    background-color: #F3F4F6 !important;
+    font-family: 'Inter', 'Roboto', sans-serif !important;
+}
+
+
+.secureContainer {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 0 16px;
+    gap: 24px;
+}
+
+
+/* Header Section */
+.secureHeader {
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+
+.iconContainer {
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+
+.shieldIcon {
+    font-size: 32px !important;
+    color: white !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+
+.secureTitle {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    text-align: center;
+}
+
+
+.secureSubtitle {
+    font-size: 16px !important;
+    color: #6B7280 !important;
+    text-align: center;
+    font-weight: 400 !important;
+    margin-top: -24px !important;
+}
+
+
+/* POD Details Card */
+.podCard {
+    background: white;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    gap: 20px;
+    position: relative;
+}
+
+
+.podCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 2px;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+
+.podHeaderSection {
+    background: linear-gradient(135deg, #f7f6fc 0%, #ede9fe 100%);
+    padding: 16px;
+    border-radius: 12px;
+    margin: -8px -8px 24px -8px;
+    gap: 16px;
+}
+
+
+.podTitleRow {
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+
+.podTitleIcon {
+    font-size: 20px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+}
+
+
+.podTitle {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+}
+
+
+.podDetailsRow {
+    justify-content: space-between;
+    gap: 24px;
+}
+
+
+.podDetail {
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1;
+}
+
+
+.iconCircle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(147, 51, 234, 0.15);
+    margin-top: 2px;
+}
+
+
+.podIcon {
+    font-size: 16px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+.podLabel {
+    font-size: 12px !important;
+    color: #6B7280 !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+}
+
+
+.podValue {
+    font-size: 16px !important;
+    color: #111827 !important;
+    font-weight: 600 !important;
+}
+
+
+/* OTP Section Inside Card */
+.otpSectionInside {
+    gap: 20px;
+    align-items: center;
+    padding-top: 20px;
+}
+
+
+.otpTitleBox {
+    background: #fff5ea;
+    border-radius: 20px;
+    padding: 8px 12px;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+}
+
+
+.lockIcon {
+    font-size: 14px !important;
+    color: #945826 !important;
+}
+
+
+.otpTitle {
+    font-size: 14px !important;
+    font-weight: normal !important;
+    color: #945826 !important;
+    text-align: center;
+}
+
+
+.otpSubtitle {
+    font-size: 14px !important;
+    color: #6B7280 !important;
+    text-align: center;
+    font-weight: normal !important;
+}
+
+
+.otpInputs {
+    gap: 12px;
+    justify-content: center;
+}
+
+
+.otpInput .sapMInputBaseContentWrapper {
+    width: 56px !important;
+    height: 70px !important;
+}
+
+
+.otpInput .sapMInputBaseInner {
+    text-align: center !important;
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    border: 2px solid #bcc0c9 !important;
+    background: #f5f6fa !important;
+    transition: all 0.3s ease;
+}
+
+
+.otpInput .sapMInputBaseInner:focus {
+    /* border: 2px solid transparent !important;
+    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #9333EA 0%, #C084FC 100%) border-box !important;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.25) !important; */
+}
+
+
+.otpInput .sapMInputBaseContentWrapper:focus {
+    border: 2px solid transparent !important;
+    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #9333EA 0%, #C084FC 100%) border-box !important;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.25) !important;
+}
+.generateButton {
+    width: 100% !important;
+    height: 52px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-top: 50px !important;
+    background: linear-gradient(135deg, #E5E7EB 0%, #F3F4F6 100%) !important;
+    border: 2px solid #9333EA !important;
+    color: #9333EA !important;
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2) !important;
+}
+
+
+.generateButton .sapMBtnInner {
+    border-radius: 12px !important;
+    background: transparent !important;
+}
+
+
+.completeButton {
+    width: 100% !important;
+    height: 52px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-top: 8px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%) !important;
+    border: none !important;
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.5) !important;
+}
+
+
+.completeButton:disabled {
+    background: #E5E7EB !important;
+    color: #9CA3AF !important;
+    box-shadow: none !important;
+    opacity: 0.6 !important;
+}
+
+
+.completeButton .sapMBtnInner {
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: white !important;
+}
+
+
+/* Success Section Inside Card */
+.successSectionInside {
+    align-items: center;
+    gap: 16px;
+    padding-top: 20px;
+}
+
+
+.successIconCircle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #DCFCE7;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+
+.successIcon {
+    font-size: 30px !important;
+    color: #059669 !important;
+}
+
+
+@keyframes successPulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+.podVerifiedBox {
+    background: #DCFCE7;
+    border-radius: 12px;
+    padding: 8px 16px;
+    margin: 8px 0;
+    align-items: center;
+    gap: 8px;
+}
+
+
+.podVerifiedIcon {
+    font-size: 16px !important;
+    color: #059669 !important;
+}
+
+
+.podVerifiedText {
+    font-size: 14px !important;
+    color: #059669 !important;
+    font-weight: 600 !important;
+    text-align: center;
+}
+
+
+.successTitle {
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #059669 !important;
+    text-align: center;
+}
+
+
+.shipmentId {
+    font-size: 16px !important;
+    color: #6B7280 !important;
+    font-weight: 500 !important;
+    text-align: center;
+}
+
+
+/* Security Notice */
+.securityNotice {
+    background: white;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    border-radius: 16px;
+    padding: 16px;
+    gap: 12px;
+    align-items: flex-start;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.15);
+}
+
+
+.securityNotice::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    z-index: -1;
+}
+
+
+.infoIcon {
+    font-size: 18px !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 2px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(147, 51, 234, 0.4));
+}
+
+
+.noticeText {
+    font-size: 14px !important;
+    color: #374151 !important;
+    line-height: 1.5 !important;
+    font-weight: 500 !important;
+}
+
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .secureContainer {
+        margin: 16px auto;
+        padding: 0 12px;
+    }
+   
+    .podCard, .otpSection, .successSection {
+        padding: 20px;
+    }
+   
+    .otpInput {
+        width: 48px !important;
+        height: 48px !important;
+    }
+   
+    .otpInput .sapMInputBaseInner {
+        font-size: 20px !important;
+    }
+}
+
+
+/* No Mission State Styling */
+.noMissionContainer {
+    align-items: center;
+    gap: 24px;
+}
+
+
+.noMissionIconBox {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+
+.noMissionIcon {
+    font-size: 64px !important;
+    color: #9CA3AF !important;
+    opacity: 0.7;
+}
+
+
+.noMissionTitle {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    text-align: center;
+    margin-bottom: 8px !important;
+}
+
+
+.noMissionText {
+    font-size: 16px !important;
+    color: #6B7280 !important;
+    text-align: center;
+    line-height: 1.5 !important;
+    margin-bottom: 24px !important;
+}
+
+
+.backButton {
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%) !important;
+    border: none !important;
+    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4) !important;
+}
+
+
+.backButton .sapMBtnInner {
+    border-radius: 12px !important;
+    background: transparent !important;
+    color: white !important;
+}
