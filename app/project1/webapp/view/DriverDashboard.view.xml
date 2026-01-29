@@ -59,13 +59,12 @@
                             </HBox>
                         </HBox>
                         <VBox class="drActive-missionCard sapUiMediumMargin" id="missionContainer">
-                            <VBox id="_IDGenVBox28" class="drActive-missionCard-header">
-                                <HBox id="missionHeaderBox" justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox id="shipmentInfoVBox">
-                                        <Text id="shipmentLabel" text="ACTIVE SHIPMENT" class="drActive-whiteText drActive-tinyLabel"/>
-                                        <Title id="shipmentID" text="{driverData>/ID}" titleStyle="H1" class="drActive-whiteText drActive-mainShipmentID"/>
+                            <VBox class="drActive-missionCard-header">
+                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                    <VBox>
+                                        <Text text="ACTIVE SHIPMENT" class="drActive-whiteText drActive-tinyLabel"/>
+                                        <Title text="{driverData>/ID}" titleStyle="H1" class="drActive-whiteText drActive-mainShipmentID"/>
                                     </VBox>
-                                    <ObjectStatus id="missionStatus" text="{driverData>/status}" state="{= ${driverData>/status} === 'In-Transit' ? 'Success' : 'Warning' }" inverted="true"/>
                                 </HBox>
                             </VBox>
                             <VBox id="_IDGenVBox29" class="sapUiLargeMarginBottom">

@@ -65,43 +65,161 @@ sap.ui.define([
 
         _geocodeAddress: function(address) {
             return new Promise((resolve, reject) => {
-                // Try multiple geocoding strategies
-                const queries = [
-                    address + ", India",
-                    address.replace(/plant|factory|warehouse/gi, "").trim() + ", India",
-                    address.split(" ")[0] + ", India" // First word only
-                ];
+                // Enhanced geocoding with better address parsing
+                const cleanAddress = this._cleanAddress(address);
+                const queries = this._generateGeocodingQueries(cleanAddress);
                 
-                this._tryGeocoding(queries, 0, resolve, reject);
+                console.log('Geocoding queries for:', address, queries);
+                this._tryGeocodingWithFallback(queries, 0, resolve, reject);
             });
         },
 
-        _tryGeocoding: function(queries, index, resolve, reject) {
+        _cleanAddress: function(address) {
+            // Remove common noise words and normalize
+            return address
+                .replace(/\b(plant|factory|warehouse|depot|hub|center|centre)\b/gi, '')
+                .replace(/\b(road|rd|street|st|avenue|ave|lane|ln)\b/gi, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        },
+
+        _generateGeocodingQueries: function(address) {
+            const parts = address.split(',').map(part => part.trim());
+            const queries = [];
+            
+            // Strategy 1: Full address
+            queries.push(address);
+            
+            // Strategy 2: City + State + Country (most reliable)
+            if (parts.length >= 3) {
+                const city = parts.find(part => 
+                    /\b(bhopal|jamshedpur|delhi|mumbai|bangalore|chennai|kolkata|hyderabad|pune|ahmedabad)\b/i.test(part)
+                );
+                const state = parts.find(part => 
+                    /\b(madhya pradesh|jharkhand|delhi|maharashtra|karnataka|tamil nadu|west bengal|telangana|gujarat)\b/i.test(part)
+                );
+                
+                if (city && state) {
+                    queries.push(`${city}, ${state}, India`);
+                }
+            }
+            
+            // Strategy 3: Major city extraction
+            const cityMatch = address.match(/\b(bhopal|jamshedpur|delhi|mumbai|bangalore|chennai|kolkata|hyderabad|pune|ahmedabad)\b/i);
+            if (cityMatch) {
+                queries.push(`${cityMatch[0]}, India`);
+            }
+            
+            // Strategy 4: Pincode based (if available)
+            const pincodeMatch = address.match(/\b(\d{6})\b/);
+            if (pincodeMatch) {
+                queries.push(`${pincodeMatch[0]}, India`);
+            }
+            
+            // Strategy 5: First significant location word
+            const locationWords = address.split(/[,\s]+/).filter(word => 
+                word.length > 3 && !/\d/.test(word) && 
+                !/\b(area|gate|road|street|sector|block|phase)\b/i.test(word)
+            );
+            if (locationWords.length > 0) {
+                queries.push(`${locationWords[0]}, India`);
+            }
+            
+            return [...new Set(queries)]; // Remove duplicates
+        },
+
+        _tryGeocodingWithFallback: function(queries, index, resolve, reject) {
             if (index >= queries.length) {
                 reject(new Error('All geocoding attempts failed'));
                 return;
             }
 
             const query = queries[index];
-            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=in`;
+            console.log(`Trying geocoding query ${index + 1}/${queries.length}:`, query);
             
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        resolve({
-                            lat: parseFloat(data[0].lat),
-                            lng: parseFloat(data[0].lon)
-                        });
-                    } else {
-                        // Try next query
-                        this._tryGeocoding(queries, index + 1, resolve, reject);
-                    }
+            // Use multiple geocoding services for better accuracy
+            this._geocodeWithNominatim(query)
+                .then(result => {
+                    console.log('Geocoding success:', query, result);
+                    resolve(result);
                 })
                 .catch(() => {
-                    // Try next query on error
-                    this._tryGeocoding(queries, index + 1, resolve, reject);
+                    console.log('Geocoding failed for:', query);
+                    // Try next query
+                    this._tryGeocodingWithFallback(queries, index + 1, resolve, reject);
                 });
+        },
+
+        _geocodeWithNominatim: function(query) {
+            return new Promise((resolve, reject) => {
+                const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5&countrycodes=in&addressdetails=1`;
+                
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            // Find best match based on importance and type
+                            const bestMatch = this._selectBestGeocodingMatch(data, query);
+                            if (bestMatch) {
+                                resolve({
+                                    lat: parseFloat(bestMatch.lat),
+                                    lng: parseFloat(bestMatch.lon),
+                                    display_name: bestMatch.display_name
+                                });
+                            } else {
+                                reject(new Error('No suitable match found'));
+                            }
+                        } else {
+                            reject(new Error('No results found'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Nominatim API error:', error);
+                        reject(error);
+                    });
+            });
+        },
+
+        _selectBestGeocodingMatch: function(results, originalQuery) {
+            // Prioritize results by type and relevance
+            const priorities = {
+                'city': 10,
+                'town': 9,
+                'village': 8,
+                'suburb': 7,
+                'neighbourhood': 6,
+                'administrative': 5
+            };
+            
+            let bestMatch = results[0]; // Default to first result
+            let bestScore = 0;
+            
+            results.forEach(result => {
+                let score = 0;
+                
+                // Score based on place type
+                if (result.type && priorities[result.type]) {
+                    score += priorities[result.type];
+                }
+                
+                // Score based on importance
+                if (result.importance) {
+                    score += result.importance * 10;
+                }
+                
+                // Bonus for exact city name match
+                const queryLower = originalQuery.toLowerCase();
+                if (result.display_name && result.display_name.toLowerCase().includes(queryLower)) {
+                    score += 5;
+                }
+                
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = result;
+                }
+            });
+            
+            return bestMatch;
         },
 
         _setupRouteNavigation: function(pickupLocation, dropLocation) {
