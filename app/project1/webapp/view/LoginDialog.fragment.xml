@@ -11,11 +11,14 @@
                     <Label id="_IDGenLabel1" text="Password" labelFor="passwordInput" design="Bold" class="sapUiSmallMarginTop"/>
                     <Input id="passwordInput" placeholder="Enter password" type="Password"/>
                 </VBox>
+                
+                <!-- Register button in content area -->
+                <HBox id="buttonBox" justifyContent="SpaceBetween" class="sapUiMediumMarginTop">
+                    <Button id="loginBtn" text="Login" press="onLoginSubmit" type="Emphasized" class="loginSubmitBtn"/>
+                    <Button id="registerBtn" text="Register" press="onRegisterPress" type="Accept" visible="false"/>
+                </HBox>
             </VBox>
         </content>
-        <beginButton>
-            <Button id="_IDGenButton4" text="Login" press="onLoginSubmit" type="Emphasized" class="loginSubmitBtn"/>
-        </beginButton>
         <endButton>
             <Button id="_IDGenButton5" text="Close" press="onCloseLogin" />
         </endButton>

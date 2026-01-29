@@ -24,6 +24,7 @@ sap.ui.define(
           portalTitle: "",
           portalIcon: "",
           portalType: "",
+          showRegister: false
         });
         this.getView().setModel(oLoginModel, "loginModel");
       },
@@ -49,6 +50,8 @@ sap.ui.define(
           oLoginModel.setProperty("/portalTitle", "Corporate Client Login");
           oLoginModel.setProperty("/portalIcon", "sap-icon://building");
           oLoginModel.setProperty("/portalType", "CUSTOMER");
+          oLoginModel.setProperty("/showRegister", true); // Only show register for customers
+          console.log("Corporate Client - showRegister set to:", oLoginModel.getProperty("/showRegister"));
         } else if (sCardTitle.includes("Operations")) {
           oLoginModel.setProperty("/portalTitle", "Operations Admin Login");
           oLoginModel.setProperty(
@@ -56,17 +59,21 @@ sap.ui.define(
             "sap-icon://BusinessSuiteInAppSymbols/signal",
           );
           oLoginModel.setProperty("/portalType", "ADMIN");
+          oLoginModel.setProperty("/showRegister", false);
+          console.log("Admin - showRegister set to:", oLoginModel.getProperty("/showRegister"));
         } else {
           oLoginModel.setProperty("/portalTitle", "Fleet Driver Login");
           oLoginModel.setProperty("/portalIcon", "sap-icon://shipping-status");
           oLoginModel.setProperty("/portalType", "DRIVER");
+          oLoginModel.setProperty("/showRegister", false);
+          console.log("Driver - showRegister set to:", oLoginModel.getProperty("/showRegister"));
         }
 
         // Fragment (Popup) load karne ka logic
         if (!this._pDialog) {
           this._pDialog = Fragment.load({
             id: oView.getId(),
-            name: "project1.view.LoginDialog", // <--- Yahan apna sahi path check karein
+            name: "project1.view.LoginDialog",
             controller: this,
           }).then(function (oDialog) {
             oView.addDependent(oDialog);
@@ -74,7 +81,17 @@ sap.ui.define(
           });
         }
 
+        var that = this;
         this._pDialog.then(function (oDialog) {
+          // Show/hide register button based on portal type
+          var oRegisterBtn = that.byId("registerBtn");
+          if (oRegisterBtn) {
+            if (sCardTitle.includes("Corporate")) {
+              oRegisterBtn.setVisible(true);
+            } else {
+              oRegisterBtn.setVisible(false);
+            }
+          }
           oDialog.open();
         });
       },
@@ -239,6 +256,123 @@ sap.ui.define(
         if (sType === "CUSTOMER") oRouter.navTo("CustomerDashboard");
         else if (sType === "ADMIN") oRouter.navTo("AdminDashboard");
         else if (sType === "DRIVER") oRouter.navTo("DriverDashboard");
+      },
+
+      // Registration functions
+      onRegisterPress: function () {
+        var oView = this.getView();
+        
+        if (!this._pRegisterDialog) {
+          this._pRegisterDialog = Fragment.load({
+            id: oView.getId(),
+            name: "project1.view.RegisterDialog",
+            controller: this,
+          }).then(function (oDialog) {
+            oView.addDependent(oDialog);
+            return oDialog;
+          });
+        }
+
+        this._pRegisterDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+        
+        // Close login dialog
+        this.onCloseLogin();
+      },
+
+      onCloseRegister: function () {
+        var oDialog = this.byId("registerDialog");
+        if (oDialog) {
+          oDialog.close();
+          this._clearRegisterFields();
+        }
+      },
+
+      onBackToLogin: function () {
+        this.onCloseRegister();
+        // Reopen login dialog
+        this._pDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+      },
+
+      _clearRegisterFields: function () {
+        var oCompany = this.byId("companyInput");
+        var oEmail = this.byId("emailRegInput");
+        var oPass = this.byId("passwordRegInput");
+        var oCredit = this.byId("creditInput");
+
+        if (oCompany) oCompany.setValue("");
+        if (oEmail) oEmail.setValue("");
+        if (oPass) oPass.setValue("");
+        if (oCredit) oCredit.setValue("");
+      },
+
+      onRegisterSubmit: function () {
+        var oView = this.getView();
+        var sCompany = oView.byId("companyInput").getValue();
+        var sEmail = oView.byId("emailRegInput").getValue();
+        var sPassword = oView.byId("passwordRegInput").getValue();
+        var sCreditLine = oView.byId("creditInput").getValue() || "0";
+
+        if (!sCompany || !sEmail || !sPassword) {
+          MessageToast.show("Please fill all required fields");
+          return;
+        }
+
+        // Email validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(sEmail)) {
+          MessageToast.show("Please enter a valid email address");
+          return;
+        }
+
+        var oModel = this.getOwnerComponent().getModel();
+        var oNewUser = {
+          companyName: sCompany,
+          email: sEmail,
+          password: sPassword,
+          role: "CUSTOMER",
+          creditLine: parseFloat(sCreditLine)
+        };
+
+        sap.ui.core.BusyIndicator.show(0);
+
+        // First check if email already exists
+        var oBinding = oModel.bindList("/Users", null, null, [
+          new Filter("email", FilterOperator.EQ, sEmail)
+        ]);
+
+        var that = this;
+        oBinding.requestContexts().then(function (aContexts) {
+          if (aContexts.length > 0) {
+            sap.ui.core.BusyIndicator.hide();
+            MessageToast.show("Email already registered. Please use a different email.");
+            return;
+          }
+
+          // Create new user
+          var oListBinding = oModel.bindList("/Users");
+          var oContext = oListBinding.create(oNewUser);
+          
+          oContext.created().then(function () {
+            sap.ui.core.BusyIndicator.hide();
+            MessageToast.show("Registration successful! You can now login.");
+            that.onCloseRegister();
+            
+            // Open login dialog again
+            that._pDialog.then(function (oDialog) {
+              oDialog.open();
+            });
+          }).catch(function (oError) {
+            sap.ui.core.BusyIndicator.hide();
+            MessageToast.show("Registration failed. Please try again.");
+          });
+        }).catch(function (oError) {
+          sap.ui.core.BusyIndicator.hide();
+          MessageToast.show("Registration failed. Please try again.");
+        });
       },
     });
   },
