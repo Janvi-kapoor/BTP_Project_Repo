@@ -1,26 +1,26 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
-    <Dialog id="addTruckDialog" title="Add New Truck" contentWidth="400px">
+    <Dialog id="addTruckDialog" title="Add New Truck" contentWidth="400px" class="professionalDialog">
         <content>
-            <form:SimpleForm id="_IDGenSimpleForm1" editable="true" layout="ResponsiveGridLayout">
+            <form:SimpleForm id="_IDGenSimpleForm1" editable="true" layout="ResponsiveGridLayout" class="professionalForm">
                 <form:content>
-                    <Label id="_IDGenLabel12" text="Truck Number" required="true"/>
-                    <Input id="_IDGenInput" value="{newTruck>/truckNo}" placeholder="Ex: MH-12-AB-1234" />
+                    <Label id="_IDGenLabel12" text="Truck Number" required="true" class="professionalLabel"/>
+                    <Input id="_IDGenInput" value="{newTruck>/truckNo}" placeholder="Ex: MH-12-AB-1234" class="professionalInput" />
 
-                    <Label id="_IDGenLabel13" text="Vehicle Type" required="true"/>
-                    <Select id="_IDGenSelect3" selectedKey="{newTruck>/vehicleType}">
+                    <Label id="_IDGenLabel13" text="Vehicle Type" required="true" class="professionalLabel"/>
+                    <Select id="_IDGenSelect3" selectedKey="{newTruck>/vehicleType}" class="professionalSelect">
                         <core:Item id="_IDGenItem5" key="Heavy Duty" text="Heavy Duty" />
                         <core:Item id="_IDGenItem6" key="Medium Duty" text="Medium Duty" />
                         <core:Item id="_IDGenItem7" key="Light Duty" text="Light Duty" />
                     </Select>
 
-                    <Label id="_IDGenLabel14" text="Max Capacity (Tons)" />
-                    <StepInput id="_IDGenStepInput1" value="{newTruck>/maxCapacityTons}" min="1" max="50" step="0.5" />
+                    <Label id="_IDGenLabel14" text="Max Capacity (Tons)" class="professionalLabel" />
+                    <StepInput id="_IDGenStepInput1" value="{newTruck>/maxCapacityTons}" min="1" max="50" step="0.5" class="professionalStepInput" />
 
-                    <Label id="_IDGenLabel15" text="Odometer (KM)" />
-                    <Input id="_IDGenInput4" value="{newTruck>/odometerKM}" type="Number" />
+                    <Label id="_IDGenLabel15" text="Odometer (KM)" class="professionalLabel" />
+                    <Input id="_IDGenInput4" value="{newTruck>/odometerKM}" type="Number" class="professionalInput" />
 
-                    <Label id="_IDGenLabel16" text="Status" />
-                    <Select id="_IDGenSelect4" selectedKey="{newTruck>/status}">
+                    <Label id="_IDGenLabel16" text="Status" class="professionalLabel" />
+                    <Select id="_IDGenSelect4" selectedKey="{newTruck>/status}" class="professionalSelect">
                         <core:Item id="_IDGenItem8" key="AVAILABLE" text="Available" />
                         <core:Item id="_IDGenItem9" key="MAINTENANCE" text="Maintenance" />
                         <core:Item id="_IDGenItem10" key="ON_TRIP" text="On Trip" />
@@ -29,10 +29,10 @@
             </form:SimpleForm>
         </content>
         <beginButton>
-            <Button id="_IDGenButton11" text="Save" type="Emphasized" press=".onSaveTruck" />
+            <Button id="_IDGenButton11" text="Save" type="Emphasized" press=".onSaveTruck" class="professionalSaveBtn" />
         </beginButton>
         <endButton>
-            <Button id="_IDGenButton12" text="Cancel" press=".onCancelTruck" />
+            <Button id="_IDGenButton12" text="Cancel" press=".onCancelTruck" class="professionalCancelBtn" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>

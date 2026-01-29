@@ -1,27 +1,27 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form">
-    <Dialog id="addDriverDialog" title="Add New Driver" contentWidth="400px">
+    <Dialog id="addDriverDialog" title="Add New Driver" contentWidth="400px" class="professionalDialog">
         <content>
-            <form:SimpleForm id="_IDGenSimpleForm" editable="true" layout="ResponsiveGridLayout">
+            <form:SimpleForm id="_IDGenSimpleForm" editable="true" layout="ResponsiveGridLayout" class="professionalForm">
                 <form:content>
-                    <Label id="_IDGenLabel5" text="Full Name" required="true"/>
-                    <Input id="inputName" value="{newDriver>/name}" placeholder="Ex: Rahul Sharma" />
+                    <Label id="_IDGenLabel5" text="Full Name" required="true" class="professionalLabel"/>
+                    <Input id="inputName" value="{newDriver>/name}" placeholder="Ex: Rahul Sharma" class="professionalInput" />
 
-                    <Label id="_IDGenLabel6" text="License No." required="true"/>
-                    <Input id="inputLicense" value="{newDriver>/licenseNo}" placeholder="DL-XXXX-XXXX" />
+                    <Label id="_IDGenLabel6" text="License No." required="true" class="professionalLabel"/>
+                    <Input id="inputLicense" value="{newDriver>/licenseNo}" placeholder="DL-XXXX-XXXX" class="professionalInput" />
 
-                    <Label id="_IDGenLabel7" text="Rating" />
-                    <StepInput id="_IDGenStepInput" value="{newDriver>/rating}" min="0" max="5" step="0.5" />
-                    <Label id="_IDGenLabel9" text="Email Address" required="true"/>
-<Input id="_IDGenInput1" value="{newDriver>/email}" type="Email" placeholder="driver@company.com" />
+                    <Label id="_IDGenLabel7" text="Rating" class="professionalLabel" />
+                    <StepInput id="_IDGenStepInput" value="{newDriver>/rating}" min="0" max="5" step="0.5" class="professionalStepInput" />
+                    <Label id="_IDGenLabel9" text="Email Address" required="true" class="professionalLabel"/>
+<Input id="_IDGenInput1" value="{newDriver>/email}" type="Email" placeholder="driver@company.com" class="professionalInput" />
 
-<Label id="_IDGenLabel10" text="Initial Password" required="true"/>
-<Input id="_IDGenInput2" value="{newDriver>/password}" type="Password" placeholder="Set temporary password" />
+<Label id="_IDGenLabel10" text="Initial Password" required="true" class="professionalLabel"/>
+<Input id="_IDGenInput2" value="{newDriver>/password}" type="Password" placeholder="Set temporary password" class="professionalInput" />
 
-<Label id="_IDGenLabel11" text="Phone Number" />
-<Input id="_IDGenInput3" value="{newDriver>/phone}" type="Tel" placeholder="+91-XXXXXXXXXX" />
+<Label id="_IDGenLabel11" text="Phone Number" class="professionalLabel" />
+<Input id="_IDGenInput3" value="{newDriver>/phone}" type="Tel" placeholder="+91-XXXXXXXXXX" class="professionalInput" />
 
-                    <Label id="_IDGenLabel8" text="Status" />
-                    <Select id="_IDGenSelect2" selectedKey="{newDriver>/status}">
+                    <Label id="_IDGenLabel8" text="Status" class="professionalLabel" />
+                    <Select id="_IDGenSelect2" selectedKey="{newDriver>/status}" class="professionalSelect">
                         <core:Item id="_IDGenItem2" key="AVAILABLE" text="Available" />
                         <core:Item id="_IDGenItem3" key="BUSY" text="Busy" />
                         <core:Item id="_IDGenItem4" key="OFF_DUTY" text="Off Duty" />
@@ -30,10 +30,10 @@
             </form:SimpleForm>
         </content>
         <beginButton>
-            <Button id="_IDGenButton9" text="Save" type="Emphasized" press=".onSaveDriver" />
+            <Button id="_IDGenButton9" text="Save" type="Emphasized" press=".onSaveDriver" class="professionalSaveBtn" />
         </beginButton>
         <endButton>
-            <Button id="_IDGenButton10" text="Cancel" press=".onCancelDriver" />
+            <Button id="_IDGenButton10" text="Cancel" press=".onCancelDriver" class="professionalCancelBtn" />
         </endButton>
     </Dialog>
 </core:FragmentDefinition>
