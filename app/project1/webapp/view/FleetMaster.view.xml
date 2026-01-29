@@ -46,7 +46,7 @@
     </HBox>
     <HBox id="_IDGenHBox8" alignItems="Center" class="locationPill">
         <core:Icon id="_IDGenIcon7" src="sap-icon://map-2" size="12px"  class="sapUiTinyMarginEnd" />
-        <Link id="_IDGenLink" text="View Location" /> </HBox>
+        <Link id="_IDGenLink" text="View Location" press="onViewLocation" /> </HBox>
     <ObjectStatus id="_IDGenObjectStatus1" class="customStatusPill" text="{status}" 
         state="{= ${status} === 'AVAILABLE' ? 'Success' : 'Warning' }" />
 </cells>
