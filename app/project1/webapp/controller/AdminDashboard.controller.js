@@ -11,12 +11,30 @@ sap.ui.define([
             var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("AdminDashboard").attachPatternMatched(this._onAdminMatched, this);
 
+            // Refresh main model to ensure fresh data
+            var oMainModel = this.getOwnerComponent().getModel();
+            if (oMainModel && oMainModel.refresh) {
+                oMainModel.refresh();
+            }
+
             if (Device.system.phone) {
                 var oToolPage = this.byId("adminToolPage");
                 if (oToolPage) {
                     oToolPage.setSideExpanded(false);
                 }
             }
+            
+            // Load notifications initially
+            setTimeout(function() {
+                this._loadNotifications();
+            }.bind(this), 1000);
+            
+            // Set up periodic notification refresh (every 30 seconds)
+            this._notificationTimer = setInterval(function() {
+                if (this._loadNotifications) {
+                    this._loadNotifications();
+                }
+            }.bind(this), 30000);
         },
         
         onAfterRendering: function() {
@@ -121,6 +139,89 @@ sap.ui.define([
                 var bExpanded = oToolPage.getSideExpanded();
                 oBtn.setIcon(bExpanded ? "sap-icon://menu2" : "sap-icon://menu2"); 
                 // Note: Desktop pe usually menu icon hi rakhte hain, par agar cross chahiye to yahan change kar lena
+            }
+        },
+
+        onLogout: function() {
+            // Clear all localStorage data
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("loggedDriverID");
+            localStorage.removeItem("loggedDriverName");
+            localStorage.clear();
+            
+            // Navigate to main landing page (3 tiles)
+            this.getOwnerComponent().getRouter().navTo("RouteView1");
+            
+            // Show confirmation message
+            sap.m.MessageToast.show("Logged out successfully");
+        },
+
+        // Notification System
+        onNotificationPress: function() {
+            if (!this._notificationPopover) {
+                this._notificationPopover = sap.ui.xmlfragment("project1.fragment.NotificationPopover", this);
+                this.getView().addDependent(this._notificationPopover);
+            }
+            
+            this._loadNotifications();
+            this._notificationPopover.openBy(this.byId("notificationBtn"));
+        },
+
+        _loadNotifications: function() {
+            var sUserID = localStorage.getItem("userID") || "admin";
+            var sUserRole = "ADMIN";
+            var oModel = this.getOwnerComponent().getModel();
+            
+            var oListBinding = oModel.bindList("/ActiveDelays");
+            var that = this;
+            
+            oListBinding.requestContexts().then(function(aContexts) {
+                var aNotifications = aContexts.map(function(oContext) {
+                    return oContext.getObject();
+                });
+                
+                console.log("Admin notifications loaded:", aNotifications.length);
+                
+                var oNotificationModel = new sap.ui.model.json.JSONModel(aNotifications);
+                that.getView().setModel(oNotificationModel, "notificationModel");
+                
+                // Update notification count
+                that._updateNotificationCount(aNotifications.length);
+            }).catch(function(oError) {
+                console.error("Failed to load notifications:", oError.message);
+                // Set empty model in case of error
+                var oNotificationModel = new sap.ui.model.json.JSONModel([]);
+                that.getView().setModel(oNotificationModel, "notificationModel");
+                that._updateNotificationCount(0);
+            });
+        },
+
+        _updateNotificationCount: function(iCount) {
+            var oBtn = this.byId("notificationBtn");
+            if (oBtn) {
+                if (iCount > 0) {
+                    oBtn.setText(iCount.toString());
+                    oBtn.setType("Emphasized");
+                } else {
+                    oBtn.setText("");
+                    oBtn.setType("Transparent");
+                }
+            }
+        },
+
+        onRefreshNotifications: function() {
+            this._loadNotifications();
+        },
+
+        onCloseNotifications: function() {
+            this._notificationPopover.close();
+        },
+        
+        onExit: function() {
+            // Clean up the notification timer
+            if (this._notificationTimer) {
+                clearInterval(this._notificationTimer);
             }
         }
     });

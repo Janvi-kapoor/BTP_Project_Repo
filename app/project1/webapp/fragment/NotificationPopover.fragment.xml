@@ -1,0 +1,27 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <ResponsivePopover id="notificationPopover" title="Active Delays" placement="Bottom" contentWidth="400px" contentHeight="300px">
+        <content>
+            <List id="notificationList" items="{notificationModel>/}" noDataText="No active delays">
+                <StandardListItem 
+                    title="{notificationModel>driverName} - {notificationModel>shipmentID}"
+                    description="{notificationModel>delayReason}"
+                    info="{
+                        path: 'notificationModel>reportedAt',
+                        type: 'sap.ui.model.odata.type.DateTimeOffset',
+                        formatOptions: {
+                            style: 'short'
+                        }
+                    }"
+                    type="Inactive"
+                    icon="sap-icon://warning"/>
+            </List>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Refresh" press="onRefreshNotifications" icon="sap-icon://refresh"/>
+                <Button text="Close" press="onCloseNotifications"/>
+            </Toolbar>
+        </footer>
+    </ResponsivePopover>
+</core:FragmentDefinition>

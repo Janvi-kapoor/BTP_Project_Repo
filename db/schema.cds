@@ -107,3 +107,20 @@ entity TrackingLogs : cuid {
     long      : Decimal(9, 6);
     timestamp : DateTime @cds.on.insert: $now;
 }
+
+// 7. Delay Logs
+entity DelayLogs : cuid, managed {
+    shipment     : Association to Shipments;
+    driver       : Association to Drivers;
+    delayReason  : String(30) enum {
+        Traffic = 'Traffic';
+        VehicleBreakdown = 'Vehicle Breakdown';
+        Weather = 'Weather';
+        Accident = 'Accident';
+    };
+    status       : String(20) enum {
+        Active = 'Active';
+        Resolved = 'Resolved';
+    } default 'Active';
+    reportedAt   : DateTime @cds.on.insert: $now;
+}

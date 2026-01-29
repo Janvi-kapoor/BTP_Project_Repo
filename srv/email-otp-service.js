@@ -5,9 +5,15 @@ class EmailOTPService {
     constructor() {
         this.transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
             auth: {
                 user: process.env.GMAIL_USER || 'your_gmail@gmail.com',
-                pass: process.env.GMAIL_PASS || 'your_app_password'
+                pass: process.env.GMAIL_APP_PASSWORD || 'your_16_digit_app_password'
+            },
+            tls: {
+                rejectUnauthorized: false
             }
         });
         console.log('Email OTP Service initialized');

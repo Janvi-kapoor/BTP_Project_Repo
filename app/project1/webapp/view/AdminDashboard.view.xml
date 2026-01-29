@@ -27,7 +27,7 @@
     
         <ToolbarSpacer id="_IDGenfrToolbarSpacer5" />
         <HBox id="rightSection2" alignItems="Center">
-              <Button id="_IDGenButton9"  icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications"/>
+              <Button id="notificationBtn" icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications" press="onNotificationPress"/>
             <core:Icon id="_IDGenIcon29"  src="sap-icon://vertical-bar" class="separatorIcon sapUiTinyMarginEnd" color="#e2e8f0"/>
              <HBox id="profileBox2" alignItems="Center" class="profileSection">
                <Avatar id="_IDGengAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>
@@ -35,6 +35,7 @@
                     <Text id="_IDGuenText18" class="profileName"/>
                     <Text id="_IDGuenText19" class="profileRole"/>
                 </VBox>
+                <Button id="logoutBtn" icon="sap-icon://log" type="Transparent" class="headerIconBtn sapUiTinyMarginBegin" tooltip="Logout" press="onLogout"/>
                </HBox>
         </HBox>
     </tnt:ToolHeader>

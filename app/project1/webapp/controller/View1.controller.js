@@ -151,6 +151,14 @@ sap.ui.define(
                 );
 
                 this.onCloseLogin();
+                
+                // Clear any cached models to ensure fresh data
+                var oComponent = this.getOwnerComponent();
+                var oMainModel = oComponent.getModel();
+                if (oMainModel && oMainModel.refresh) {
+                  oMainModel.refresh();
+                }
+                
                 this._navigateToDashboard(sType);
               } else {
                 sap.m.MessageToast.show(
@@ -205,6 +213,14 @@ sap.ui.define(
               sap.m.MessageToast.show("Welcome Driver " + oDriverData.name);
 
               that.onCloseLogin();
+              
+              // Clear any cached models to ensure fresh data
+              var oComponent = that.getOwnerComponent();
+              var oMainModel = oComponent.getModel();
+              if (oMainModel && oMainModel.refresh) {
+                oMainModel.refresh();
+              }
+              
               var oRouter = that.getOwnerComponent().getRouter();
               oRouter.navTo("DriverDashboard");
             } else {
