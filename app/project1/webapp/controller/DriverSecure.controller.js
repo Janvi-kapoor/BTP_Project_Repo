@@ -42,8 +42,8 @@ sap.ui.define([
                     var oMission = aContexts[0].getObject();
                     console.log("🔍 DriverSecure - Mission data:", oMission);
                    
-                    // Check if mission is active (Assigned or In-Transit)
-                    if (oMission && (oMission.status === 'Assigned' || oMission.status === 'In-Transit')) {
+                    // Check if mission is active (Assigned, In-Transit, or ConfirmPickup)
+                    if (oMission && (oMission.status === 'Assigned' || oMission.status === 'In-Transit' || oMission.status === 'ConfirmPickup')) {
                         that._currentShipmentId = oMission.ID;
                         that.byId("handoverLocationText").setText(oMission.dropLocation || "N/A");
                         that.byId("receivingOfficerText").setText("Receiving Company"); // Default text

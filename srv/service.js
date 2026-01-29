@@ -239,7 +239,7 @@ module.exports = cds.service.impl(async function () {
             .columns('ID', 'pickupLocation', 'dropLocation', 'status', 'loadWeightTons', 'materialCategory', 'totalDistance', 'totalFare')
             .where({
                 ID: { in: shipmentIDs },
-                status: { in: ['Assigned', 'In-Transit'] }
+                status: { in: ['Assigned', 'In-Transit', 'ConfirmPickup'] }
             });
         
         console.log('====> Active missions found:', activeMissions.length);

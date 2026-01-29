@@ -59,13 +59,12 @@
                             </HBox>
                         </HBox>
                         <VBox class="drActive-missionCard sapUiMediumMargin" id="missionContainer">
-                            <VBox id="_IDGenVBox28" class="drActive-missionCard-header">
-                                <HBox id="missionHeaderBox" justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox id="shipmentInfoVBox">
-                                        <Text id="shipmentLabel" text="ACTIVE SHIPMENT" class="drActive-whiteText drActive-tinyLabel"/>
-                                        <Title id="shipmentID" text="{driverData>/ID}" titleStyle="H1" class="drActive-whiteText drActive-mainShipmentID"/>
+                            <VBox class="drActive-missionCard-header">
+                                <HBox justifyContent="SpaceBetween" alignItems="Center">
+                                    <VBox>
+                                        <Text text="ACTIVE SHIPMENT" class="drActive-whiteText drActive-tinyLabel"/>
+                                        <Title text="{driverData>/ID}" titleStyle="H1" class="drActive-whiteText drActive-mainShipmentID"/>
                                     </VBox>
-                                    <ObjectStatus id="missionStatus" text="{driverData>/status}" state="{= ${driverData>/status} === 'In-Transit' ? 'Success' : 'Warning' }" inverted="true"/>
                                 </HBox>
                             </VBox>
                             <VBox id="_IDGenVBox29" class="sapUiLargeMarginBottom">
@@ -96,12 +95,12 @@
                                     <VBox id="durationBox" alignItems="Center" class="drActive-specItem">
                                         <core:Icon id="durationIcon" src="sap-icon://future" size="1.8rem"/>
                                         <Text id="durationLabel" text="EST. DURATION" class="drActive-tinyLabel"/>
-                                        <Text id="durationValue" text="3-4 Hours" class="drActive-specValue sapMTextBold"/>
+                                        <Text id="durationValue" text="{driverData>/eta}" class="drActive-specValue sapMTextBold"/>
                                     </VBox>
                                 </l:Grid>
                                 <!-- Conditional Action Section -->
-                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://arrow-right" iconFirst="false" visible="{= ${driverData>/status} !== 'In-Transit' }"/>
-                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' }" alignItems="Center" class="sapUiMediumMarginTop">
+                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://arrow-right" iconFirst="false" visible="{= ${driverData>/status} !== 'In-Transit' &amp;&amp; ${driverData>/status} !== 'ConfirmPickup' }"/>
+                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' || ${driverData>/status} === 'ConfirmPickup' }" alignItems="Center" class="sapUiMediumMarginTop">
                                     <core:Icon id="_IDGenIcon17" src="sap-icon://accept" size="2rem" color="#10b981" class="sapUiTinyMarginBottom"/>
                                     <Text id="_IDGenText45" text="The trip has started" class="drActive-specValue sapMTextBold sapUiPositiveText"/>
                                 </VBox>
@@ -122,7 +121,7 @@
        <Title id="_IDGenTitle17" 
        text="{
            parts: [
-               {path: 'perfModel>/totalFare'},
+               {path: 'driverData>/totalFare'},
                {value: 'INR'}
            ],
            type: 'sap.ui.model.type.Currency',
@@ -132,7 +131,7 @@
            }
        }" 
        titleStyle="H2" 
-       color="#6366f1"/>
+       class="fareTitle"/>
     </VBox>
 </l:Grid>
                     </VBox>
