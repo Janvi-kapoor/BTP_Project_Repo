@@ -1,0 +1,30 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="registerDialog" title="Register New Client" class="simpleLoginDialog">
+        <content>
+            <VBox id="registerVBox" class="sapUiMediumMargin">
+                <VBox id="registerFieldGroup" class="loginFieldGroup">
+                    <Label id="companyLabel" text="Company Name" labelFor="companyInput" design="Bold"/>
+                    <Input id="companyInput" placeholder="Enter company name" required="true" />
+                    
+                    <Label id="emailLabel" text="Email Address" labelFor="emailRegInput" design="Bold" class="sapUiSmallMarginTop"/>
+                    <Input id="emailRegInput" placeholder="company@example.com" type="Email" required="true" />
+                    
+                    <Label id="passwordLabel" text="Password" labelFor="passwordRegInput" design="Bold" class="sapUiSmallMarginTop"/>
+                    <Input id="passwordRegInput" placeholder="Enter password" type="Password" required="true"/>
+                    
+                    <Label id="creditLabel" text="Credit Line (Optional)" labelFor="creditInput" design="Bold" class="sapUiSmallMarginTop"/>
+                    <Input id="creditInput" placeholder="0.00" type="Number" />
+                </VBox>
+            </VBox>
+        </content>
+        <beginButton>
+            <Button id="registerSubmitBtn" text="Register" press="onRegisterSubmit" type="Emphasized" class="loginSubmitBtn"/>
+        </beginButton>
+        <endButton>
+            <Button id="backToLoginBtn" text="Back to Login" press="onBackToLogin" />
+            <Button id="closeRegisterBtn" text="Close" press="onCloseRegister" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
