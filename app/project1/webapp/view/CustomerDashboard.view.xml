@@ -45,11 +45,12 @@
                     alignItems="Center"
                 >
                     <Button
-                        id="_IDGenButton3"
+                        id="customerNotificationBtn"
                         icon="sap-icon://bell"
                         type="Transparent"
                         class="headerIconBtn sapUiTinyMarginEnd"
                         tooltip="Notifications"
+                        press="onNotificationPress"
                     />
                     <core:Icon
                         id="_IDGenIcon15"

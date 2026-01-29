@@ -538,31 +538,32 @@ this.on('completeDelivery', async (req) => {
                 return req.error(404, 'Trip assignment not found');
             }
 
+            // Update shipment status to Delivered
             await tx.update(Shipments).set({
                 status: 'Delivered'
             }).where({ ID: shipmentId });
 
+            // Mark truck as AVAILABLE
             await tx.update(Trucks).set({
                 status: 'AVAILABLE'
             }).where({ ID: tripAssignment.truck_ID });
 
+            // Mark driver as AVAILABLE
             await tx.update(Drivers).set({
                 status: 'AVAILABLE'
             }).where({ ID: tripAssignment.driver_ID });
 
+            // Update delivery time
             await tx.update(TripAssignments).set({
                 actualDeliveryTime: new Date().toISOString()
             }).where({ shipment_ID: shipmentId });
 
-            // Auto-resolve delays when shipment is delivered
-            await tx.update(DelayLogs).set({
-                status: 'Resolved'
-            }).where({ shipment_ID: shipmentId, status: 'Active' });
+            console.log(`✅ Driver and Truck marked as AVAILABLE for shipment: ${shipmentId}`);
         });
 
         return {
             success: true,
-            message: "Delivery completed successfully",
+            message: "Delivery completed successfully. Driver and truck are now available.",
             shipmentId: shipmentId
         };
 

@@ -23,6 +23,18 @@ sap.ui.define([
                     oToolPage.setSideExpanded(false);
                 }
             }
+            
+            // Load notifications initially
+            setTimeout(function() {
+                this._loadNotifications();
+            }.bind(this), 1000);
+            
+            // Set up periodic notification refresh (every 30 seconds)
+            this._notificationTimer = setInterval(function() {
+                if (this._loadNotifications) {
+                    this._loadNotifications();
+                }
+            }.bind(this), 30000);
         },
         
         onAfterRendering: function() {
@@ -169,6 +181,8 @@ sap.ui.define([
                     return oContext.getObject();
                 });
                 
+                console.log("Admin notifications loaded:", aNotifications.length);
+                
                 var oNotificationModel = new sap.ui.model.json.JSONModel(aNotifications);
                 that.getView().setModel(oNotificationModel, "notificationModel");
                 
@@ -176,6 +190,10 @@ sap.ui.define([
                 that._updateNotificationCount(aNotifications.length);
             }).catch(function(oError) {
                 console.error("Failed to load notifications:", oError.message);
+                // Set empty model in case of error
+                var oNotificationModel = new sap.ui.model.json.JSONModel([]);
+                that.getView().setModel(oNotificationModel, "notificationModel");
+                that._updateNotificationCount(0);
             });
         },
 
@@ -198,6 +216,13 @@ sap.ui.define([
 
         onCloseNotifications: function() {
             this._notificationPopover.close();
+        },
+        
+        onExit: function() {
+            // Clean up the notification timer
+            if (this._notificationTimer) {
+                clearInterval(this._notificationTimer);
+            }
         }
     });
 });

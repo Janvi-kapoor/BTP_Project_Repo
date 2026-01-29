@@ -27,6 +27,13 @@ sap.ui.define(
         oRouter
           .getRoute("CustomerHistory")
           .attachMatched(this._onRouteMatched, this);
+          
+        // Set up periodic notification refresh (every 30 seconds)
+        this._notificationTimer = setInterval(function() {
+          if (this._loadCustomerNotifications) {
+            this._loadCustomerNotifications();
+          }
+        }.bind(this), 30000);
       },
       // CustomerDashboard.controller.js
 
@@ -57,6 +64,8 @@ sap.ui.define(
               this.getView().setBindingContext(aContexts[0]);
               this._loadDashboardMetrics(oUserData.email);
               this._loadCustomerShipments(oUserData.email);
+              // Load notifications when user data is loaded
+              this._loadCustomerNotifications();
             }
           }.bind(this),
         );
@@ -361,6 +370,11 @@ sap.ui.define(
 
       _loadCustomerNotifications: function() {
         var sUserEmail = localStorage.getItem("userEmail");
+        if (!sUserEmail) {
+          console.error("No user email found in localStorage");
+          return;
+        }
+        
         var oModel = this.getOwnerComponent().getModel();
         var that = this;
         
@@ -372,6 +386,7 @@ sap.ui.define(
         oUserBinding.requestContexts(0, 1).then(function(aUserContexts) {
           if (aUserContexts.length > 0) {
             var sCustomerID = aUserContexts[0].getObject().ID;
+            console.log("Customer ID found:", sCustomerID);
             
             // Now get notifications for customer's shipments
             var oDelayBinding = oModel.bindList("/ActiveDelays", null, [], [
@@ -383,15 +398,33 @@ sap.ui.define(
                 return oContext.getObject();
               });
               
+              console.log("Customer notifications loaded:", aNotifications.length);
+              
               var oNotificationModel = new sap.ui.model.json.JSONModel(aNotifications);
               that.getView().setModel(oNotificationModel, "notificationModel");
               
               // Update notification count
               that._updateNotificationCount(aNotifications.length);
+            }).catch(function(oError) {
+              console.error("Failed to load delay notifications:", oError.message);
+              // Set empty model in case of error
+              var oNotificationModel = new sap.ui.model.json.JSONModel([]);
+              that.getView().setModel(oNotificationModel, "notificationModel");
+              that._updateNotificationCount(0);
             });
+          } else {
+            console.error("Customer not found for email:", sUserEmail);
+            // Set empty model if customer not found
+            var oNotificationModel = new sap.ui.model.json.JSONModel([]);
+            that.getView().setModel(oNotificationModel, "notificationModel");
+            that._updateNotificationCount(0);
           }
         }).catch(function(oError) {
-          console.error("Failed to load customer notifications:", oError.message);
+          console.error("Failed to load customer data:", oError.message);
+          // Set empty model in case of error
+          var oNotificationModel = new sap.ui.model.json.JSONModel([]);
+          that.getView().setModel(oNotificationModel, "notificationModel");
+          that._updateNotificationCount(0);
         });
       },
 
@@ -414,6 +447,13 @@ sap.ui.define(
 
       onCloseNotifications: function() {
         this._notificationPopover.close();
+      },
+      
+      onExit: function() {
+        // Clean up the notification timer
+        if (this._notificationTimer) {
+          clearInterval(this._notificationTimer);
+        }
       },
     });
   },
