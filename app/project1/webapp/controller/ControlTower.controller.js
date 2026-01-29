@@ -21,7 +21,25 @@ sap.ui.define([
             this._loadLeafletResources().then(() => {
                 this._initializeAdminMap();
                 this._loadFleetData();
+                this._startLocationPolling();
             });
+        },
+        
+        onExit: function() {
+            this._stopLocationPolling();
+        },
+        
+        _startLocationPolling: function() {
+            this._locationPollingInterval = setInterval(() => {
+                this._loadFleetData();
+            }, 30000); // 30 seconds
+        },
+        
+        _stopLocationPolling: function() {
+            if (this._locationPollingInterval) {
+                clearInterval(this._locationPollingInterval);
+                this._locationPollingInterval = null;
+            }
         },
 
         _loadDashboardStats: function() {
@@ -133,29 +151,26 @@ sap.ui.define([
                                 // Get truck details
                                 if (shipment.assignment.truck_ID) {
                                     this._getTruckDetails(shipment.assignment.truck_ID).then((truckData) => {
-                                        
-                                        // Get tracking logs for this assignment
-                                        this._getTrackingLogs(shipment.assignment.ID).then((trackingLogs) => {
-                                            // Add to fleet data
-                                            aFleetData.push({
-                                                shipmentId: shipment.ID,
-                                                truckId: truckData.truckNo || "TRK-" + truckData.ID.slice(-4),
-                                                driverName: driverData.name,
-                                                driverInitials: this._getDriverInitials(driverData.name),
-                                                driverContact: driverData.phone,
-                                                pickupLocation: shipment.pickupLocation,
-                                                dropLocation: shipment.dropLocation,
-                                                currentLocation: "En Route",
-                                                eta: shipment.assignment.eta,
-                                                trackingLogs: trackingLogs
-                                            });
-                                            
-                                            processedCount++;
-                                            if (processedCount === aShipmentContexts.length) {
-                                                oFleetModel.setProperty("/activeFleet", aFleetData);
-                                                this._addTruckMarkersToMap(aFleetData);
-                                            }
+                                        // Add to fleet data with driver's current location
+                                        aFleetData.push({
+                                            shipmentId: shipment.ID,
+                                            truckId: truckData.truckNo || "TRK-" + truckData.ID.slice(-4),
+                                            driverName: driverData.name,
+                                            driverInitials: this._getDriverInitials(driverData.name),
+                                            driverContact: driverData.phone,
+                                            pickupLocation: shipment.pickupLocation,
+                                            dropLocation: shipment.dropLocation,
+                                            currentLocation: "En Route",
+                                            eta: shipment.assignment.eta,
+                                            currentLat: driverData.currentLat,
+                                            currentLong: driverData.currentLong
                                         });
+                                        
+                                        processedCount++;
+                                        if (processedCount === aShipmentContexts.length) {
+                                            oFleetModel.setProperty("/activeFleet", aFleetData);
+                                            this._addTruckMarkersToMap(aFleetData);
+                                        }
                                     });
                                 } else {
                                     processedCount++;
@@ -197,16 +212,7 @@ sap.ui.define([
             return (names[0].charAt(0) + names[names.length - 1].charAt(0)).toUpperCase();
         },
         
-        _getTrackingLogs: function(assignmentId) {
-            const oModel = this.getOwnerComponent().getModel();
-            const oBinding = oModel.bindList("/TrackingHistory", null, [], [
-                new sap.ui.model.Filter("trip/ID", sap.ui.model.FilterOperator.EQ, assignmentId)
-            ]);
-            
-            return oBinding.requestContexts().then((contexts) => {
-                return contexts.map(context => context.getObject());
-            });
-        },
+
         
         _addTruckMarkersToMap: function(fleetData) {
             if (!this.adminMap || !window.L) return;
@@ -218,28 +224,24 @@ sap.ui.define([
             this.truckMarkersMap = {};
             
             fleetData.forEach(fleet => {
-                if (fleet.trackingLogs && fleet.trackingLogs.length > 0) {
-                    const latestLog = fleet.trackingLogs[fleet.trackingLogs.length - 1];
+                if (fleet.currentLat && fleet.currentLong) {
+                    const truckMarker = L.marker([fleet.currentLat, fleet.currentLong], {
+                        icon: L.divIcon({
+                            html: '🚛',
+                            iconSize: [20, 20],
+                            className: 'truck-marker'
+                        })
+                    }).addTo(this.adminMap);
                     
-                    if (latestLog.lat && latestLog.long) {
-                        const truckMarker = L.marker([latestLog.lat, latestLog.long], {
-                            icon: L.divIcon({
-                                html: '🚛',
-                                iconSize: [20, 20],
-                                className: 'truck-marker'
-                            })
-                        }).addTo(this.adminMap);
-                        
-                        truckMarker.bindPopup(`
-                            <b>${fleet.truckId}</b><br>
-                            Driver: ${fleet.driverName}<br>
-                            Contact: ${fleet.driverContact}<br>
-                            Drop: ${fleet.dropLocation}
-                        `);
-                        
-                        this.truckMarkers.push(truckMarker);
-                        this.truckMarkersMap[fleet.truckId] = truckMarker;
-                    }
+                    truckMarker.bindPopup(`
+                        <b>${fleet.truckId}</b><br>
+                        Driver: ${fleet.driverName}<br>
+                        Contact: ${fleet.driverContact}<br>
+                        Drop: ${fleet.dropLocation}
+                    `);
+                    
+                    this.truckMarkers.push(truckMarker);
+                    this.truckMarkersMap[fleet.truckId] = truckMarker;
                 }
             });
         },
@@ -250,16 +252,10 @@ sap.ui.define([
             if (!oBindingContext) return;
             
             const oFleetData = oBindingContext.getObject();
-            this._showFleetDetails(oFleetData);
             this._highlightTruckOnMap(oFleetData.truckId);
         },
         
-        _showFleetDetails: function(fleetData) {
-            const oDetailsPanel = this.byId("fleetDetailsPanel");
-            const oDetailModel = new sap.ui.model.json.JSONModel(fleetData);
-            oDetailsPanel.setModel(oDetailModel, "selectedFleet");
-            oDetailsPanel.setVisible(true);
-        },
+
         
         _highlightTruckOnMap: function(truckId) {
             if (!this.adminMap || !this.truckMarkersMap || !this.truckMarkersMap[truckId]) return;
@@ -285,9 +281,6 @@ sap.ui.define([
             }, 3000);
         },
         
-        onCloseDetails: function() {
-            const oDetailsPanel = this.byId("fleetDetailsPanel");
-            oDetailsPanel.setVisible(false);
-        }
+
     });
 });

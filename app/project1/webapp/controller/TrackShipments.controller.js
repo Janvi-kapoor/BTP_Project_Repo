@@ -58,24 +58,55 @@ sap.ui.define([
         },
         
         _getTrackingLogs: function(tripAssignmentId) {
+            // Remove tracking logs - now get driver location directly
+            this._getDriverLocation(tripAssignmentId);
+        },
+        
+        _getDriverLocation: function(tripAssignmentId) {
             const oModel = this.getOwnerComponent().getModel();
-            let oBinding = oModel.bindList("/TrackingHistory");
+            
+            // Get trip assignment to find driver ID
+            const oBinding = oModel.bindList("/ActiveTrips", null, [], [
+                new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.EQ, tripAssignmentId)
+            ]);
             
             oBinding.requestContexts().then((aContexts) => {
-                const matchingLogs = aContexts.filter(context => {
-                    const logData = context.getObject();
-                    return logData.trip_ID === tripAssignmentId || (logData.trip && logData.trip.ID === tripAssignmentId);
-                });
-                
-                if (matchingLogs.length > 0) {
-                    const latestLog = matchingLogs[matchingLogs.length - 1].getObject();
-                    if (latestLog.lat && latestLog.long && this.map) {
-                        this._addTruckMarker(latestLog.lat, latestLog.long);
+                if (aContexts.length > 0) {
+                    const tripData = aContexts[0].getObject();
+                    if (tripData.driver_ID) {
+                        this._fetchDriverCurrentLocation(tripData.driver_ID);
+                        // Start polling every 30 seconds
+                        this._startLocationPolling(tripData.driver_ID);
                     }
                 }
             }).catch((error) => {
-                console.error("Error loading tracking logs:", error);
+                console.error("Error loading trip assignment:", error);
             });
+        },
+        
+        _fetchDriverCurrentLocation: function(driverId) {
+            const oModel = this.getOwnerComponent().getModel();
+            const sDriverPath = "/Fleet_Drivers('" + driverId + "')";
+            
+            oModel.bindContext(sDriverPath).requestObject().then((driverData) => {
+                if (driverData.currentLat && driverData.currentLong && this.map) {
+                    this._addTruckMarker(driverData.currentLat, driverData.currentLong);
+                }
+            }).catch((error) => {
+                console.error("Error fetching driver location:", error);
+            });
+        },
+        
+        _startLocationPolling: function(driverId) {
+            // Clear existing interval if any
+            if (this.locationInterval) {
+                clearInterval(this.locationInterval);
+            }
+            
+            // Poll every 30 seconds
+            this.locationInterval = setInterval(() => {
+                this._fetchDriverCurrentLocation(driverId);
+            }, 30000);
         },
         
         _addTruckMarker: function(lat, lng) {
@@ -91,6 +122,12 @@ sap.ui.define([
             
             this.truckMarker = L.marker([lat, lng], { icon: truckIcon }).addTo(this.map);
             this.truckMarker.bindPopup('<b>Current Truck Location</b>');
+        },
+        
+        onExit: function() {
+            if (this.locationInterval) {
+                clearInterval(this.locationInterval);
+            }
         },
         
         _updateUIWithShipmentData: function(shipmentData) {
