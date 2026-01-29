@@ -94,11 +94,12 @@ service LogiChainService {
         totalDistance,
         totalFare,
         status,
+        assignment.eta as eta,
         null as truckNo : String,
         null as truckType : String,
         null as driverName : String,
         null as driverID : UUID
-    } where status = 'Assigned' or status = 'In-Transit';
+    } where status = 'Assigned' or status = 'In-Transit' or status = 'ConfirmPickup';
     
     // Driver Performance Entity
     @readonly

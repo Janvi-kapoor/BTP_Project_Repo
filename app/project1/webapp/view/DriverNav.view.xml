@@ -3,8 +3,9 @@
     
     <!-- Scrollable Container -->
     <ScrollContainer id="_IDGenScrollContainer2" height="100vh" vertical="true" horizontal="false">
-        <!-- Full Screen Map Background Container -->
-        <VBox id="_IDGenVBox26" class="liveNav-mapBackground">
+        
+        <!-- Mission Content (when active mission exists) -->
+        <VBox id="missionContent" class="liveNav-mapBackground">
         
         <!-- Floating Header Strip with Glassmorphism -->
         <HBox id="_IDGenHBox16" class="liveNav-glassHeader" justifyContent="SpaceBetween" alignItems="Center">
@@ -35,64 +36,77 @@
                     <Text id="_IDGenText53" text="Track your shipment progress" class="liveNav-cardSubtitle"/>
                 </VBox>
                 
-                <!-- Status Timeline -->
-               <VBox id="_IDGenVBox35" class="liveNav-timelineContainer">
+                <!-- Custom Vertical Timeline -->
+               <VBox id="_IDGenVBox35" class="timeline-container">
     
-    <HBox id="_IDGenHBox21" alignItems="Center" class="liveNav-timelineItem">
-        <VBox id="_IDGenVBox36" alignItems="Center" class="liveNav-stepIndicator">
-            <core:Icon id="_IDGenIcon19" src="{= ${missionData>/status} === 'Assigned' ? 'sap-icon://accept' : 'sap-icon://accept' }" 
-                       class="{= ${missionData>/status} === 'Assigned' ? 'liveNav-stepIcon liveNav-active' : 'liveNav-stepIcon liveNav-completed' }"/>
-            <VBox id="_IDGenVBox37" class="{= ${missionData>/status} === 'Assigned' ? 'liveNav-stepLine' : 'liveNav-stepLine liveNav-completedLine' }"/>
+    <!-- Step 1: Order Assigned -->
+    <HBox id="_IDGenHBox21" alignItems="Start" class="timeline-step">
+        <VBox id="_IDGenVBox36" alignItems="Center" class="timeline-marker">
+            <core:Icon id="_IDGenIcon19" src="{= ${missionData>/status} === 'Assigned' ? 'sap-icon://shipping-status' : 'sap-icon://accept' }" 
+                       class="{= ${missionData>/status} === 'Assigned' ? 'timeline-node status-active' : 
+                                (${missionData>/status} === 'In-Transit' || ${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-node status-completed' : 'timeline-node status-pending' }"/>
+            <VBox id="_IDGenVBox37" class="{= (${missionData>/status} === 'In-Transit' || ${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-line line-completed' : 'timeline-line line-pending' }"/>
         </VBox>
-        <VBox id="_IDGenVBox38" class="liveNav-stepContent">
-            <Text id="_IDGenText55" text="Assigned" class="liveNav-stepTitle"/>
-            <Text id="_IDGenText56" text="Driver assigned" class="liveNav-stepTime"/>
+        <VBox id="_IDGenVBox38" class="timeline-content">
+            <Text id="_IDGenText55" text="Order Assigned" class="{= ${missionData>/status} === 'Assigned' ? 'timeline-title title-active' : 
+                                                                        (${missionData>/status} === 'In-Transit' || ${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-title title-completed' : 'timeline-title title-pending' }"/>
+            <Text id="_IDGenText56" text="Driver assigned to shipment" class="timeline-description"/>
         </VBox>
     </HBox>
     
-    <HBox id="_IDGenHBox22" alignItems="Center" class="liveNav-timelineItem">
-        <VBox id="_IDGenVBox39" alignItems="Center" class="liveNav-stepIndicator">
-            <core:Icon id="_IDGenIcon20" src="sap-icon://navigation-right-arrow" 
-                       class="{= ${missionData>/status} === 'In-Transit' ? 'liveNav-stepIcon liveNav-active' : 
-                                (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
-            <VBox id="_IDGenVBox40" class="{= ${missionData>/status} === 'In-Transit' ? 'liveNav-stepLine' : 
-                            (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'liveNav-stepLine liveNav-completedLine' : 'liveNav-stepLine' }"/>
+    <!-- Step 2: En Route to Pickup -->
+    <HBox id="_IDGenHBox22" alignItems="Start" class="timeline-step">
+        <VBox id="_IDGenVBox39" alignItems="Center" class="timeline-marker">
+            <core:Icon id="_IDGenIcon20" src="{= ${missionData>/status} === 'In-Transit' ? 'sap-icon://navigation-right-arrow' : 'sap-icon://accept' }" 
+                       class="{= ${missionData>/status} === 'In-Transit' ? 'timeline-node status-active' : 
+                                (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-node status-completed' : 'timeline-node status-pending' }"/>
+            <VBox id="_IDGenVBox40" class="{= (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-line line-completed' : 'timeline-line line-pending' }"/>
         </VBox>
-        <VBox id="_IDGenVBox41" class="liveNav-stepContent">
-            <Text id="_IDGenText57" text="In-Transit" class="liveNav-stepTitle"/>
-            <Text id="_IDGenText58" text="En route to destination" class="liveNav-stepTime"/>
-        </VBox>
-    </HBox>
-    
-    <HBox id="_IDGenHBox23" alignItems="Center" class="liveNav-timelineItem">
-        <VBox id="_IDGenVBox42" alignItems="Center" class="liveNav-stepIndicator">
-            <core:Icon id="_IDGenIcon21" src="sap-icon:// shipping-status" 
-                       class="{= ${missionData>/status} === 'ConfirmPickup' ? 'liveNav-stepIcon liveNav-active' : 
-                                ${missionData>/status} === 'Delivered' ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
-            <VBox id="_IDGenVBox43" class="{= ${missionData>/status} === 'ConfirmPickup' ? 'liveNav-stepLine' : 
-                            ${missionData>/status} === 'Delivered' ? 'liveNav-stepLine liveNav-completedLine' : 'liveNav-stepLine' }"/>
-        </VBox>
-        <VBox id="_IDGenVBox44" class="liveNav-stepContent">
-            <Text id="_IDGenText59" text="Pickup Complete" class="liveNav-stepTitle"/>
-            <Text id="_IDGenText60" text="Driver reached &amp; picked up" class="liveNav-stepTime"/>
+        <VBox id="_IDGenVBox41" class="timeline-content">
+            <Text id="_IDGenText57" text="En Route to Pickup" class="{= ${missionData>/status} === 'In-Transit' ? 'timeline-title title-active' : 
+                                                                            (${missionData>/status} === 'ConfirmPickup' || ${missionData>/status} === 'Delivered') ? 'timeline-title title-completed' : 'timeline-title title-pending' }"/>
+            <Text id="_IDGenText58" text="Heading to pickup location" class="timeline-description"/>
         </VBox>
     </HBox>
     
-    <HBox id="_IDGenHBox24" alignItems="Center" class="liveNav-timelineItem">
-        <VBox id="_IDGenVBox45" alignItems="Center" class="liveNav-stepIndicator">
+    <!-- Step 3: Pickup Confirmed -->
+    <HBox id="_IDGenHBox23" alignItems="Start" class="timeline-step">
+        <VBox id="_IDGenVBox42" alignItems="Center" class="timeline-marker">
+            <core:Icon id="_IDGenIcon21" src="{= ${missionData>/status} === 'ConfirmPickup' ? 'sap-icon://shipping-status' : 'sap-icon://accept' }" 
+                       class="{= ${missionData>/status} === 'ConfirmPickup' ? 'timeline-node status-active' : 
+                                ${missionData>/status} === 'Delivered' ? 'timeline-node status-completed' : 'timeline-node status-pending' }"/>
+            <VBox id="_IDGenVBox43" class="{= ${missionData>/status} === 'Delivered' ? 'timeline-line line-completed' : 'timeline-line line-pending' }"/>
+        </VBox>
+        <VBox id="_IDGenVBox44" class="timeline-content">
+            <Text id="_IDGenText59" text="Pickup Confirmed" class="{= ${missionData>/status} === 'ConfirmPickup' ? 'timeline-title title-active' : 
+                                                                        ${missionData>/status} === 'Delivered' ? 'timeline-title title-completed' : 'timeline-title title-pending' }"/>
+            <Text id="_IDGenText60" text="Cargo loaded and secured" class="timeline-description"/>
+        </VBox>
+    </HBox>
+    
+    <!-- Step 4: Delivered Successfully -->
+    <HBox id="_IDGenHBox24" alignItems="Start" class="timeline-step">
+        <VBox id="_IDGenVBox45" alignItems="Center" class="timeline-marker">
             <core:Icon id="_IDGenIcon22" src="sap-icon://complete" 
-                       class="{= ${missionData>/status} === 'Delivered' ? 'liveNav-stepIcon liveNav-completed' : 'liveNav-stepIcon liveNav-pending' }"/>
+                       class="{= ${missionData>/status} === 'Delivered' ? 'timeline-node status-completed' : 'timeline-node status-pending' }"/>
+            <!-- No line for last step -->
         </VBox>
-        <VBox id="_IDGenVBox46" class="liveNav-stepContent">
-            <Text id="_IDGenText61" text="Delivered" class="liveNav-stepTitle"/>
-            <Text id="_IDGenText74" text="Package delivered" class="liveNav-stepTime"/>
+        <VBox id="_IDGenVBox46" class="timeline-content">
+            <Text id="_IDGenText61" text="Delivered Successfully" class="{= ${missionData>/status} === 'Delivered' ? 'timeline-title title-completed' : 'timeline-title title-pending' }"/>
+            <Text id="_IDGenText74" text="Package delivered to customer" class="timeline-description"/>
         </VBox>
     </HBox>
 </VBox>
                 <!-- Action Buttons -->
                 <VBox id="_IDGenVBox47" class="liveNav-actionSection">
                     <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay"/>
-                    <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup"/>
+                    <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup"
+                            visible="{= ${missionData>/status} === 'In-Transit' }"/>
+                    <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' &amp;&amp; ${missionData>/status} !== 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                        <core:Icon id="pickupConfirmedIcon" src="sap-icon://accept" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
+                        <Text id="pickupConfirmedText" text="Pickup Confirmed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
+                        <Text id="pickupConfirmedSubtext" text="Ready for delivery" class="liveNav-stepTime"/>
+                    </VBox>
                 </VBox>
             </VBox>
             
@@ -116,5 +130,14 @@
             
         </HBox>
     </VBox>
+    
+    <!-- No Mission Content (when no active mission) -->
+    <VBox id="noMissionContent" visible="false" alignItems="Center" justifyContent="Center" class="liveNav-noMissionContainer">
+        <core:Icon id="noMissionIcon" src="sap-icon://map-2" size="4rem" color="#94a3b8" class="sapUiLargeMarginBottom"/>
+        <Title id="noMissionTitle" text="No Active Mission" level="H2" class="liveNav-noMissionTitle sapUiMediumMarginBottom"/>
+        <Text id="noMissionText" text="You don't have any active missions assigned." class="liveNav-noMissionText sapUiMediumMarginBottom"/>
+        <Text id="noMissionSubtext" text="Please wait for the administrator to assign a new shipment." class="liveNav-noMissionSubtext"/>
+    </VBox>
+    
     </ScrollContainer>
 </mvc:View>

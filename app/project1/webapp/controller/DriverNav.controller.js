@@ -20,7 +20,10 @@ sap.ui.define([
         },
 
         onAfterRendering: function() {
-            this._initializeMap();
+            // Add delay to ensure DOM is fully rendered
+            setTimeout(() => {
+                this._initializeMap();
+            }, 100);
         },
 
         onExit: function() {
@@ -31,17 +34,33 @@ sap.ui.define([
         _initializeMap: function() {
             if (this._map) return;
             
-            this._map = L.map('map').setView([20.5937, 78.9629], 5); // India center
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(this._map);
+            // Check if map container exists
+            var mapContainer = document.getElementById('map');
+            if (!mapContainer) {
+                console.warn('Map container not found, retrying in 500ms...');
+                setTimeout(() => {
+                    this._initializeMap();
+                }, 500);
+                return;
+            }
             
-            this._truckMarker = null;
-            this._pickupMarker = null;
-            this._dropMarker = null;
-            this._routeControl = null;
-            this._driverRouteControl = null;
-            this._pickupCoords = null;
+            try {
+                this._map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(this._map);
+                
+                this._truckMarker = null;
+                this._pickupMarker = null;
+                this._dropMarker = null;
+                this._routeControl = null;
+                this._driverRouteControl = null;
+                this._pickupCoords = null;
+                
+                console.log('Map initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize map:', error.message);
+            }
         },
 
         _geocodeAddress: function(address) {
@@ -198,7 +217,7 @@ sap.ui.define([
             
             if (this._truckMarker) {
                 this._truckMarker.setLatLng([lat, lng]);
-                this._truckMarker.bringToFront();
+                // Remove bringToFront() as it doesn't exist on Leaflet markers
                 
                 // Update driver to pickup route when truck moves
                 this._createDriverToPickupRoute();
@@ -276,6 +295,9 @@ sap.ui.define([
                     var oData = aContexts[0].getObject();
                     console.log("Mission Data:", oData);
                     
+                    // Show mission content
+                    that._showMissionContent();
+                    
                     // Setup route if locations available
                     if (oData.pickupLocation && oData.dropLocation) {
                         that._setupRouteNavigation(oData.pickupLocation, oData.dropLocation);
@@ -289,10 +311,24 @@ sap.ui.define([
                     }
                     
                     that.getView().setModel(new JSONModel(oData), "missionData");
+                } else {
+                    // No active mission found
+                    that._showNoMissionState();
                 }
             }).catch(function(oError) {
                 console.error("Mission load error:", oError.message);
+                that._showNoMissionState();
             });
+        },
+
+        _showMissionContent: function() {
+            this.byId("missionContent").setVisible(true);
+            this.byId("noMissionContent").setVisible(false);
+        },
+
+        _showNoMissionState: function() {
+            this.byId("missionContent").setVisible(false);
+            this.byId("noMissionContent").setVisible(true);
         },
 
         _loadPerformanceData: function() {
@@ -350,16 +386,22 @@ sap.ui.define([
             }
             
             var sShipmentID = oMissionModel.getProperty("/ID");
+            console.log("Confirming pickup for shipment:", sShipmentID);
+            
             var oAction = oModel.bindContext("/confirmPickup(...)");
             oAction.setParameter("shipmentID", sShipmentID);
             
             oAction.execute().then(function() {
-                oMissionModel.setProperty("/status", "ConfirmPickup");
                 MessageToast.show("Pickup confirmed successfully!");
-                that._loadActiveMission();
+                
+                // Refresh mission data from server to get updated status
+                setTimeout(() => {
+                    that._loadActiveMission();
+                }, 500);
+                
             }).catch(function(oError) {
                 console.error("Confirm pickup failed:", oError.message);
-                MessageToast.show("Failed to confirm pickup");
+                MessageToast.show("Failed to confirm pickup: " + oError.message);
             });
         },
 
