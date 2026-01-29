@@ -364,7 +364,46 @@ sap.ui.define([
         },
 
         onReportDelay: function () {
-            MessageToast.show("Delay report functionality will be implemented");
+            if (!this._reportDelayDialog) {
+                this._reportDelayDialog = sap.ui.xmlfragment(this.getView().getId(), "project1.fragment.ReportDelayDialog", this);
+                this.getView().addDependent(this._reportDelayDialog);
+            }
+            this._reportDelayDialog.open();
+        },
+
+        onSendDelayReport: function() {
+            var oMissionModel = this.getView().getModel("missionData");
+            var sDriverID = localStorage.getItem("loggedDriverID");
+            var oSelect = this.byId("delayReasonSelect");
+            var sDelayReason = oSelect ? oSelect.getSelectedKey() : null;
+            
+            console.log("Debug - Selected reason:", sDelayReason);
+            
+            if (!oMissionModel || !sDelayReason) {
+                MessageToast.show("Please select a delay reason");
+                return;
+            }
+            
+            var sShipmentID = oMissionModel.getProperty("/ID");
+            var oModel = this.getOwnerComponent().getModel();
+            var oAction = oModel.bindContext("/reportDelay(...)");
+            
+            oAction.setParameter("shipmentID", sShipmentID);
+            oAction.setParameter("driverID", sDriverID);
+            oAction.setParameter("delayReason", sDelayReason);
+            
+            var that = this;
+            oAction.execute().then(function() {
+                MessageToast.show("Delay reported successfully!");
+                that._reportDelayDialog.close();
+            }).catch(function(oError) {
+                console.error("Delay report failed:", oError.message);
+                MessageToast.show("Failed to report delay");
+            });
+        },
+
+        onCancelDelayReport: function() {
+            this._reportDelayDialog.close();
         }
     });
 });

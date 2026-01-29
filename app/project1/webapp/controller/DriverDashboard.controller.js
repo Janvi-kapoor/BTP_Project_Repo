@@ -23,6 +23,12 @@ sap.ui.define([
             });
             this.getView().setModel(oDriverModel, "driverData");
 
+            // Refresh main model to ensure fresh data
+            var oMainModel = this.getOwnerComponent().getModel();
+            if (oMainModel && oMainModel.refresh) {
+                oMainModel.refresh();
+            }
+
             // Database se real data uthayein
             this._loadActiveMission();
             this._loadPerformanceData();
@@ -118,6 +124,21 @@ onStartTrip: function () {
         onSideNavButtonPress: function() {
             var oToolPage = this.byId("toolPage");
             oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+        },
+
+        onLogout: function() {
+            // Clear all localStorage data
+            localStorage.removeItem("userEmail");
+            localStorage.removeItem("userRole");
+            localStorage.removeItem("loggedDriverID");
+            localStorage.removeItem("loggedDriverName");
+            localStorage.clear();
+            
+            // Navigate to main landing page (3 tiles)
+            this.getOwnerComponent().getRouter().navTo("RouteView1");
+            
+            // Show confirmation message
+            sap.m.MessageToast.show("Logged out successfully");
         },
 
   

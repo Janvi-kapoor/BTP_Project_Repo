@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="reportDelayDialog" title="Report Delay" contentWidth="400px" contentHeight="300px">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Label text="Delay Reason:" class="sapUiSmallMarginBottom"/>
+                <Select id="delayReasonSelect" class="sapUiMediumMarginBottom" width="100%">
+                    <core:Item key="Traffic" text="Traffic"/>
+                    <core:Item key="Vehicle Breakdown" text="Vehicle Breakdown"/>
+                    <core:Item key="Weather" text="Weather"/>
+                    <core:Item key="Accident" text="Accident"/>
+                </Select>
+                <Text text="This will notify the admin and customer about the delay." class="sapUiSmallMarginTop"/>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Send Report" type="Emphasized" press="onSendDelayReport"/>
+            <Button text="Cancel" press="onCancelDelayReport"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

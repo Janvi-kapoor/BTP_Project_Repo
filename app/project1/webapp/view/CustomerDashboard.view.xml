@@ -85,6 +85,14 @@
                                 class="profileRole"
                             />
                         </VBox>
+                        <Button
+                            id="logoutBtn"
+                            icon="sap-icon://log"
+                            type="Transparent"
+                            class="headerIconBtn sapUiTinyMarginBegin"
+                            tooltip="Logout"
+                            press="onLogout"
+                        />
                     </HBox>
                 </HBox>
             </tnt:ToolHeader>

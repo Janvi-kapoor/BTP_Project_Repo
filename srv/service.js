@@ -125,8 +125,8 @@ module.exports = cds.service.impl(async function () {
             // Transaction start: Taki agar ek bhi update fail ho, toh kuch bhi save na ho (Data Integrity)
             await cds.tx(async (tx) => {
                 
-                // 1. Shipment ka status 'In Transit' karo
-                await tx.update(Shipments).set({ status: 'In Transit' }).where({ ID: orderID });
+                // 1. Shipment ka status 'In-Transit' karo (hyphen ke sath)
+                await tx.update(Shipments).set({ status: 'In-Transit' }).where({ ID: orderID });
 
                 // 2. Truck ka status 'ON_TRIP' karo
                 await tx.update(Trucks).set({ status: 'ON_TRIP' }).where({ ID: truckID });
@@ -216,42 +216,70 @@ module.exports = cds.service.impl(async function () {
             });
         }
 
+        console.log('====> ActiveMission Query - Driver ID:', targetDriverID);
         if (!targetDriverID) return [];
 
-        // 2. FIX YAHAN HAI: 'driver_ID' aur 'truck_ID' bhi select karo
+        // 2. TripAssignments fetch karo
         const assignments = await SELECT.from(TripAssignments)
             .columns('shipment_ID', 'driver_ID', 'truck_ID') 
             .where({ driver_ID: targetDriverID });
-
+        
+        console.log('====> Assignments found:', assignments.length);
         const shipmentIDs = assignments.map(a => a.shipment_ID);
         if (shipmentIDs.length === 0) return [];
 
-        // 3. Shipments fetch karo
+        // 3. First check all shipments regardless of status
+        const allShipments = await SELECT.from(Shipments)
+            .columns('ID', 'status')
+            .where({ ID: { in: shipmentIDs } });
+        console.log('====> All shipments with status:', allShipments);
+
+        // 4. Shipments fetch karo with active status
         const activeMissions = await SELECT.from(Shipments)
-            .columns('ID', 'pickupLocation', 'dropLocation', 'status', 'loadWeightTons', 'materialCategory')
+            .columns('ID', 'pickupLocation', 'dropLocation', 'status', 'loadWeightTons', 'materialCategory', 'totalDistance', 'totalFare')
             .where({
                 ID: { in: shipmentIDs },
                 status: { in: ['Assigned', 'In-Transit'] }
             });
+        
+        console.log('====> Active missions found:', activeMissions.length);
+        console.log('====> Mission data:', activeMissions);
 
-        // 4. Manual Enrichment
-        return await Promise.all(activeMissions.map(async (mission) => {
-            const ta = assignments.find(a => a.shipment_ID === mission.ID);
+        // 4. Complete Enrichment with all required data
+        const result = await Promise.all(activeMissions.map(async (mission) => {
+            const assignment = assignments.find(a => a.shipment_ID === mission.ID);
+            
+            // Truck details fetch karo
+            const truck = await SELECT.one.from(Trucks)
+                .columns('truckNo', 'vehicleType')
+                .where({ ID: assignment.truck_ID });
+            
+            // Driver details fetch karo
+            const driver = await SELECT.one.from(Drivers)
+                .columns('name')
+                .where({ ID: assignment.driver_ID });
 
-            if (ta) {
-                // Ta.truck_ID aur Ta.driver_ID ab available hain
-                const [trk, drv] = await Promise.all([
-                    SELECT.one.from(Trucks).columns('truckNo').where({ ID: ta.truck_ID }),
-                    SELECT.one.from(Drivers).columns('name', 'ID', 'currentLat', 'currentLong').where({ ID: ta.driver_ID })
-                ]);
-                mission.truckNo = trk?.truckNo || "N/A";
-                mission.driverName = drv?.name || "N/A";
-                mission.driverID = drv?.ID || targetDriverID;
-                mission.currentLat = drv?.currentLat || 0;
-                mission.currentLong = drv?.currentLong || 0;
-            }
-            return mission;
+            const enrichedMission = {
+                ID: mission.ID,
+                pickupLocation: mission.pickupLocation,
+                dropLocation: mission.dropLocation,
+                loadWeightTons: mission.loadWeightTons,
+                materialCategory: mission.materialCategory,
+                totalDistance: mission.totalDistance,
+                totalFare: mission.totalFare,
+                truckNo: truck?.truckNo || 'N/A',
+                truckType: truck?.vehicleType || 'N/A',
+                driverName: driver?.name || 'N/A',
+                status: mission.status,
+                driverID: assignment.driver_ID
+            };
+            
+            console.log('====> Enriched mission:', enrichedMission);
+            return enrichedMission;
         }));
+        
+        console.log('====> Final result:', result);
+        return result;
 
     } catch (error) {
         console.error("ActiveMission Error:", error.message);
@@ -525,6 +553,11 @@ this.on('completeDelivery', async (req) => {
             await tx.update(TripAssignments).set({
                 actualDeliveryTime: new Date().toISOString()
             }).where({ shipment_ID: shipmentId });
+
+            // Auto-resolve delays when shipment is delivered
+            await tx.update(DelayLogs).set({
+                status: 'Resolved'
+            }).where({ shipment_ID: shipmentId, status: 'Active' });
         });
 
         return {
@@ -536,6 +569,55 @@ this.on('completeDelivery', async (req) => {
     } catch (error) {
         console.error("Delivery completion error:", error.message);
         return req.error(500, "Failed to complete delivery: " + error.message);
+    }
+});
+
+// --- Delay Reporting System ---
+const { DelayLogs } = cds.entities('logichain.db');
+
+this.on('reportDelay', async (req) => {
+    const { shipmentID, driverID, delayReason } = req.data;
+    console.log(`====> Reporting delay for shipment: ${shipmentID}`);
+
+    try {
+        await INSERT.into(DelayLogs).entries({
+            shipment_ID: shipmentID,
+            driver_ID: driverID,
+            delayReason: delayReason,
+            status: 'Active'
+        });
+
+        return {
+            success: true,
+            message: "Delay reported successfully"
+        };
+    } catch (error) {
+        console.error("Delay reporting error:", error.message);
+        return req.error(500, "Failed to report delay: " + error.message);
+    }
+});
+
+this.on('getNotificationCount', async (req) => {
+    const { userID, userRole } = req.data;
+    
+    try {
+        let whereClause = { status: 'Active' };
+        
+        // Customer sees only their shipments' delays
+        if (userRole === 'CUSTOMER') {
+            const customerShipments = await SELECT.from(Shipments)
+                .columns('ID')
+                .where({ customer_ID: userID });
+            const shipmentIDs = customerShipments.map(s => s.ID);
+            whereClause.shipment_ID = { in: shipmentIDs };
+        }
+        // Admin sees all delays (no additional filter)
+        
+        const delays = await SELECT.from(DelayLogs).where(whereClause);
+        return delays.length;
+    } catch (error) {
+        console.error("Notification count error:", error.message);
+        return 0;
     }
 });
 });

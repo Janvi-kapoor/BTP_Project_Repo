@@ -91,8 +91,11 @@ service LogiChainService {
         dropLocation,
         materialCategory,
         loadWeightTons,
+        totalDistance,
+        totalFare,
         status,
         null as truckNo : String,
+        null as truckType : String,
         null as driverName : String,
         null as driverID : UUID
     } where status = 'Assigned' or status = 'In-Transit';
@@ -155,4 +158,22 @@ service LogiChainService {
     // --- Secure Delivery Actions ---
     action sendOTP(phoneNumber: String) returns { success: Boolean; otp: String; message: String; };
     action completeDelivery(shipmentId: String, otpVerified: Boolean) returns { success: Boolean; message: String; shipmentId: String; };
+
+    // --- Delay Reporting System ---
+    @cds.redirection.target
+    entity DelayLogs as projection on db.DelayLogs;
+    
+    action reportDelay(shipmentID: String, driverID: UUID, delayReason: String) returns { success: Boolean; message: String; };
+    
+    @readonly
+    entity ActiveDelays as projection on db.DelayLogs {
+        key ID,
+        shipment.ID as shipmentID,
+        driver.name as driverName,
+        delayReason,
+        reportedAt,
+        shipment.customer.ID as customerID
+    } where status = 'Active';
+    
+    function getNotificationCount(userID: UUID, userRole: String) returns Integer;
 }

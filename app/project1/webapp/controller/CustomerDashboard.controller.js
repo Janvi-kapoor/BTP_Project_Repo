@@ -8,6 +8,12 @@ sap.ui.define(
         // 2. Router Attach karna (URL detect karne ke liye)
         var oRouter = this.getOwnerComponent().getRouter();
 
+        // Refresh main model to ensure fresh data
+        var oMainModel = this.getOwnerComponent().getModel();
+        if (oMainModel && oMainModel.refresh) {
+          oMainModel.refresh();
+        }
+
         // In chaaro routes par nazar rakho
         oRouter
           .getRoute("CustomerDashboard")
@@ -324,6 +330,90 @@ sap.ui.define(
         // Navigate to track page
         var oRouter = this.getOwnerComponent().getRouter();
         oRouter.navTo("CustomerTracking");
+      },
+
+      onLogout: function() {
+        // Clear all localStorage data
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("loggedDriverID");
+        localStorage.removeItem("loggedDriverName");
+        localStorage.removeItem("selectedShipmentId");
+        localStorage.clear();
+        
+        // Navigate to main landing page (3 tiles)
+        this.getOwnerComponent().getRouter().navTo("RouteView1");
+        
+        // Show confirmation message
+        sap.m.MessageToast.show("Logged out successfully");
+      },
+
+      // Customer Notification System
+      onNotificationPress: function() {
+        if (!this._notificationPopover) {
+          this._notificationPopover = sap.ui.xmlfragment("project1.fragment.NotificationPopover", this);
+          this.getView().addDependent(this._notificationPopover);
+        }
+        
+        this._loadCustomerNotifications();
+        this._notificationPopover.openBy(this.byId("customerNotificationBtn"));
+      },
+
+      _loadCustomerNotifications: function() {
+        var sUserEmail = localStorage.getItem("userEmail");
+        var oModel = this.getOwnerComponent().getModel();
+        var that = this;
+        
+        // First get customer ID
+        var oUserBinding = oModel.bindList("/Users", null, [], [
+          new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.EQ, sUserEmail)
+        ]);
+        
+        oUserBinding.requestContexts(0, 1).then(function(aUserContexts) {
+          if (aUserContexts.length > 0) {
+            var sCustomerID = aUserContexts[0].getObject().ID;
+            
+            // Now get notifications for customer's shipments
+            var oDelayBinding = oModel.bindList("/ActiveDelays", null, [], [
+              new sap.ui.model.Filter("customerID", sap.ui.model.FilterOperator.EQ, sCustomerID)
+            ]);
+            
+            oDelayBinding.requestContexts().then(function(aContexts) {
+              var aNotifications = aContexts.map(function(oContext) {
+                return oContext.getObject();
+              });
+              
+              var oNotificationModel = new sap.ui.model.json.JSONModel(aNotifications);
+              that.getView().setModel(oNotificationModel, "notificationModel");
+              
+              // Update notification count
+              that._updateNotificationCount(aNotifications.length);
+            });
+          }
+        }).catch(function(oError) {
+          console.error("Failed to load customer notifications:", oError.message);
+        });
+      },
+
+      _updateNotificationCount: function(iCount) {
+        var oBtn = this.byId("customerNotificationBtn");
+        if (oBtn) {
+          if (iCount > 0) {
+            oBtn.setText(iCount.toString());
+            oBtn.setType("Emphasized");
+          } else {
+            oBtn.setText("");
+            oBtn.setType("Transparent");
+          }
+        }
+      },
+
+      onRefreshNotifications: function() {
+        this._loadCustomerNotifications();
+      },
+
+      onCloseNotifications: function() {
+        this._notificationPopover.close();
       },
     });
   },

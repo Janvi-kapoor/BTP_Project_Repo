@@ -17,6 +17,7 @@
                             <Text id="_IDGfenText18" text="Acme Logistics Ltd." class="profileName"/>
                             <Text id="_IDGenfText19" text="Ops Manager" class="profileRole"/>
                         </VBox>
+                        <Button id="logoutBtn" icon="sap-icon://log" type="Transparent" class="headerIconBtn sapUiTinyMarginBegin" tooltip="Logout" press="onLogout"/>
                     </HBox>
                 </HBox>
             </tnt:ToolHeader>
