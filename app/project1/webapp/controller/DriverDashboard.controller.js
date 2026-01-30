@@ -57,6 +57,9 @@ _loadActiveMission: function() {
             var oData = aContexts[0].getObject();
             console.log("Mission Data Loaded:", oData);
             oDriverModel.setData(oData);
+            
+            // Update performance data after mission data is loaded
+            that._loadPerformanceData();
         } else {
             // Agar trip nahi hai, toh purana card reset karo aur naam login wala dikhao
             oDriverModel.setProperty("/driverName", localStorage.getItem("loggedDriverName"));
@@ -144,36 +147,18 @@ onStartTrip: function () {
   
 _loadPerformanceData: function() {
     var sDriverID = localStorage.getItem("loggedDriverID");
-    var oModel = this.getOwnerComponent().getModel();
-    var that = this;
-
-    // 1. Action Context Bind karo
-    var oActionContext = oModel.bindContext("/getDriverPerformance(...)");
-    oActionContext.setParameter("driverID", sDriverID);
-
-    // 2. Execute karo
-    oActionContext.execute().then(function () {
-        // V4 mein requestObject use karne se clean JSON milta hai
-        oActionContext.requestObject().then(function(oData) {
-            console.log("SUCCESS! Data reached UI5:", oData);
-
-            // 3. Agar pehle se model nahi hai toh banao, warna update karo
-            var oPerfModel = that.getOwnerComponent().getModel("perfModel");
-            if (!oPerfModel) {
-                oPerfModel = new sap.ui.model.json.JSONModel(oData);
-                that.getOwnerComponent().setModel(oPerfModel, "perfModel");
-                oPerfModel.refresh(true);
-            } else {
-                oPerfModel.setData(oData);
-            }
-            
-            // 4. Forceful UI update
-            oPerfModel.refresh(true);
-            console.log("UI Model Updated!");
+    var oDriverModel = this.getView().getModel("driverData");
+    
+    // Use data from driverData model instead of separate action
+    if (oDriverModel) {
+        var oData = oDriverModel.getData();
+        var oPerfModel = new sap.ui.model.json.JSONModel({
+            totalDistance: Math.round(oData.totalDistance || 0),
+            truckType: oData.truckType || "N/A",
+            totalFare: oData.totalFare || 0
         });
-    }).catch(function (oError) {
-        console.error("Action Failed:", oError.message);
-    });
+        this.getOwnerComponent().setModel(oPerfModel, "perfModel");
+    }
 }
     });
 });

@@ -38,7 +38,7 @@ sap.ui.define([
 
             // 2. Requirement Section update
             this.byId("reqMaterial").setText("Material: " + oContext.materialCategory + " (" + oContext.loadWeightTons + " Tons)");
-            this.byId("reqVehicle").setText("Required Truck: " + oContext.requiredVehicleType);
+            this.byId("reqVehicle").setText("Required Truck: " + (oContext.requiredVehicleType || "Any Type"));
 
             // 3. Route Section
             this.byId("reqRoute").setText(oContext.pickupLocation + " ➔ " + oContext.dropLocation);

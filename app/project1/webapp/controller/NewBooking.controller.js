@@ -29,6 +29,63 @@ sap.ui.define(
         }, this);
       },
 
+      onPickupChange: function() {
+        this._pickupCoords = null;
+        this._tryGeocodeAndCalculate();
+      },
+
+      onDropChange: function() {
+        this._dropCoords = null;
+        this._tryGeocodeAndCalculate();
+      },
+
+      _tryGeocodeAndCalculate: function() {
+        var sPickup = this.byId("inputPickup").getValue();
+        var sDrop = this.byId("inputDrop").getValue();
+        
+        if (sPickup && sDrop) {
+          this._geocodeAndCalculateDistance(sPickup, sDrop);
+        }
+      },
+
+      _geocodeAndCalculateDistance: function(sPickup, sDrop) {
+        var that = this;
+        
+        Promise.all([
+          this._geocodeAddress(sPickup),
+          this._geocodeAddress(sDrop)
+        ]).then(function(results) {
+          that._pickupCoords = results[0];
+          that._dropCoords = results[1];
+          
+          if (that._pickupCoords && that._dropCoords) {
+            that._calculateRoute();
+          }
+        }).catch(function(error) {
+          console.error("Geocoding failed:", error);
+        });
+      },
+
+      _geocodeAddress: function(sAddress) {
+        return new Promise(function(resolve, reject) {
+          var sUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(sAddress)}&limit=1`;
+          
+          fetch(sUrl)
+            .then(response => response.json())
+            .then(data => {
+              if (data && data.length > 0) {
+                resolve({
+                  lat: parseFloat(data[0].lat),
+                  lng: parseFloat(data[0].lon)
+                });
+              } else {
+                reject(new Error("Address not found"));
+              }
+            })
+            .catch(reject);
+        });
+      },
+
       _onTruckSelect: function (sId) {
         this._aTruckIDs.forEach(function (id) {
           var oCard = this.byId(id);
@@ -157,6 +214,7 @@ sap.ui.define(
         var iValue = parseInt(oInput.getValue()) || 0;
         if (iValue < 100) {
           oInput.setValue(iValue + 1);
+          this._recalculateEverything();
         }
       },
 
@@ -166,6 +224,7 @@ sap.ui.define(
         var iValue = parseInt(oInput.getValue()) || 0;
         if (iValue > 1) {
           oInput.setValue(iValue - 1);
+          this._recalculateEverything();
         }
       },
 
@@ -183,6 +242,8 @@ sap.ui.define(
         var that = this;
         var sUrl = `https://router.project-osrm.org/route/v1/driving/${this._pickupCoords.lng},${this._pickupCoords.lat};${this._dropCoords.lng},${this._dropCoords.lat}?overview=false`;
 
+        console.log("Calculating route from:", this._pickupCoords, "to:", this._dropCoords);
+
         fetch(sUrl)
           .then((response) => response.json())
           .then((data) => {
@@ -190,6 +251,8 @@ sap.ui.define(
               var oRoute = data.routes[0];
               var distance = Math.round(oRoute.distance / 1000);
               that._fCurrentDistance = distance;
+
+              console.log("Distance calculated:", distance, "KM");
 
               var realisticDurationMin = Math.round((distance / 40) * 60);
               var fDurationHrs = realisticDurationMin / 60;
@@ -201,6 +264,8 @@ sap.ui.define(
               that.byId("_IDGenTitle25").setText(sTime);
 
               that._updateDetailedBill(distance);
+            } else {
+              console.error("No route found in response:", data);
             }
           })
           .catch(function (error) {
@@ -242,6 +307,21 @@ sap.ui.define(
       },
 
       onToPricing: function () {
+        // Validate that distance is calculated
+        if (!this._fCurrentDistance || this._fCurrentDistance === 0) {
+          var sPickup = this.byId("inputPickup").getValue();
+          var sDrop = this.byId("inputDrop").getValue();
+          
+          if (sPickup && sDrop) {
+            sap.m.MessageToast.show("Calculating distance, please wait...");
+            this._tryGeocodeAndCalculate();
+            return;
+          } else {
+            sap.m.MessageBox.error("Please enter both pickup and drop locations.");
+            return;
+          }
+        }
+        
         var oPage = this.byId("pagePricing");
         if (this._oNavContainer && oPage) {
           this._oNavContainer.to(oPage);
@@ -323,130 +403,213 @@ sap.ui.define(
         var oModel = oView.getModel();
         var sUserEmail = localStorage.getItem("userEmail");
 
-        var sPickupAddr = oView.byId("inputPickup").getValue();
-        var sDropAddr = oView.byId("inputDrop").getValue();
-        var sMaterial = oView.byId("inputMaterial").getValue();
-        var sWeight = oView.byId("inputWeight").getValue();
-        var sReceiver = oView.byId("inputReceiver").getValue();
-        var sReceiverEmail = oView.byId("inputReceiver2").getValue();
-        var sReceiverPhone = oView.byId("inputReceiver3").getValue();
-        
-        if (!sPickupAddr || !sDropAddr || !sMaterial || !sWeight || sWeight === "0" || 
-            !sReceiver || !sReceiverEmail || !sReceiverPhone) {
-          sap.m.MessageBox.error("Please fill all required fields before confirming.");
+        // Distance validation
+        if (!this._fCurrentDistance || this._fCurrentDistance === 0) {
+          sap.m.MessageBox.error("Distance calculation is missing. Please ensure pickup and drop locations are properly set.");
           return;
         }
-        
+
+        console.log("Confirming dispatch with distance:", this._fCurrentDistance, "KM");
+
+        // 1. Inputs get karein
+        var oInpPickup = oView.byId("inputPickup"),
+          oInpDrop = oView.byId("inputDrop"),
+          oInpWeight = oView.byId("inputWeight"),
+          oInpReceiver = oView.byId("inputReceiver"),
+          oInpMail = oView.byId("inputReceiver2"),
+          oInpPhone = oView.byId("inputReceiver3");
+
+
+        // 2. RE-VALIDATION LOGIC (Fixing the 'lag' issue)
+        var sMail = oInpMail.getValue();
+        var sPhone = oInpPhone.getValue();
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(sReceiverEmail)) {
-          sap.m.MessageBox.error("Please enter a valid email address.");
-          return;
-        }
-        
         var phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(sReceiverPhone)) {
-          sap.m.MessageBox.error("Please enter a valid 10-digit phone number.");
-          return;
-        }
-        
-        if (!this._pickupCoords || !this._dropCoords) {
-          sap.m.MessageBox.error("Please select pickup and drop locations from map.");
-          return;
-        }
 
-        if (!sUserEmail) {
-          sap.m.MessageBox.error("User session not found. Please log in again.");
-          return;
+
+        // Basic Empty Check
+        if (
+          !oInpPickup.getValue() ||
+          !oInpDrop.getValue() ||
+          oInpWeight.getValue() === "0" ||
+          !oInpReceiver.getValue()
+        ) {
+          sap.m.MessageBox.error("Please fill all required fields.");
+          return; // Execution yahi ruk jayegi
         }
 
-        var sCalculatedETA = oView.byId("_IDGenTitle25").getText();
-        var fWeight = parseFloat(sWeight);
 
-        if (!sPickupAddr.includes("India") || !sDropAddr.includes("India")) {
+        // Email Check
+        if (!emailRegex.test(sMail)) {
+          oInpMail.setValueState("Error"); // UI par red box dikhayega
+          oInpMail.setValueStateText(
+            "Enter a valid email (e.g. name@example.com)",
+          );
+          sap.m.MessageBox.error("Invalid Email Address.");
+          return;
+        } else {
+          oInpMail.setValueState("None");
+        }
+
+
+        // Phone Check
+        if (!phoneRegex.test(sPhone)) {
+          oInpPhone.setValueState("Error");
+          oInpPhone.setValueStateText(
+            "Phone number must be exactly 10 digits.",
+          );
+          sap.m.MessageBox.error("Invalid Phone Number.");
+          return;
+        } else {
+          oInpPhone.setValueState("None");
+        }
+
+
+        // India Only Check
+        if (
+          !oInpPickup.getValue().includes("India") ||
+          !oInpDrop.getValue().includes("India")
+        ) {
           sap.m.MessageBox.error("Service limited to India only.");
           return;
         }
 
+
+        // 3. AGAR SAB SAHI HAI TO PROCEED KAREIN
         sap.ui.core.BusyIndicator.show(0);
 
+
+        // Baki ka logic (User check and Deep Create)...
         var oListBinding = oModel.bindList("/Users", null, null, [
-          new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.EQ, sUserEmail)
+          new sap.ui.model.Filter(
+            "email",
+            sap.ui.model.FilterOperator.EQ,
+            sUserEmail,
+          ),
         ]);
 
-        oListBinding.requestContexts(0, 1).then(function (aContexts) {
-          if (aContexts.length === 0) {
+
+        oListBinding
+          .requestContexts(0, 1)
+          .then(
+            function (aContexts) {
+              if (aContexts.length === 0) {
+                sap.ui.core.BusyIndicator.hide();
+                throw new Error("User record not found.");
+              }
+
+
+              var sUserID = aContexts[0].getProperty("ID");
+              
+              // Map truck selection to vehicle type
+              var sTruckTypeMapping = {
+                "truckOpen": "Open Bed",
+                "truckContainer": "Container", 
+                "truckReefer": "Refrigerated"
+              };
+              
+              var oPayload = {
+                ID: "LOG-" + Date.now().toString().slice(-6),
+                materialCategory: oView.byId("inputMaterial").getValue(),
+                loadWeightTons: parseFloat(oInpWeight.getValue()),
+                pickupLocation: oInpPickup.getValue(),
+                dropLocation: oInpDrop.getValue(),
+                receiverCompany: oInpReceiver.getValue(),
+                receiverPhone: sPhone,
+                receiverEmail: sMail,
+                requiredVehicleType: sTruckTypeMapping[this._selectedTruck] || "Container",
+                totalDistance: this._fCurrentDistance,
+                priority:
+                  { std: "Standard", exp: "Express", urg: "Urgent" }[
+                    oView.byId("prioritySeg").getSelectedKey()
+                  ] || "Standard",
+                totalFare: parseFloat(
+                  oView
+                    .byId("_IDGenTitle28")
+                    .getText()
+                    .replace(/[^\d.-]/g, ""),
+                ),
+                status: "Pending",
+                customer_ID: sUserID,
+                assignment: { eta: oView.byId("_IDGenTitle25").getText() },
+              };
+
+
+              var oNewContext = oModel
+                .bindList("/AdminShipments")
+                .create(oPayload);
+
+
+              return oNewContext
+                .created()
+                .then(function () {
+                  return oModel.submitBatch("$auto");
+                })
+                .then(function () {
+                  return oModel
+                    .bindContext(
+                      "LogiChainService.draftActivate(...)",
+                      oNewContext,
+                    )
+                    .execute();
+                });
+            }.bind(this),
+          )
+          .then(
+            function () {
+              sap.ui.core.BusyIndicator.hide();
+              sap.m.MessageToast.show("Booking Successful!");
+              this._resetForm(); // Helper function for cleanup
+            }.bind(this),
+          )
+          .catch(function (oError) {
             sap.ui.core.BusyIndicator.hide();
-            throw new Error("User record not found.");
-          }
-
-          var sUserID = aContexts[0].getProperty("ID");
-          var sNewShipmentID = "LOG-" + Date.now().toString().slice(-6);
-          var oPriorityMap = { std: "Standard", exp: "Express", urg: "Urgent" };
-          var sSelectedPriority = oPriorityMap[oView.byId("prioritySeg").getSelectedKey()] || "Standard";
-
-          var oShipmentPayload = {
-            ID: sNewShipmentID,
-            materialCategory: sMaterial,
-            loadWeightTons: fWeight,
-            pickupLocation: sPickupAddr,
-            dropLocation: sDropAddr,
-            receiverCompany: sReceiver,
-            receiverPhone: sReceiverPhone,
-            receiverEmail: sReceiverEmail,
-            priority: sSelectedPriority,
-            totalFare: parseFloat(oView.byId("_IDGenTitle28").getText().replace(/[^\d.-]/g, "")),
-            status: "Pending",
-            customer_ID: sUserID,
-            assignment: {
-                eta: sCalculatedETA
-            }
-          };
-
-          var oShipmentBinding = oModel.bindList("/AdminShipments");
-          var oNewShipmentContext = oShipmentBinding.create(oShipmentPayload);
-
-          return oNewShipmentContext.created().then(function () {
-            return oModel.submitBatch("$auto");
-          }).then(function () {
-            var oOperation = oModel.bindContext("LogiChainService.draftActivate(...)", oNewShipmentContext);
-            return oOperation.execute();
+            sap.m.MessageBox.error("Error: " + oError.message);
           });
-
-        }.bind(this)).then(function () {
-          sap.ui.core.BusyIndicator.hide();
-          sap.m.MessageToast.show("Booking Successful! Trip Assigned.");
-
-          this.byId("inputSender")?.setValue("");
-          this.byId("inputReceiver").setValue("");
-          this.byId("inputReceiver2").setValue("");
-          this.byId("inputReceiver3").setValue("");
-          this.byId("inputMaterial").setValue("");
-          this.byId("inputWeight").setValue("10");
-          this.byId("inputPickup").setValue("");
-          this.byId("inputDrop").setValue("");
-          this.byId("prioritySeg").setSelectedKey("std");
-
-          this._pickupCoords = null;
-          this._dropCoords = null;
-          this._fCurrentDistance = 0;
-
-          this.byId("step1Ind").addStyleClass("stepActive");
-          ["step2Ind", "step3Ind", "step4Ind"].forEach((id) =>
-            this.byId(id).removeStyleClass("stepActive")
-          );
-
-          var oNavCon = this.byId("wizardNavContainer");
-          oNavCon.to(this.byId("pageConsignment"));
-
-          setTimeout(function () {
-            this.getOwnerComponent().getRouter().navTo("CustomerDashboard");
-          }.bind(this), 1500);
-
-        }.bind(this)).catch(function (oError) {
-          sap.ui.core.BusyIndicator.hide();
-          sap.m.MessageBox.error("Process Failed: " + (oError.message || oError.toString()));
-        });
       },
+
+      _resetForm: function() {
+        // Reset all form inputs
+        this.byId("inputPickup").setValue("");
+        this.byId("inputDrop").setValue("");
+        this.byId("inputWeight").setValue("1");
+        this.byId("inputMaterial").setValue("");
+        this.byId("inputReceiver").setValue("");
+        this.byId("inputReceiver2").setValue("");
+        this.byId("inputReceiver3").setValue("");
+        
+        // Reset truck selection
+        this._selectedTruck = "truckContainer";
+        this._aTruckIDs.forEach(function (id) {
+          var oCard = this.byId(id);
+          if (oCard) {
+            oCard.removeStyleClass("selectedTruck");
+          }
+        }, this);
+        this.byId("truckContainer").addStyleClass("selectedTruck");
+        
+        // Reset priority
+        this.byId("prioritySeg").setSelectedKey("std");
+        
+        // Reset coordinates
+        this._pickupCoords = null;
+        this._dropCoords = null;
+        this._fCurrentDistance = 0;
+        
+        // Reset pricing display
+        this.byId("_IDGenText34").setText("₹ 0");
+        this.byId("_IDGenText38").setText("₹ 0");
+        this.byId("_IDGenTitle28").setText("₹ 0");
+        this.byId("_IDGenTitle13").setText("0 KM");
+        this.byId("_IDGenTitle25").setText("0m");
+        
+        // Navigate back to first page
+        var oPage1 = this.byId("pageConsignment");
+        if (this._oNavContainer && oPage1) {
+          this._oNavContainer.to(oPage1);
+        }
+        this._updateHeader(1);
+      }
     });
   },
 );

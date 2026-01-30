@@ -187,7 +187,60 @@ module.exports = cds.service.impl(async function () {
         }
     });
 
-    // 3. --- Driver Authentication --- (Wahi purana logic)
+    // 3. --- Complete Delivery Function ---
+    this.on('completeDelivery', async (req) => {
+        const { shipmentID, driverID } = req.data;
+        console.log(`===> Completing delivery for Shipment: ${shipmentID} by Driver: ${driverID}`);
+        
+        try {
+            await cds.tx(async (tx) => {
+                // 1. Get assignment details
+                const assignment = await tx.read(TripAssignments)
+                    .where({ shipment_ID: shipmentID, driver_ID: driverID, status: 'Active' });
+                
+                if (!assignment || assignment.length === 0) {
+                    throw new Error('No active assignment found');
+                }
+                
+                const truckID = assignment[0].truck_ID;
+                
+                // 2. Update shipment status to Delivered
+                await tx.update(Shipments).set({ status: 'Delivered' }).where({ ID: shipmentID });
+                
+                // 3. Update driver status to AVAILABLE
+                await tx.update(Drivers).set({ status: 'AVAILABLE' }).where({ ID: driverID });
+                
+                // 4. Update truck status to AVAILABLE
+                await tx.update(Trucks).set({ status: 'AVAILABLE' }).where({ ID: truckID });
+                
+                // 5. Update trip assignment to Completed
+                await tx.update(TripAssignments)
+                    .set({ status: 'Completed' })
+                    .where({ shipment_ID: shipmentID, driver_ID: driverID });
+            });
+            
+            return { success: true, message: "Delivery completed successfully! Driver and truck are now available." };
+            
+        } catch (error) {
+            console.error("Complete Delivery Error:", error.message);
+            return req.error(500, "Delivery completion failed: " + error.message);
+        }
+    });
+    // 5. --- Update Mission Status (Pickup Confirmation) ---
+    this.on('updateMissionStatus', async (req) => {
+        const { shipmentID, newStatus } = req.data;
+        console.log(`===> Updating mission ${shipmentID} to status: ${newStatus}`);
+        
+        try {
+            await UPDATE(Shipments).set({ status: newStatus }).where({ ID: shipmentID });
+            return { success: true, message: `Status updated to ${newStatus}` };
+        } catch (error) {
+            console.error("Status Update Error:", error.message);
+            return req.error(500, "Status update failed: " + error.message);
+        }
+    });
+
+    // 6. --- Driver Authentication ---
     this.on('authenticateDriver', async (req) => {
         const { email, password } = req.data;
         try {
@@ -198,9 +251,6 @@ module.exports = cds.service.impl(async function () {
             return req.error(500, "Auth failed");
         }
     });
-
-    // 4. --- DRIVER PORTAL: ActiveMission (STABLE VERSION) ---
-    // 4. --- DRIVER PORTAL: ActiveMission (STABLE VERSION) ---
   this.on('READ', 'ActiveMission', async (req) => {
     try {
         let targetDriverID = null;
@@ -259,19 +309,25 @@ module.exports = cds.service.impl(async function () {
                 .columns('name')
                 .where({ ID: assignment.driver_ID });
 
+            // Get TripAssignment for ETA
+            const tripAssignment = await SELECT.one.from(TripAssignments)
+                .columns('eta')
+                .where({ shipment_ID: mission.ID });
+
             const enrichedMission = {
                 ID: mission.ID,
                 pickupLocation: mission.pickupLocation,
                 dropLocation: mission.dropLocation,
                 loadWeightTons: mission.loadWeightTons,
                 materialCategory: mission.materialCategory,
-                totalDistance: mission.totalDistance,
+                totalDistance: Math.round(mission.totalDistance || 0),
                 totalFare: mission.totalFare,
                 truckNo: truck?.truckNo || 'N/A',
                 truckType: truck?.vehicleType || 'N/A',
                 driverName: driver?.name || 'N/A',
                 status: mission.status,
-                driverID: assignment.driver_ID
+                driverID: assignment.driver_ID,
+                eta: tripAssignment?.eta || '2-3 hours'
             };
             
             console.log('====> Enriched mission:', enrichedMission);
@@ -287,7 +343,7 @@ module.exports = cds.service.impl(async function () {
     }
 });
 
-    // 5. --- Start Mission Action --- (Wahi purana logic)
+    // 8. --- Start Mission Action ---
     this.on('startMission', async (req) => {
         const { shipmentID } = req.data;
         try {
@@ -299,7 +355,7 @@ module.exports = cds.service.impl(async function () {
         }
     });
 
-    // 6. --- Calculate Earnings --- (Wahi purana logic)
+    // 9. --- Calculate Earnings ---
     this.on('calculateDriverEarnings', async (req) => {
         const { driverID } = req.data;
         try {
@@ -315,7 +371,7 @@ module.exports = cds.service.impl(async function () {
         }
     });
 
-    // 7. --- Driver Stats Function ---
+    // 10. --- Driver Stats Function ---
     this.on('getDriverStats', async (req) => {
         const { driverID } = req.data;
         console.log(`====> Getting stats for driver: ${driverID}`);
@@ -421,7 +477,7 @@ this.on('getDriverPerformance', async (req) => {
         console.log("Backend: Sending data:", { totalDistance: finalDistance, truckType: truck?.vehicleType });
 
         return {
-            totalDistance: finalDistance,
+            totalDistance: Math.round(finalDistance),
             truckType: truck?.vehicleType || "Standard",
             totalFare: shipment?.totalFare || 0
         };

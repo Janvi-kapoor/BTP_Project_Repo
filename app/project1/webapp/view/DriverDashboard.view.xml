@@ -109,12 +109,12 @@
         <l:Grid id="kpiGrid" defaultSpan="L4 M6 S12" class="sapUiMediumMarginTop sapUiMediumMarginBeginEnd drActive-kpiContainer">
    <VBox id="distanceKpiCard" class="drActive-kpiCard">
     <Text id="_IDGenText46" text="Total Distance" class="drActive-tinyLabel"/>
-    <Title id="_IDGenTitle18" text="{perfModel>/totalDistance} KM" titleStyle="H2"/>
+    <Title id="_IDGenTitle18" text="{driverData>/totalDistance} KM" titleStyle="H2"/>
 </VBox>
 
 <VBox id="rateKpiCard" class="drActive-kpiCard">
     <Text id="_IDGenText47" text="Assigned Truck Type" class="drActive-tinyLabel"/>
-    <Title id="_IDGenTitle19" text="{perfModel>/truckType}" titleStyle="H2" class="sapUiPositiveText"/>
+    <Title id="_IDGenTitle19" text="{driverData>/truckType}" titleStyle="H2" class="sapUiPositiveText"/>
 </VBox>
 <VBox id="fareKpiCard" class="drActive-kpiCard">
         <Text id="_IDGenText49" text="Trip Fare" class="drActive-tinyLabel"/>

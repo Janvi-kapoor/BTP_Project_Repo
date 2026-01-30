@@ -13,7 +13,7 @@
                 <core:Icon id="_IDGenIcon14" src="sap-icon://map-2" class="liveNav-metricIcon"/>
                 <VBox id="_IDGenVBox27" class="liveNav-metricContent">
                     <Text id="_IDGenText48" text="Total Distance" class="liveNav-metricLabel"/>
-                    <Text id="_IDGenText50" text="{perfModel>/totalDistance} KM" class="liveNav-metricValue"/>
+                    <Text id="_IDGenText50" text="{missionData>/totalDistance} KM" class="liveNav-metricValue"/>
                 </VBox>
             </HBox>
             
@@ -21,7 +21,7 @@
                 <core:Icon id="_IDGenIcon18" src="sap-icon://shipping-status" class="liveNav-metricIcon"/>
                 <VBox id="_IDGenVBox32" class="liveNav-metricContent">
                     <Text id="_IDGenText51" text="Assigned Truck" class="liveNav-metricLabel"/>
-                    <Text id="_IDGenText52" text="{perfModel>/truckType}" class="liveNav-metricValue liveNav-purpleText"/>
+                    <Text id="_IDGenText52" text="{missionData>/truckType}" class="liveNav-metricValue liveNav-purpleText"/>
                 </VBox>
             </HBox>
         </HBox>

@@ -360,6 +360,7 @@
                                         showValueHelp="true"
                                         class="customInputIcon"
                                         valueHelpRequest="onOpenMap"
+                                        change="onPickupChange"
                                     />
                                 </VBox>
                                 <VBox id="dropBox">
@@ -375,6 +376,7 @@
                                         showValueHelp="true"
                                         class="customInputIcon"
                                         valueHelpRequest="onOpenMap"
+                                        change="onDropChange"
                                     />
                                 </VBox>
                             </layout:Grid>
