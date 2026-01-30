@@ -187,45 +187,7 @@ module.exports = cds.service.impl(async function () {
         }
     });
 
-    // 3. --- Complete Delivery Function ---
-    this.on('completeDelivery', async (req) => {
-        const { shipmentID, driverID } = req.data;
-        console.log(`===> Completing delivery for Shipment: ${shipmentID} by Driver: ${driverID}`);
-        
-        try {
-            await cds.tx(async (tx) => {
-                // 1. Get assignment details
-                const assignment = await tx.read(TripAssignments)
-                    .where({ shipment_ID: shipmentID, driver_ID: driverID, status: 'Active' });
-                
-                if (!assignment || assignment.length === 0) {
-                    throw new Error('No active assignment found');
-                }
-                
-                const truckID = assignment[0].truck_ID;
-                
-                // 2. Update shipment status to Delivered
-                await tx.update(Shipments).set({ status: 'Delivered' }).where({ ID: shipmentID });
-                
-                // 3. Update driver status to AVAILABLE
-                await tx.update(Drivers).set({ status: 'AVAILABLE' }).where({ ID: driverID });
-                
-                // 4. Update truck status to AVAILABLE
-                await tx.update(Trucks).set({ status: 'AVAILABLE' }).where({ ID: truckID });
-                
-                // 5. Update trip assignment to Completed
-                await tx.update(TripAssignments)
-                    .set({ status: 'Completed' })
-                    .where({ shipment_ID: shipmentID, driver_ID: driverID });
-            });
-            
-            return { success: true, message: "Delivery completed successfully! Driver and truck are now available." };
-            
-        } catch (error) {
-            console.error("Complete Delivery Error:", error.message);
-            return req.error(500, "Delivery completion failed: " + error.message);
-        }
-    });
+
     // 5. --- Update Mission Status (Pickup Confirmation) ---
     this.on('updateMissionStatus', async (req) => {
         const { shipmentID, newStatus } = req.data;
@@ -523,8 +485,8 @@ this.on('sendOTP', async (req) => {
    
     try {
         const activeShipment = await SELECT.one.from(Shipments)
-            .columns('ID', 'receiverEmail', 'receiverCompany')
-            .where({ status: { in: ['Assigned', 'In-Transit'] } })
+            .columns('ID', 'receiverEmail', 'receiverCompany', 'status')
+            .where({ status: { in: ['Assigned', 'In-Transit', 'ConfirmPickup'] } })
             .orderBy('createdAt desc');
        
         if (!activeShipment || !activeShipment.receiverEmail) {
@@ -583,7 +545,8 @@ this.on('completeDelivery', async (req) => {
     console.log(`====> Completing delivery for shipment: ${shipmentId}`);
 
     try {
-        await cds.tx(async (tx) => {
+        const result = await cds.tx(async (tx) => {
+            // Get trip assignment using correct column names
             const tripAssignment = await tx.run(
                 SELECT.one.from(TripAssignments)
                 .where({ shipment_ID: shipmentId })
@@ -591,8 +554,10 @@ this.on('completeDelivery', async (req) => {
             );
 
             if (!tripAssignment) {
-                return req.error(404, 'Trip assignment not found');
+                throw new Error('Trip assignment not found');
             }
+
+            console.log(`Found assignment - Truck: ${tripAssignment.truck_ID}, Driver: ${tripAssignment.driver_ID}`);
 
             // Update shipment status to Delivered
             await tx.update(Shipments).set({
@@ -613,12 +578,20 @@ this.on('completeDelivery', async (req) => {
             await tx.update(TripAssignments).set({
                 actualDeliveryTime: new Date().toISOString()
             }).where({ shipment_ID: shipmentId });
-            console.log(`✅ Driver and Truck marked as AVAILABLE for shipment: ${shipmentId}`);
+            
+            console.log(`✅ Driver ${tripAssignment.driver_ID} and Truck ${tripAssignment.truck_ID} marked as AVAILABLE`);
+            
+            return {
+                truckID: tripAssignment.truck_ID,
+                driverID: tripAssignment.driver_ID
+            };
         });
+        
         return {
             success: true,
             message: "Delivery completed successfully. Driver and truck are now available.",
-            shipmentId: shipmentId
+            shipmentId: shipmentId,
+            updatedResources: result
         };
 
     } catch (error) {
