@@ -126,7 +126,7 @@ module.exports = cds.service.impl(async function () {
             await cds.tx(async (tx) => {
                 
                 // 1. Shipment ka status 'In-Transit' karo (hyphen ke sath)
-                await tx.update(Shipments).set({ status: 'In-Transit' }).where({ ID: orderID });
+                await tx.update(Shipments).set({ status: 'Assigned' }).where({ ID: orderID });
 
                 // 2. Truck ka status 'ON_TRIP' karo
                 await tx.update(Trucks).set({ status: 'ON_TRIP' }).where({ ID: truckID });
