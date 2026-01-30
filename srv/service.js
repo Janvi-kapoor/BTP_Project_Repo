@@ -613,10 +613,8 @@ this.on('completeDelivery', async (req) => {
             await tx.update(TripAssignments).set({
                 actualDeliveryTime: new Date().toISOString()
             }).where({ shipment_ID: shipmentId });
-
             console.log(`✅ Driver and Truck marked as AVAILABLE for shipment: ${shipmentId}`);
         });
-
         return {
             success: true,
             message: "Delivery completed successfully. Driver and truck are now available.",
