@@ -125,7 +125,7 @@ module.exports = cds.service.impl(async function () {
             // Transaction start: Taki agar ek bhi update fail ho, toh kuch bhi save na ho (Data Integrity)
             await cds.tx(async (tx) => {
                 
-                // 1. Shipment ka status 'In-Transit' karo (hyphen ke sath)
+                // 1. Shipment ka status 'Assigned' karo
                 await tx.update(Shipments).set({ status: 'Assigned' }).where({ ID: orderID });
 
                 // 2. Truck ka status 'ON_TRIP' karo
@@ -134,13 +134,29 @@ module.exports = cds.service.impl(async function () {
                 // 3. Driver ka status 'BUSY' karo
                 await tx.update(Drivers).set({ status: 'BUSY' }).where({ ID: driverID });
 
-                // 4. TripAssignments table mein entry dalo (History ke liye)
-                await tx.create(TripAssignments).entries({
-                    shipment_ID: orderID,
-                    truck_ID: truckID,
-                    driver_ID: driverID,
-                    status: 'Active'
-                });
+                // 4. Check if TripAssignment already exists (ETA wala record)
+                const existingAssignment = await tx.run(
+                    SELECT.one.from(TripAssignments).where({ shipment_ID: orderID })
+                );
+
+                if (existingAssignment) {
+                    // Update existing record with truck and driver IDs
+                    console.log(`Updating existing assignment for shipment: ${orderID}`);
+                    await tx.update(TripAssignments).set({
+                        truck_ID: truckID,
+                        driver_ID: driverID,
+                        status: 'Active'
+                    }).where({ shipment_ID: orderID });
+                } else {
+                    // Create new TripAssignment entry
+                    console.log(`Creating new assignment for shipment: ${orderID}`);
+                    await tx.create(TripAssignments).entries({
+                        shipment_ID: orderID,
+                        truck_ID: truckID,
+                        driver_ID: driverID,
+                        status: 'Active'
+                    });
+                }
             });
 
             return "Order successfully dispatched and resource status updated!";
@@ -169,7 +185,7 @@ module.exports = cds.service.impl(async function () {
         }
     });
 
-    // 2. --- Smart Dispatcher: assignOrder --- (Wahi purana logic)
+    // 2. --- Smart Dispatcher: assignOrder --- (Updated to handle existing ETA records)
     this.on('assignOrder', async (req) => {
         const { orderID, truckID, driverID } = req.data;
         try {
@@ -177,9 +193,25 @@ module.exports = cds.service.impl(async function () {
                 await tx.update(Shipments).set({ status: 'Assigned' }).where({ ID: orderID });
                 await tx.update(Trucks).set({ status: 'ON_TRIP' }).where({ ID: truckID });
                 await tx.update(Drivers).set({ status: 'BUSY' }).where({ ID: driverID });
-                await tx.create(TripAssignments).entries({
-                    shipment_ID: orderID, truck_ID: truckID, driver_ID: driverID, status: 'Active'
-                });
+                
+                // Check if assignment already exists
+                const existingAssignment = await tx.run(
+                    SELECT.one.from(TripAssignments).where({ shipment_ID: orderID })
+                );
+
+                if (existingAssignment) {
+                    // Update existing record
+                    await tx.update(TripAssignments).set({
+                        truck_ID: truckID,
+                        driver_ID: driverID,
+                        status: 'Active'
+                    }).where({ shipment_ID: orderID });
+                } else {
+                    // Create new record
+                    await tx.create(TripAssignments).entries({
+                        shipment_ID: orderID, truck_ID: truckID, driver_ID: driverID, status: 'Active'
+                    });
+                }
             });
             return "Order successfully dispatched!";
         } catch (error) {
