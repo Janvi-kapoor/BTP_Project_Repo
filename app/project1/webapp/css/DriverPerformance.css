@@ -1,117 +1,228 @@
-/* DriverPerformance Page Styles - Modern Gradient Design */
+/* ================================================================= */
+/* 1. PROFESSIONAL HEADER CONTAINER                                  */
+/* ================================================================= */
 
 .performancePageContainer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    min-height: 100vh;
+    background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%) !important;
+    padding: 32px 48px !important; /* Thoda zyada breathing room */
+    min-height: 100vh !important;
 }
 
+/* Header Alignment */
 .performanceHeaderBox {
-    margin-bottom: 8px;
-    align-items: center;
-    gap: 16px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 24px !important; /* Icon aur Text ke beech perfect gap */
+    margin-bottom: 4px !important; /* Title aur subtitle ko paas layenge */
+    padding-bottom: 0 !important;
 }
 
+/* ================================================================= */
+/* 2. HEADER ICON (Glassy & Premium)                                 */
+/* ================================================================= */
 .performanceHeaderIcon {
-    font-size: 28px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    font-size: 2rem !important;
+    width: 60px !important;
+    height: 60px !important;
+    
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* Subtle Glassy Background */
+    background: rgba(62, 79, 179, 0.06) !important; 
+    border: 1px solid rgba(62, 79, 179, 0.15) !important;
+    border-radius: 16px !important; /* Soft Squircle shape */
+    
+    /* Icon Gradient */
+    background: linear-gradient(135deg, #3e4fb3 0%, #a85af3 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+ 
+    
+    /* Soft Glow */
+    box-shadow: 0 8px 20px rgba(62, 79, 179, 0.12) !important;
 }
 
+/* ================================================================= */
+/* 3. MAIN TITLE (High-End & Dimensional)                            */
+/* ================================================================= */
 .mainTitleText {
-    font-size: 28px !important;
-    font-weight: 700 !important;
-    color: #374151 !important;
+    font-family: 'Inter', 'Roboto', sans-serif !important;
+    font-size: 2.4rem !important; /* Thoda bada size impact ke liye */
+    font-weight: 700 !important; /* Bold but balanced */
+    
+    /* Dynamic Gradient - Left to Right */
+    background: linear-gradient(to right, #3e4fb3 0%, #6f38db 50%, #a85af3 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    
     margin: 0 !important;
+    letter-spacing: -0.8px !important; /* Tight elegant spacing */
+    line-height: 1 !important;
+    
+    /* KEY CHANGE: Drop Shadow to remove "Simple" look */
+    filter: drop-shadow(0 2px 4px rgba(62, 79, 179, 0.15));
+    padding-bottom: 3px !important;
 }
 
+/* ================================================================= */
+/* 4. SUBTITLE (Clean, Professional & Aligned)                       */
+/* ================================================================= */
 .performanceSubtitle {
-    font-size: 16px !important;
-    color: #6B7280 !important;
-    font-weight: 400 !important;
-    margin-bottom: 32px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.20rem !important; /* Readable size (approx 18px) */
+    font-weight: 530 !important; /* Medium weight looks premium */
+    
+    /* Color: Cool Slate Blue (Not boring Gray) */
+    color: #5e7088 !important; 
+    
+    /* Spacing & Position */
+    margin-top: 1px !important;
+    margin-bottom: 30px !important;
+    
+    /* Indent to align with Title text (Icon width 60 + Gap 24 = 84px) */
+    margin-left: 84px !important; 
+    
+    line-height: 1.5 !important;
+    letter-spacing: 0.3px !important; /* Slight spacing for clean look */
+    
+    /* Optional: Subtle fade-in effect if needed, but keeping it static for now */
+    opacity: 0.9 !important;
 }
 
-.performanceCardsWrapper {
-    gap: 24px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
+/* Mobile Responsive Tweaks */
+@media (max-width: 600px) {
+    .performancePageContainer {
+        padding: 20px !important;
+    }
+    .performanceHeaderBox {
+        gap: 16px !important;
+    }
+    .mainTitleText {
+        font-size: 1.8rem !important;
+    }
+    .performanceSubtitle {
+        margin-left: 0 !important; /* Mobile pe indent hata do */
+        margin-top: 5px !important;
+        font-size: 1rem !important;
+    }
 }
+/* ============================================================================== */
+/* PERFORMANCE CARDS (PREMIUM DASHBOARD STYLE)                                    */
+/* ============================================================================== */
 
+/* 2. The Card Itself */
 .performanceCard {
-    background: white;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    border-radius: 20px;
-    padding: 24px;
-    flex: 1;
-    min-width: 280px;
-    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.2);
-    transition: all 0.3s ease;
-    position: relative;
-    min-height: 140px;
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    /* Soft Border */
+    border: 1px solid rgba(99, 102, 241, 0.15) !important; 
+    /* Indigo Glow Shadow */
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.08) !important;
+    padding: 20px !important;
+    flex: 1 !important;
+    min-width: 280px !important;
+    min-height: 140px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
 }
 
+/* Top Accent Line (Color Bar) */
 .performanceCard::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    z-index: -1;
+    top: 0; left: 0; right: 0;
+    height: 4px; /* Thin color line at top */
+    background: linear-gradient(90deg, #6366f1, #a855f7);
 }
 
+/* ============================================================================== */
+/* PREMIUM HOVER EFFECT (Theme Matched)                                           */
+/* ============================================================================== */
+
+/* Card Hover Animation */
 .performanceCard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+    /* Thoda aur upar uthega */
+    transform: translateY(-8px) !important;
+    
+    /* Background: White se Halka sa Indigo Tint */
+    background: linear-gradient(145deg, #ffffff 0%, #eef2ff 100%) !important;
+    
+   
+    border: 2px solid  #875ef5 !important; 
+    /* Shadow: Deep Indigo Glow (Theme Color) */
+    box-shadow: 0 25px 50px -12px rgba(99, 102, 241, 0.35) !important;
 }
 
+
+/* Transition smooth karne ke liye base class me ye add/check kar lena */
+.performanceCard, .cardIcon {
+    transition: all 0.3s ease-out !important;
+}
+
+/* 3. Header Area */
 .cardHeader {
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
+    align-items: center !important;
+    margin-bottom: 20px !important;
 }
 
+/* 4. Icon Styling - Glowing Badge */
 .cardIcon {
-    font-size: 20px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+    font-size: 1.4rem !important;
+    color: #ffffff !important; /* White Icon */
+    
+    /* Gradient Background for Icon */
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 14px !important; /* Soft Square */
+    
+    /* Centering the icon inside box */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    margin-right: 15px !important;
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3) !important;
 }
 
+/* 5. Text Styling - NO BLACK TEXT */
+
+/* Label (e.g. OVERALL EARNINGS) */
 .cardLabel {
-    font-size: 14px !important;
-    color: #6B7280 !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.9rem !important;
+    color: #64748b !important; /* Slate Blueish Grey */
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
 }
 
+/* Value (e.g. ₹45,000) */
 .cardValue {
-    font-size: 32px !important;
+    font-size: 2.4rem !important;
     font-weight: 800 !important;
-    color: #111827 !important;
-    margin: 8px 0 !important;
-    line-height: 1.2 !important;
+    margin: 5px 0 8px 0 !important;
+    
+    /* Gradient Text (Indigo to Dark) */
+    background: linear-gradient(135deg, #31425f 0%, #4f46e5 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
 }
 
+/* Subtext (e.g. Total Earned) */
 .cardSubtext {
-    font-size: 14px !important;
-    color: #6B7280 !important;
+    font-size: 0.9rem !important;
+    color: #4c5ada !important; /* Soft Indigo */
     font-weight: 500 !important;
+}
+
+/* Specific Tweak for Rating Value (to make it pop) */
+#safetyValue {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important; /* Greenish for Safety */
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
 }
 
 /* Trip History Table Styles */
@@ -279,6 +390,220 @@
     
     .tripHistoryTable .sapMListTblHeaderCell,
     .tripHistoryTable .sapMListTblCell {
+        padding: 10px 12px !important;
+    }
+}
+/* Fleet Master Table Styling - Exact Admin Match */
+.sectionTitle {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+    font-size: 1.4rem !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+
+.customFleetTable {
+    background: transparent !important;
+    margin-top: 0 !important;
+}
+
+/* Header Design (Uppercase, Light Grey) */
+.customFleetTable .sapMListTblHeader {
+    background: #f8fafc !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    height: 50px !important;
+}
+
+.customFleetTable .sapMListTblHeaderCell {
+    text-align: center !important;
+    vertical-align: middle !important;
+    padding: 12px 20px !important;
+}
+
+.customFleetTable .sapMListTblHeader .sapMText {
+    color: #64748b !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+/* Row Styling (Spacious & White) */
+.customFleetTable .sapMListTblRow {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 75px !important;
+    vertical-align: middle !important;
+}
+
+/* Row Hover Effect */
+.customFleetTable .sapMListTblRow:hover {
+    background: #f8fafc !important;
+}
+
+/* Table Cell Styling - Proper Alignment */
+.customFleetTable .sapMListTblCell {
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 75px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+/* Table Cell Text - Proper Alignment */
+.customFleetTable .sapMText {
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    color: #374151 !important;
+}
+
+/* Date Column - Center aligned */
+.customFleetTable .sapMListTblCell:nth-child(1) .sapMText {
+    text-align: center !important;
+    
+}
+
+/* Trip ID Column - Center aligned and bold */
+.customFleetTable .sapMListTblCell:nth-child(2) .sapMText {
+    text-align: center !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+}
+
+/* Total KM Column - Center aligned */
+.customFleetTable .sapMListTblCell:nth-child(3) .sapMText {
+    text-align: center !important;
+}
+
+/* Status Column - Center aligned */
+.customFleetTable .sapMListTblCell:nth-child(4) {
+    text-align: center !important;
+}
+
+/* Status Header - Move left */
+.customFleetTable .sapMListTblHeaderCell:nth-child(5) .sapMText {
+    text-align: center !important;
+   
+}
+
+/* Responsive Design for Fleet Table */
+@media (max-width: 768px) {
+    .customFleetTable .sapMListTblHeaderCell,
+    .customFleetTable .sapMListTblCell {
         padding: 8px 12px !important;
     }
+    
+    .customFleetTable .sapMListTblHeader .sapMText {
+        font-size: 0.7rem !important;
+    }
+    
+    .customFleetTable .sapMText {
+        font-size: 0.8rem !important;
+    }
+    
+    .customFleetTable .sapMObjStatus {
+        font-size: 0.7rem !important;
+        padding: 3px 10px !important;
+        min-width: 80px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .customFleetTable .sapMListTblHeaderCell,
+    .customFleetTable .sapMListTblCell {
+        padding: 6px 8px !important;
+    }
+    
+    .customFleetTable .sapMListTblRow {
+        height: 60px !important;
+    }
+    
+    .customFleetTable .sapMListTblHeader {
+        height: 40px !important;
+    }
+}
+
+/* Amount Column - Right aligned */
+.customFleetTable .sapMListTblCell:nth-child(5) .sapMText {
+    text-align: center !important;
+    font-weight: 600 !important;
+}
+
+/* Column Width Distribution */
+.customFleetTable .sapMListTblHeaderCell:nth-child(1),
+.customFleetTable .sapMListTblCell:nth-child(1) {
+    width: 15% !important;
+}
+
+.customFleetTable .sapMListTblHeaderCell:nth-child(2),
+.customFleetTable .sapMListTblCell:nth-child(2) {
+    width: 25% !important;
+}
+
+.customFleetTable .sapMListTblHeaderCell:nth-child(3),
+.customFleetTable .sapMListTblCell:nth-child(3) {
+    width: 20% !important;
+}
+
+.customFleetTable .sapMListTblHeaderCell:nth-child(4),
+.customFleetTable .sapMListTblCell:nth-child(4) {
+    width: 20% !important;
+}
+
+.customFleetTable .sapMListTblHeaderCell:nth-child(5),
+.customFleetTable .sapMListTblCell:nth-child(5) {
+    width: 20% !important;
+}
+
+/* Status Column - Professional Pills */
+.customFleetTable .sapMObjStatus {
+    font-weight: 600 !important;
+    font-size: 0.8rem !important;
+    padding: 5px 15px !important;
+    border-radius: 50px !important;
+    text-align: center !important;
+    min-width: 100px !important;
+    display: inline-block !important;
+}
+
+/* SUCCESS STATE (Completed) -> Green Pill */
+.customFleetTable .sapMObjStatusStateSuccess .sapMObjStatusText {
+    color: #15803d !important;
+}
+.customFleetTable .sapMObjStatusStateSuccess {
+    background-color: #dcfce7 !important;
+    border: 1px solid #bbf7d0 !important;
+}
+
+/* WARNING STATE (In Progress) -> Orange Pill */
+.customFleetTable .sapMObjStatusStateWarning .sapMObjStatusText {
+    color: #c2410c !important;
+}
+.customFleetTable .sapMObjStatusStateWarning {
+    background-color: #ffedd5 !important;
+    border: 1px solid #fed7aa !important;
+}
+
+/* INFORMATION STATE (Assigned) -> Blue Pill */
+.customFleetTable .sapMObjStatusStateInformation .sapMObjStatusText {
+    color: #2563eb !important;
+}
+.customFleetTable .sapMObjStatusStateInformation {
+    background-color: #dbeafe !important;
+    border: 1px solid #93c5fd !important;
+}
+
+/* ERROR STATE -> Red Pill */
+.customFleetTable .sapMObjStatusStateError .sapMObjStatusText {
+    color: #b91c1c !important;
+}
+.customFleetTable .sapMObjStatusStateError {
+    background-color: #fee2e2 !important;
+    border: 1px solid #fecaca !important;
 }

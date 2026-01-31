@@ -8,7 +8,7 @@
 
 /* Main Container */
 .mainTrackContainer {
-    padding: 24px;
+    padding: 20px;
     gap: 24px;
 }
 
@@ -18,118 +18,175 @@
     margin-bottom: 0;
 }
 
-/* Left Container - Timeline */
+/* ================================================================= */
+/* 1. LEFT CONTAINER CARD (Glassy & Clean)                           */
+/* ================================================================= */
 .timelineContainer {
-    width: 320px;
-    background: white;
-    border-radius: 12px;
-    padding: 24px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid #F1F5F9;
-    position: relative;
+    width: 320px !important;
+    background: rgba(255, 255, 255, 0.95) !important; /* Slight Glass */
+    border-radius: 20px !important; /* Smooth Corners */
+    padding: 30px 25px !important;
+    
+    /* Indigo Glow Shadow */
+    box-shadow: 0 15px 40px rgba(62, 79, 179, 0.1) !important;
+    border: 1px solid rgba(62, 79, 179, 0.15) !important;
+    
+    position: relative !important;
+    overflow: hidden !important;
 }
 
+/* ================================================================= */
+/* 2. HEADINGS (Theme Gradient & Professional Look)                  */
+/* ================================================================= */
 .progressTitle {
-    color: #1E293B !important;
-    font-weight: 700 !important;
-    font-size: 18px !important;
-    text-align: center;
-    margin-bottom: 8px !important;
+    /* Gradient Text Style */
+    background: linear-gradient(135deg, #3e4fb3 0%, #a85af3 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    
+    font-weight: 800 !important;
+    font-size: 1.7rem !important;
+    text-align: center !important;
+    margin-bottom: 5px !important;
+    letter-spacing: -0.5px !important;
 }
 
 .shipmentIdTitle {
-    color: #64748B !important;
-    font-weight: 500 !important;
-    margin-bottom: 8px !important;
-    font-size: 14px !important;
-    text-align: center;
-    margin-bottom: 12px !important;
+    color: #1e293b !important; /* Dark Slate */
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    margin-bottom: 5px !important;
 }
 
 .routeText {
-    color: #64748B !important;
-    font-size: 14px !important;
-    margin-bottom: 32px !important;
+    color: #64748b !important; /* Cool Gray */
+    font-size: 0.9rem !important;
+    margin-bottom: 35px !important;
     font-weight: 500 !important;
     text-align: center;
+    background: #f1f5f9;
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    align-self: center; /* If flex */
 }
 
-/* Timeline Styles */
+/* ================================================================= */
+/* 3. TIMELINE STRUCTURE & VERTICAL LINE (The Main Logic)            */
+/* ================================================================= */
+/* ================================================================= */
+/* TIMELINE CONTAINER & STRUCTURE                                    */
+/* ================================================================= */
 .timelineBox {
-    position: relative;
-    padding-left: 0;
+    padding-left: 5px !important;
+    margin-top: 10px !important;
 }
 
+/* Step Wrapper */
 .timelineStep {
-    position: relative;
-    margin-bottom: 28px;
-    align-items: flex-start;
-    gap: 16px;
-    justify-content: flex-start;
+    position: relative !important;
+    padding-bottom: 30px !important; /* Gap between steps */
+    align-items: flex-start !important;
+    gap: 20px !important; /* Icon aur Text ke beech ka gap */
 }
 
+/* --- VERTICAL LINE CONNECTOR (The Magic) --- */
+.timelineStep::before {
+    content: '' !important;
+    position: absolute !important;
+    /* Math: Icon Width (40px) / 2 = 20px. Line Width = 2px. Center = 19px */
+    left: 19px !important; 
+    top: 40px !important; /* Icon ke neeche se start */
+    height: 100% !important;
+    width: 2px !important;
+    /* Default Gray Line */
+    background: linear-gradient(to bottom, #e2e8f0 0%, #cbd5e1 100%) !important;
+    z-index: 1 !important;
+}
+
+/* Last step ki line hata do */
+.timelineStep:last-child::before {
+    display: none !important;
+}
+
+/* Jab step complete ho jaye, line ko bhi color kar sakte ho (Optional) */
+.timelineStep.completed::before {
+    background: #10b981 !important; 
+}
+
+/* ================================================================= */
+/* ICONS - PERFECT CENTER ALIGNMENT                                  */
+/* ================================================================= */
 .timelineIcon {
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50%;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    
+    /* Flexbox for Perfect Centering inside Circle */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    font-size: 16px !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    border: 3px solid white;
-    flex-shrink: 0;
-    margin-top: -2px;
+    
+    font-size: 18px !important;
+    line-height: 1 !important; /* Important for SAP Icons */
+    
+    z-index: 2 !important; /* Line ke upar */
+    position: relative !important;
+    
+    /* Default State (Pending) */
+    background: #f1f5f9 !important;
+    color: #94a3b8 !important;
+    border: 4px solid white !important; /* Clean Cut */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    flex-shrink: 0 !important;
 }
 
-.timelineIcon.completed {
-    background: #10B981 !important;
-    color: white !important;
-    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
-}
-
+/* --- STATE 1: CURRENT (Pulse Animation & Gradient) --- */
+/* Ye class JS lagayega jab status 'Assigned' ya 'In-Transit' hoga */
 .timelineIcon.current {
-    background: #6366F1 !important;
+    background: linear-gradient(135deg, #3e4fb3 0%, #6f38db 50%, #a85af3 100%) !important;
     color: white !important;
-    animation: pulse 2s infinite;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 0 4px rgba(62, 79, 179, 0.15) !important;
+    animation: pulse 2s infinite !important;
+    transform: scale(1.05) !important;
 }
 
+/* --- STATE 2: COMPLETED (Green Gradient) --- */
+/* Ye class JS lagayega jab status pass ho jayega */
+.timelineIcon.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* --- STATE 3: PENDING (Explicit Gray) --- */
 .timelineIcon.pending {
-    background: #F1F5F9 !important;
-    color: #94A3B8 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: #f1f5f9 !important;
+    color: #cbd5e1 !important;
 }
 
+/* Animation */
 @keyframes pulse {
-    0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-    }
-    50% { 
-        transform: scale(1.05);
-        box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(62, 79, 179, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(62, 79, 179, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(62, 79, 179, 0); }
 }
 
+/* Text Styles */
 .stepContent {
-    flex: 1;
+    padding-top: 8px !important;
 }
-
 .stepTitle {
-    font-weight: 600 !important;
-    color: #1E293B !important;
-    font-size: 14px !important;
-    margin-bottom: 4px !important;
-    line-height: 1.4;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    font-size: 15px !important;
 }
-
 .stepTime {
-    color: #64748B !important;
-    font-size: 12px !important;
-    margin-top: 4px !important;
-    font-weight: 400 !important;
-    line-height: 1.3;
+    color: #6366f1 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    margin-top: 2px !important;
 }
 
 /* Right Container - Map */
@@ -188,115 +245,152 @@
     font-weight: 600 !important;
     color: #1F2937 !important;
 }
+/* ============================================================
+   DRIVER SECTION (Modern Indigo/Purple Theme)
+   ============================================================ */
 
-/* Driver Section */
+/* 1. Main Section Container */
 .driverSection {
-    margin-top: 16px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-top: 16px !important;
+    padding: 0 4px !important; /* Thoda breathing space side mein */
 }
 
+/* 2. Driver Card (Assigned) */
 .driverCard {
-    background-color: #ffffff;
+    background: #ffffff !important;
     border-radius: 16px !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    border: 1px solid #eee;
-    min-height: 120px;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 10 !important;
-    padding-right: 10 !important;
+    /* Soft shadow + Clean Border */
+    box-shadow: 0 8px 24px rgba(149, 157, 165, 0.1) !important;
+    border: 1px solid #e2e8f0 !important;
+    min-height: 100px !important;
+    padding: 20px !important;
+    transition: all 0.3s ease !important;
 }
 
-.noDriverCard {
-    background: white;
-    border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid #F1F5F9;
-    align-items: center;
-    gap: 16px;
-    height: 120px;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100%;
+.driverCard:hover {
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.15) !important; /* Indigo Glow on Hover */
+    transform: translateY(-2px);
 }
 
-.driverPhoneSection {
-    min-width: 400px;
+/* 3. AVATAR STYLING (Gradient Circle Fix) */
+/* XML mein 'displaySize=L' ko CSS se override karke perfect size diya hai */
+.driverCard .sapFAvatar {
+    width: 3.5rem !important;   /* Fixed standard size */
+    height: 3.5rem !important;
+    /* The Magic Gradient: Indigo to Purple */
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    border: 2px solid #ffffff !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3) !important; /* Glow effect */
 }
 
-.phoneWithIcon {
-    align-items: center;
+/* Avatar ke andar ka Text/Icon White rahega */
+.driverCard .sapFAvatar .sapFAvatarInitialsHolder,
+.driverCard .sapFAvatar .sapUiIcon {
+    color: #ffffff !important;
+    font-size: 1.2rem !important; 
 }
 
-.phoneIcon {
-    font-size: 18px !important;
-    color: #6366F1 !important;
-}
-
-.driverPhoneText {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #1E293B !important;
+/* 4. Driver Name & Info */
+.driverCard .sapMTitle {
+    color: #1e293b !important;   /* Dark Slate */
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    text-shadow: none !important;
 }
 
 .driverRatingText {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #F59E0B !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #f59e0b !important;   /* Amber for Stars */
+    margin-top: 2px !important;
 }
 
+/* "Verified Driver" text styled nicely */
+.sapUiSecondaryText {
+    color: #64748b !important;   /* Cool Grey */
+    font-size: 0.85rem !important;
+}
+
+/* 5. Phone Section (Right Side) */
+.driverPhoneSection {
+    min-width: auto !important; /* Fixed width hataya taaki flexible ho */
+}
+
+.phoneIcon {
+    font-size: 1.2rem !important;
+    color: #7c3aed !important;    /* Vivid Purple Icon */
+    margin-right: 8px !important;
+}
+
+.driverPhoneText {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;    /* Dark Text */
+    letter-spacing: 0.5px !important;
+}
+
+/* ============================================================
+   NO DRIVER CARD (Pending State)
+   ============================================================ */
+
+.noDriverCard {
+    background: #ffffff !important; /* Slight tint for pending state */
+    border-radius: 16px !important;
+    padding: 20px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    border: 1px dashed #cbd5e1 !important; /* Dashed border shows 'Waiting' */
+    align-items: center !important;
+    height: auto !important;
+    min-height: 100px !important;
+}
+
+/* Pending Icon with Background Circle */
 .noDriverIcon {
-    font-size: 32px !important;
-    color: #F59E0B !important;
-}
-
-.noDriverContent {
-    flex: 1;
-    gap: 4px;
-    min-width: 400px;
+    font-size: 1.5rem !important;
+    color: #f59e0b !important;    /* Orange Warning Color */
+    background-color: #fffbeb !important; /* Light Orange Circle BG */
+    padding: 12px !important;
+    border-radius: 50% !important;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 16px !important;
 }
 
 .noDriverTitle {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #1E293B !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    margin-bottom: 4px !important;
 }
 
 .noDriverMessage {
-    font-size: 14px !important;
-    color: #64748B !important;
-    line-height: 1.4 !important;
+    font-size: 0.9rem !important;
+    color: #64748b !important;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .topSectionContainer {
-        flex-direction: column;
-    }
-    
-    .timelineContainer {
-        width: 100%;
-    }
-    
-    .distanceBadge {
-        position: static;
-        margin-top: 16px;
-        justify-content: center;
-    }
-}
-
+/* ============================================================
+   RESPONSIVE FIXES
+   ============================================================ */
 @media (max-width: 768px) {
     .driverCard {
-        flex-direction: column;
-        height: auto;
-        gap: 16px;
-        padding: 20px;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
     }
     
-    .actionButtons {
-        width: 100%;
-        justify-content: center;
+    .driverPhoneSection {
+        width: 100% !important;
+        align-items: flex-start !important; /* Mobile pe left align */
+        margin-top: 10px !important;
+        padding-top: 10px !important;
+        border-top: 1px solid #f1f5f9 !important;
+    }
+    
+    .phoneWithIcon {
+        width: 100% !important;
     }
 }
+  

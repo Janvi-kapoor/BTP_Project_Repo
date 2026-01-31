@@ -8,26 +8,18 @@
     height="100%">
     
     <f:DynamicPage id="trackShipmentPage" headerExpanded="true" backgroundDesign="Transparent">
-        <f:title>
-            <f:DynamicPageTitle id="_IDGenDynamicPageTitle2" backgroundDesign="Transparent">
-                <f:heading>
-                    <VBox id="_IDGenVBox13" class="sapUiMediumMarginBegin sapUiSmallMarginTop">
-                        <Title 
-                            id="_IDGenTitle10" 
-                            text="Track Shipments" 
-                            level="H1" 
-                            class="pageTitle" 
-                        />
-                        <Text 
-                            id="_IDGenText20" 
-                            text="Monitor and manage your active dispatches in real-time" 
-                            class="pageSubtitle" 
-                        />
-                    </VBox>
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
         <f:content>
+       
+            <VBox>
+             <VBox >
+                                <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox ">
+                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle"  text="Track Shipments"   class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText" text="Monitor and manage your active dispatches in real-time" class="performanceSubtitle" />
+                               
+                                </VBox>
+                
             <!-- Main Container -->
             <VBox id="mainContainer" class="mainTrackContainer">
                 
@@ -45,7 +37,7 @@
                             
                             <!-- Order Placed -->
                             <HBox id="step1" class="timelineStep">
-                                <core:Icon id="icon1" src="sap-icon://accept" class="timelineIcon" />
+                                <core:Icon id="icon1" src="sap-icon://accept" class="timelineIcon " />
                                 <VBox id="stepContent1" class="stepContent">
                                     <Text id="_IDGenText44" text="Order Placed" class="stepTitle" />
                                     <Text id="step1Time" text="" class="stepTime" />
@@ -94,7 +86,7 @@
                     <!-- Right Container: Live Route Map -->
                     <VBox id="rightContainer" class="mapContainer">
                         <HBox id="mapHeader" class="mapHeader">
-                            <Title id="_IDGenTitle15" text="Live Route Tracking" level="H3" class="mapTitle" />
+                            <Title id="_IDGenTitle15" text="Live Route Tracking" level="H3" class="mapTitle progressTitle" />
                             <core:Icon id="_IDGenIcon16" src="sap-icon://map-2" class="mapHeaderIcon" />
                         </HBox>
                         
@@ -143,6 +135,7 @@
                     
                 </HBox>
                 
+            </VBox>
             </VBox>
         </f:content>
     </f:DynamicPage>

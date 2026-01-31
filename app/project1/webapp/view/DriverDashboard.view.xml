@@ -2,20 +2,22 @@
     <tnt:ToolPage id="toolPage">
         <tnt:header>
             <tnt:ToolHeader id="mainHeader" class="nexusHeader">
-                <Button id="sideNavBtn" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress" class="headerMenuBtn"/>
+                <Button id="sideNavBtn" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress" class="headerMenuBtn">
+                    <layoutData>
+                        <OverflowToolbarLayoutData id="sideNavBtnLayoutData" priority="NeverOverflow" />
+                    </layoutData>
+                </Button>
                 <HBox id="logoBox" alignItems="Center" class="logoContainer">
-                    <core:Icon id="_IDGenIcon8" src="sap-icon://BusinessSuiteInAppSymbols/hexagon" class="logoIcon"/>
-                    <Title id="_IhDGenTitle5" text="LogiChain NEXUS" class="companyLogoText"/>
+                    <core:Icon id="_IDGenIcon8" src="sap-icon://connected" class="logoIcon"/>
+                    <Title id="_IhDGenTitle5" text="CargoConnect" class="companyLogoText"/>
                 </HBox>
                 <ToolbarSpacer id="_IDGefnToolbarSpacer5"/>
                 <HBox id="rightSection" alignItems="Center">
-                    <Button id="_IDGenBuftton3" icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications"/>
-                    <core:Icon id="_IDGenIcon15" src="sap-icon://vertical-bar" class="separatorIcon sapUiTinyMarginEnd" color="#e2e8f0"/>
                     <HBox id="profileBox" alignItems="Center" class="profileSection">
                         <Avatar id="_IDGenfAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>
-                        <VBox id="_IDGenfVBox11" alignItems="Start" justifyContent="Center" class="profileInfoBox sapUiTinyMarginBegin hideOnMobile">
-                            <Text id="_IDGfenText18" text="Acme Logistics Ltd." class="profileName"/>
-                            <Text id="_IDGenfText19" text="Ops Manager" class="profileRole"/>
+                        <VBox id="_IDGenfVBox11" alignItems="Start" justifyContent="Center" class="profileInfoBox sapUiTinyMarginBegin sapUiHideOnPhone">
+                            <Text id="_IDGfenText18"  text="{driverData>/driverName}" class="profileName"/>
+                            <Text id="_IDGenfText19" text="Driver" class="profileRole"/>
                         </VBox>
                         <Button id="logoutBtn" icon="sap-icon://log" type="Transparent" class="headerIconBtn sapUiTinyMarginBegin" tooltip="Logout" press="onLogout"/>
                     </HBox>
@@ -23,13 +25,13 @@
             </tnt:ToolHeader>
         </tnt:header>
         <tnt:sideContent>
-            <tnt:SideNavigation id="sideNavigation" class="nexusSidebar" itemSelect="onItemSelect">
+            <tnt:SideNavigation id="sideNavigation" itemSelect="onItemSelect" class="nexusSidebar">
                 <tnt:item>
                     <tnt:NavigationList id="navList">
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem" text="Active Mission" icon="sap-icon://locate-me" key="mission"/>
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem4" text="Live Navigation" icon="sap-icon://map-2" key="navigation"/>
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem6" text="Secure Delivery" icon="sap-icon://shield" key="secure"/>
-                        <tnt:NavigationListItem id="_IDGenNavigationListItem7" text="My Performance" icon="sap-icon://kpi-managing-strategy" key="performance"/>
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem" text="Active Mission" icon="sap-icon://locate-me" key="mission" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem4" text="Live Navigation" icon="sap-icon://map-2" key="navigation" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem6" text="Secure Delivery" icon="sap-icon://shield" key="secure" />
+                        <tnt:NavigationListItem id="_IDGenNavigationListItem7" text="My Performance" icon="sap-icon://performance" key="performance" />
                     </tnt:NavigationList>
                 </tnt:item>
             </tnt:SideNavigation>
@@ -37,73 +39,114 @@
         <tnt:mainContents>
             <NavContainer id="driverNavContainer">
                 <Page id="missionPage" showHeader="false">
-                    <VBox id="activeMissionContainer" class="contentPadding">
+                    <VBox id="activeMissionContainer" class="contentPadding performancePageContainer">
                         <HBox id="activeMissionHeader" alignItems="Center" class="performanceHeaderBox">
                             <core:Icon id="missionIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                            <Title id="missionTitle" text="Active Mission" level="H2" class="mainTitleText"/>
+                            <Title id="missionTitle" text="Active Mission" class="mainTitleText"/>
                         </HBox>
-                        <HBox id="driverInfoBox" class="sapUiMediumMarginBottom sapUiMediumMarginBegin">
+                        <HBox id="driverInfoBox" class="sapUiMediumMarginBottom sapUiMediumMarginBegin  mar">
                             <HBox id="driverPill" alignItems="Center" class="drActive-infoPill sapUiMediumMarginEnd">
-                                <core:Icon id="driverIcon" src="sap-icon://customer" size="1.2rem" class="sapUiTinyMarginEnd"/>
-                                <VBox id="driverInfoVBox">
+                                <VBox class="drActive-pillIcon drActive-driverIcon">
+                                    <core:Icon src="sap-icon://employee"/>
+                                </VBox>
+                                <VBox class="drActive-pillContent">
                                     <Text id="driverLabel" text="Driver" class="drActive-tinyLabel"/>
-                                    <Text id="driverName" text="{driverData>/driverName}" class="drActive-pillMainText sapMTextBold"/>
+                                    <Text id="driverName" text="{driverData>/driverName}" class="drActive-pillMainText"/>
                                 </VBox>
                             </HBox>
                             <HBox id="truckPill" alignItems="Center" class="drActive-infoPill">
-                                <core:Icon id="truckIcon" src="sap-icon://shipping-status" size="1.2rem" class="sapUiTinyMarginEnd"/>
-                                <VBox id="truckInfoVBox">
+                                <VBox class="drActive-pillIcon drActive-truckIcon">
+                                    <core:Icon src="sap-icon://vehicle-repair"/>
+                                </VBox>
+                                <VBox class="drActive-pillContent">
                                     <Text id="truckLabel" text="Truck" class="drActive-tinyLabel"/>
-                                    <Text id="truckNumber" text="{driverData>/truckNo}" class="drActive-pillMainText sapMTextBold"/>
+                                    <Text id="truckNumber" text="{driverData>/truckNo}" class="drActive-pillMainText"/>
                                 </VBox>
                             </HBox>
                         </HBox>
-                        <VBox class="drActive-missionCard sapUiMediumMargin" id="missionContainer">
-                            <VBox id="_IDGenVBox28" class="drActive-missionCard-header">
-                                <HBox id="missionHeaderBox" justifyContent="SpaceBetween" alignItems="Center">
-                                    <VBox id="shipmentInfoVBox">
-                                        <Text id="shipmentLabel" text="ACTIVE SHIPMENT" class="drActive-whiteText drActive-tinyLabel"/>
-                                        <Title id="shipmentID" text="{driverData>/ID}" titleStyle="H1" class="drActive-whiteText drActive-mainShipmentID"/>
+                        <!-- Clean Mission Layout -->
+                        <VBox class="drActive-cleanLayout" id="missionContainer">
+                            <!-- Shipment Header -->
+                            <HBox id="missionHeaderBox" justifyContent="SpaceBetween" alignItems="Center" class="drActive-shipmentHeader">
+                                <VBox id="shipmentInfoVBox">
+                                    <Text id="shipmentLabel" text="ACTIVE SHIPMENT" class="drActive-tinyLabel"/>
+                                    <Title id="shipmentID" text="{driverData>/ID}" titleStyle="H1" class="drActive-mainShipmentID"/>
+                                </VBox>
+                                <ObjectStatus id="missionStatus" text="{driverData>/status}" state="{= ${driverData>/status} === 'In-Transit' ? 'Success' : 'Warning' }" inverted="false"/>
+                            </HBox>
+                            
+                            <!-- Route & Details Cards -->
+                            <HBox class="drActive-cardsContainer">
+                                <!-- Route Card -->
+                                <VBox class="drActive-routeCard">
+                                    <Text text="ROUTE" class="drActive-cardTitle"/>
+                                <VBox class="drActive-routeContent">
+                                        <HBox alignItems="Center" class="drActive-routeItem">
+                                            <VBox class="drActive-routeIcon">
+                                                <core:Icon src="sap-icon://map-2" class="sapUiIcon"/>
+                                            </VBox>
+                                            <VBox class="drActive-routeInfo">
+                                                <Text text="FROM" class="drActive-routeLabel"/>
+                                                <Text id="originLocation" text="{driverData>/pickupLocation}" class="drActive-routeValue"/>
+                                            </VBox>
+                                        </HBox>
+                                        <VBox class="drActive-routeLine">
+                                            <VBox class="drActive-routeDots">
+                                                <VBox class="drActive-dot"></VBox>
+                                                <VBox class="drActive-dot"></VBox>
+                                                <VBox class="drActive-dot"></VBox>
+                                            </VBox>
+                                            <VBox class="drActive-truckInRoute">
+                                                <core:Icon src="sap-icon://vehicle-repair" class="sapUiIcon"/>
+                                            </VBox>
+                                        </VBox>
+                                        <HBox alignItems="Center" class="drActive-routeItem">
+                                            <VBox class="drActive-routeIcon">
+                                                <core:Icon src="sap-icon://flag-2" class="sapUiIcon"/>
+                                            </VBox>
+                                            <VBox class="drActive-routeInfo">
+                                                <Text text="TO" class="drActive-routeLabel"/>
+                                                <Text id="destinationLocation" text="{driverData>/dropLocation}" class="drActive-routeValue"/>
+                                            </VBox>
+                                        </HBox>
                                     </VBox>
-                                    <ObjectStatus id="missionStatus" text="{driverData>/status}" state="{= ${driverData>/status} === 'In-Transit' ? 'Success' : 'Warning' }" inverted="true"/>
-                                </HBox>
-                            </VBox>
-                            <VBox id="_IDGenVBox29" class="sapUiLargeMarginBottom">
-                                <HBox id="routeBox" justifyContent="SpaceAround" alignItems="Center" class="drActive-routeBox">
-                                    <VBox id="originBox" class="drActive-routePoint">
-                                        <Text id="originLabel" text="ORIGIN" class="drActive-tinyLabel"/>
-                                        <Text id="originLocation" text="{driverData>/pickupLocation}" class="drActive-locationText"/>
+                                </VBox>
+                                
+                                <!-- Details Card -->
+                                <VBox class="drActive-detailsCard">
+                                    <Text text="SHIPMENT DETAILS" class="drActive-cardTitle"/>
+                                    <VBox class="drActive-detailsContent">
+                                        <HBox alignItems="Center" class="drActive-detailRow">
+                                            <core:Icon id="weightIcon" src="sap-icon://measuring-point" class="drActive-detailIcon"/>
+                                            <VBox class="drActive-detailInfo">
+                                                <Text text="LOAD WEIGHT" class="drActive-detailLabel"/>
+                                                <Text id="weightValue" text="{driverData>/loadWeightTons} Tons" class="drActive-detailValue"/>
+                                            </VBox>
+                                        </HBox>
+                                        <HBox alignItems="Center" class="drActive-detailRow">
+                                            <core:Icon id="cargoIcon" src="sap-icon://cargo-train" class="drActive-detailIcon"/>
+                                            <VBox class="drActive-detailInfo">
+                                                <Text text="CARGO TYPE" class="drActive-detailLabel"/>
+                                                <Text id="cargoValue" text="{driverData>/materialCategory}" class="drActive-detailValue"/>
+                                            </VBox>
+                                        </HBox>
+                                        <HBox alignItems="Center" class="drActive-detailRow">
+                                            <core:Icon id="durationIcon" src="sap-icon://time-entry-request" class="drActive-detailIcon"/>
+                                            <VBox class="drActive-detailInfo">
+                                                <Text text="EST. DURATION" class="drActive-detailLabel"/>
+                                                <Text id="durationValue" text="3-4 Hours" class="drActive-detailValue"/>
+                                            </VBox>
+                                        </HBox>
                                     </VBox>
-                                    <VBox id="_IDGenVBox31" alignItems="Center" class="drActive-routeLineWrapper">
-                                        <core:Icon id="routeArrow" src="sap-icon://arrow-right" size="1.5rem" class="sapUiPositiveText"/>
-                                    </VBox>
-                                    <VBox id="destinationBox" class="drActive-routePoint sapUiTextAlignEnd">
-                                        <Text id="destinationLabel" text="DESTINATION" class="drActive-tinyLabel"/>
-                                        <Text id="destinationLocation" text="{driverData>/dropLocation}" class="drActive-locationText"/>
-                                    </VBox>
-                                </HBox>
-                                <l:Grid id="specsGrid" defaultSpan="L4 M4 S4" class="sapUiMediumMarginTop">
-                                    <VBox id="weightBox" alignItems="Center" class="drActive-specItem">
-                                        <core:Icon id="weightIcon" src="sap-icon://measure" size="1.8rem"/>
-                                        <Text id="weightLabel" text="LOAD WEIGHT" class="drActive-tinyLabel"/>
-                                        <Text id="weightValue" text="{driverData>/loadWeightTons} Tons" class="drActive-specValue sapMTextBold"/>
-                                    </VBox>
-                                    <VBox id="cargoBox" alignItems="Center" class="drActive-specItem">
-                                        <core:Icon id="cargoIcon" src="sap-icon://product" size="1.8rem"/>
-                                        <Text id="cargoLabel" text="CARGO TYPE" class="drActive-tinyLabel"/>
-                                        <Text id="cargoValue" text="{driverData>/materialCategory}" class="drActive-specValue sapMTextBold"/>
-                                    </VBox>
-                                    <VBox id="durationBox" alignItems="Center" class="drActive-specItem">
-                                        <core:Icon id="durationIcon" src="sap-icon://future" size="1.8rem"/>
-                                        <Text id="durationLabel" text="EST. DURATION" class="drActive-tinyLabel"/>
-                                        <Text id="durationValue" text="3-4 Hours" class="drActive-specValue sapMTextBold"/>
-                                    </VBox>
-                                </l:Grid>
-                                <!-- Conditional Action Section -->
-                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://arrow-right" iconFirst="false" visible="{= ${driverData>/status} !== 'In-Transit' }"/>
-                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' }" alignItems="Center" class="sapUiMediumMarginTop">
-                                    <core:Icon id="_IDGenIcon17" src="sap-icon://accept" size="2rem" color="#10b981" class="sapUiTinyMarginBottom"/>
-                                    <Text id="_IDGenText45" text="The trip has started" class="drActive-specValue sapMTextBold sapUiPositiveText"/>
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Action Button -->
+                            <VBox class="drActive-actionContainer">
+                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://play" iconFirst="false" visible="{= ${driverData>/status} !== 'In-Transit' }"/>
+                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' }" alignItems="Center" class="drActive-successMessage">
+                                    <core:Icon id="_IDGenIcon17" src="sap-icon://accept" class="drActive-successIcon"/>
+                                    <Text id="_IDGenText45" text="The trip has started" class="drActive-successText"/>
                                 </VBox>
                             </VBox>
                         </VBox>

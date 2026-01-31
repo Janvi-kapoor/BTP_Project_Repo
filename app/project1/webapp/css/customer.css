@@ -142,16 +142,7 @@
     margin: 0 auto;
 }
 
-.pageTitle {
-    font-size: 1.8rem !important;
-    color: #1e293b !important;
-    font-weight: 800 !important;
-}
 
-.pageSubtitle {
-    color: #64748b !important;
-    font-size: 1rem !important;
-}
 
 /* KPI Cards */
 .kpiCard {
@@ -300,4 +291,176 @@
 /* CSS file mein */
 .bottomLineToolbar {
     border-bottom: 2px solid #e6e2e2 !important; /* Ye line ka kaam karegi */
+}
+
+/* Professional Header Styling - View Classes Only */
+.pageHeaderSection {
+    margin-bottom: 1rem !important;
+    margin-top: 0.5rem !important;
+    padding: 0.8rem !important;
+   background: linear-gradient(90deg, #f3f0fe 0%, #ede9fe 50%, #e9d5ff 100%) !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.premiumTitle {
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+    color: #6366f1 !important;
+    margin: 0 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.premiumSubtitle {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.15)) !important;
+    color: #4c1d95 !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    margin-top: 0.2rem !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    display: inline-block !important;
+}/* ============================================================
+   ACTIVE SHIPMENTS TABLE STYLING
+   ============================================================ */
+/* ============================================================
+   ACTIVE SHIPMENTS TABLE STYLING - FINAL FIX
+   ============================================================ */
+
+/* 1. Main Toolbar Styling (Height & Title Color) */
+.customTableToolbar {
+    height: 3.5rem !important;        /* Toolbar ki height badha di */
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding-left: 0.5rem !important;
+}
+
+.customTableTitle {
+    color: #1e293b !important;        /* Dark Slate (Not Black) */
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+}
+
+/* 2. Main Table Background */
+.activeShipmentTable {
+     background: transparent !important;   /* Light Grey */
+    margin-top: 5px !important;
+     border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* 3. Column Headers (Height Fixed & Clean) */
+.activeShipmentTable .sapMListTblHeader {
+    background: #b3cee9 !important;   /* Light Grey */
+    border-bottom: 1px solid #e2e8f0 !important;
+    height: 50px !important;          /* Header ki height forcefully set ki */
+}
+
+/* Text inside Header */
+.activeShipmentTable .sapMListTblHeader .sapMText {
+    color: #64748b !important;        /* Slate Grey */
+    font-size: 0.9rem !important;  
+    font-weight: 500 !important;    
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    line-height: 50px !important;     /* Vertical center alignment fix */
+}
+
+/* 4. Row Styling */
+.activeShipmentTable .sapMListTblRow {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 70px !important;
+    vertical-align: middle !important;
+}
+
+/* Row Hover */
+.activeShipmentTable .sapMListTblRow:hover {
+    background: #f8fafc !important; 
+    box-shadow: inset 3px 0 0 #7c3aed !important; 
+}
+
+/* ============================================================
+   CELL STYLING (UPDATED)
+   ============================================================ */
+
+/* Shipment ID */
+.shipmentIdText {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    text-decoration: none !important;
+}
+
+.shipmentIdText:focus {
+    background: rgba(20, 19, 19, 0.1) !important; /* Soft Red Bg */
+    color: #222020 !important; /* Darker Red */
+}
+/* MATERIAL TAG (New Look - Grey Box) */
+.materialTag {
+    display: inline-block !important;
+    background: #f1f5f9 !important;   /* Very Light Grey */
+    color: #475569 !important;        /* Medium Grey Text */
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;    /* Square Edges */
+    border: 1px solid #e2e8f0 !important;
+}
+
+
+
+.destinationPill {
+
+    display: inline-block !important;
+background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+   font-weight: 600 !important;
+    font-size: 0.9rem !important; 
+ padding: 8px 10px !important; 
+ border-radius: 8px !important;   
+  border: 1px solid #d8b4fe !important;
+  text-overflow: ellipsis !important;
+    text-align: center !important;
+     width: 100% !important;
+
+}
+/* STATUS PILL (Same as before) */
+.statusPill {
+    display: inline-block !important;
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    padding: 4px 12px !important;
+    border-radius: 50px !important;
+    text-transform: uppercase !important;
+    min-width: 90px !important;
+    text-align: center !important;
+}
+
+/* FARE BADGE */
+.fareBadge {
+    display: inline-block !important;
+    background-color: #dcfce7 !important;
+    color: #15803d !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #bbf7d0 !important;
+}
+
+/* ETA TEXT (New Look - Bold) */
+.etaText {
+    display: inline-block !important;
+    color: #d97706 !important;        /* Dark Grey */
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    background-color: #feeba0 !important;
+     font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
 }

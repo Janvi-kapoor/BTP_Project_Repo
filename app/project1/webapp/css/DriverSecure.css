@@ -1,25 +1,23 @@
-/* DriverSecure Page Styling */
-.driverSecurePage {
-    background-color: #F3F4F6 !important;
-    font-family: 'Inter', 'Roboto', sans-serif !important;
+
+
+/* Page Container - Added sidebar spacing */
+.activeMissionContainer {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 2rem 3rem !important;
+    background: #f8fafc !important;
+    min-height: 100vh !important;
 }
 
 
-.secureContainer {
-    max-width: 650px;
-    margin: 20px auto;
-    padding: 0 16px;
-    gap: 24px;
-}
-
-
-/* Header Section */
+/* ================================================================= */
+/* 2. HEADER SECTION (Shield Icon & Titles)                          */
+/* ================================================================= */
 .secureHeader {
     align-items: center;
     gap: 16px;
     margin-bottom: 8px;
 }
-
 
 .iconContainer {
     justify-content: center;
@@ -27,10 +25,10 @@
     width: 64px;
     height: 64px;
     border-radius: 16px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    /* Updated to Indigo-Purple Gradient */
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
 }
-
 
 .shieldIcon {
     font-size: 32px !important;
@@ -38,61 +36,57 @@
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-
 .secureTitle {
     font-size: 24px !important;
-    font-weight: 600 !important;
-    color: #111827 !important;
+    font-weight: 700 !important;
+    color: #1e293b !important; /* Slate-800 */
     text-align: center;
 }
-
 
 .secureSubtitle {
     font-size: 16px !important;
-    color: #6B7280 !important;
+    color: #64748b !important; /* Slate-500 */
     text-align: center;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     margin-top: -24px !important;
 }
 
-
-/* POD Details Card */
+/* ================================================================= */
+/* 3. POD CARD (The Main Box)                                        */
+/* ================================================================= */
 .podCard {
     background: white;
     border: 2px solid transparent;
     background-clip: padding-box;
     border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 12px 30px rgba(139, 92, 246, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    /* Indigo Glow Shadow */
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15) !important;
     gap: 20px;
     position: relative;
 }
 
-
+/* Gradient Border Effect */
 .podCard::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     border-radius: 20px;
     padding: 2px;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     z-index: -1;
 }
 
-
 .podHeaderSection {
-    background: linear-gradient(135deg, #f7f6fc 0%, #ede9fe 100%);
+    background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%) !important; /* Light Indigo Bg */
     padding: 16px;
     border-radius: 12px;
     margin: -8px -8px 24px -8px;
     gap: 16px;
+    border: 1px solid rgba(99, 102, 241, 0.1);
 }
-
 
 .podTitleRow {
     align-items: center;
@@ -100,36 +94,28 @@
     margin-bottom: 12px;
 }
 
-
 .podTitleIcon {
     font-size: 20px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 4px rgba(147, 51, 234, 0.4));
+    color: #6366f1 !important;
+    filter: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.2));
 }
-
 
 .podTitle {
     font-size: 18px !important;
-    font-weight: 600 !important;
-    color: #374151 !important;
+    font-weight: 700 !important;
+    color: #312e81 !important; /* Dark Indigo */
 }
-
 
 .podDetailsRow {
     justify-content: space-between;
     gap: 24px;
 }
 
-
 .podDetail {
     align-items: flex-start;
     gap: 12px;
     flex: 1;
 }
-
 
 .iconCircle {
     width: 32px;
@@ -138,231 +124,261 @@
     background: white;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(147, 51, 234, 0.15);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
     margin-top: 2px;
 }
 
-
 .podIcon {
     font-size: 16px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #6366f1 !important;
 }
-
 
 .podLabel {
     font-size: 12px !important;
-    color: #6B7280 !important;
-    font-weight: 500 !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
     margin-bottom: 4px !important;
+    text-transform: uppercase;
 }
-
 
 .podValue {
     font-size: 16px !important;
-    color: #111827 !important;
-    font-weight: 600 !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
 }
 
-
-/* OTP Section Inside Card */
+/* ================================================================= */
+/* 4. OTP SECTION (Inputs & Buttons)                                 */
+/* ================================================================= */
 .otpSectionInside {
     gap: 20px;
     align-items: center;
     padding-top: 20px;
 }
 
-
+/* OTP Title Box - Updated to Blue/Indigo tint */
 .otpTitleBox {
-    background: #fff5ea;
+    background: rgba(99, 102, 241, 0.1) !important;
     border-radius: 20px;
-    padding: 8px 12px;
+    padding: 8px 16px;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
 }
-
 
 .lockIcon {
     font-size: 14px !important;
-    color: #945826 !important;
+    color: #4f46e5 !important; /* Indigo-600 */
 }
-
 
 .otpTitle {
     font-size: 14px !important;
-    font-weight: normal !important;
-    color: #945826 !important;
+    font-weight: 600 !important;
+    color: #4338ca !important; /* Indigo-700 */
     text-align: center;
 }
-
 
 .otpSubtitle {
     font-size: 14px !important;
-    color: #6B7280 !important;
+    color: #64748b !important;
     text-align: center;
-    font-weight: normal !important;
+    font-weight: 500 !important;
 }
+/* ================================================================= */
+/* 1. OTP INPUTS (Fixed Space & Simple Shape)                        */
+/* ================================================================= */
 
-
+/* Container: Force Flex to manage space */
 .otpInputs {
-    gap: 12px;
-    justify-content: center;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 15px !important; /* Boxes ke beech mein space */
+    margin-top: 15px !important;
+    width: 100% !important;
 }
 
+/* Individual Input Control Size */
+.otpInput {
+    width: 55px !important;
+    height: 55px !important;
+    margin: 0 !important; /* SAP ka default margin hataya */
+}
 
+/* Outer Wrapper (Remove SAP Default Border/Style) */
 .otpInput .sapMInputBaseContentWrapper {
-    width: 56px !important;
-    height: 70px !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important; /* Double border hatayi */
+    padding: 0 !important;
+    background: transparent !important;
 }
 
-
+/* Inner Box (The Actual Visible Box) - CLEAN SQUARE LOOK */
 .otpInput .sapMInputBaseInner {
+    width: 100% !important;
+    height: 100% !important;
     text-align: center !important;
     font-size: 24px !important;
-    font-weight: 600 !important;
-    border-radius: 12px !important;
-    border: 2px solid #bcc0c9 !important;
-    background: #f5f6fa !important;
-    transition: all 0.3s ease;
+    font-weight: 700 !important;
+    padding: 0 !important;
+    
+    /* Shape Styling - Rounded Square */
+    border-radius: 12px !important; 
+    border: 2px solid #cbd5e1 !important; /* Light Grey Border */
+    background: #f8fafc !important; /* Very Light Grey BG */
+    color: #334155 !important;
+    
+    box-shadow: none !important;
+    transition: all 0.2s ease !important;
 }
 
-
+/* Focus State (Jab click karoge - Purple Glow) */
+.otpInput .sapMInputBaseContentWrapper:focus,
 .otpInput .sapMInputBaseInner:focus {
-    /* border: 2px solid transparent !important;
-    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #9333EA 0%, #C084FC 100%) border-box !important;
-    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.25) !important; */
+    border-color: #6366f1 !important; /* Indigo Border */
+    background: white !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25) !important;
+    transform: translateY(-2px) !important;
 }
 
 
-.otpInput .sapMInputBaseContentWrapper:focus {
-    border: 2px solid transparent !important;
-    background: linear-gradient(white, white) padding-box, linear-gradient(135deg, #9333EA 0%, #C084FC 100%) border-box !important;
-    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.25) !important;
-}
+/* ================================================================= */
+/* 2. GENERATE OTP BUTTON (Indigo Theme - Not White)                 */
+/* ================================================================= */
 .generateButton {
     width: 100% !important;
-    height: 52px !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    margin-top: 50px !important;
-    background: linear-gradient(135deg, #E5E7EB 0%, #F3F4F6 100%) !important;
-    border: 2px solid #9333EA !important;
-    color: #9333EA !important;
-    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2) !important;
+    margin-top: 30px !important;
+    border: none !important;
 }
-
 
 .generateButton .sapMBtnInner {
+    height: 50px !important;
     border-radius: 12px !important;
-    background: transparent !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    
+    /* Background Color (Light Purple - No more plain white) */
+    background: rgba(99, 102, 241, 0.1) !important;
+    border: 1px solid rgba(99, 102, 241, 0.3) !important;
+    color: #4f46e5 !important; /* Dark Indigo Text */
+    
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.generateButton:hover .sapMBtnInner {
+    background: rgba(99, 102, 241, 0.2) !important;
+    border-color: #4f46e5 !important;
 }
 
 
+/* ================================================================= */
+/* 3. COMPLETE DELIVERY BUTTON (Professional Green)                  */
+/* ================================================================= */
 .completeButton {
     width: 100% !important;
+    margin-top: 15px !important;
+    border: none !important;
+}
+
+.completeButton .sapMBtnInner {
     height: 52px !important;
     border-radius: 12px !important;
     font-size: 16px !important;
-    font-weight: 600 !important;
-    margin-top: 8px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%) !important;
-    border: none !important;
-    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.5) !important;
-}
-
-
-.completeButton:disabled {
-    background: #E5E7EB !important;
-    color: #9CA3AF !important;
-    box-shadow: none !important;
-    opacity: 0.6 !important;
-}
-
-
-.completeButton .sapMBtnInner {
-    border-radius: 12px !important;
-    background: transparent !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    
+    /* PROFESSIONAL GREEN GRADIENT */
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
     color: white !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    
+    /* Green Glow */
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3) !important;
+    border: none !important;
+    transition: all 0.3s ease !important;
 }
 
+.completeButton:hover .sapMBtnInner {
+    /* Slightly Brighter Green on Hover */
+    background: linear-gradient(135deg, #34d399 0%, #047857 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 25px rgba(16, 185, 129, 0.5) !important;
+}
 
-/* Success Section Inside Card */
+/* Disabled State */
+.completeButton:disabled {
+    opacity: 0.6 !important;
+    filter: grayscale(1) !important;
+    cursor: not-allowed !important;
+}
+/* ================================================================= */
+/* 5. SUCCESS SECTION (Hidden initially)                             */
+/* ================================================================= */
 .successSectionInside {
     align-items: center;
     gap: 16px;
     padding-top: 20px;
 }
 
-
 .successIconCircle {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
-    background: #DCFCE7;
+    background: rgba(16, 185, 129, 0.1);
     justify-content: center;
     align-items: center;
     margin-bottom: 4px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
-
 
 .successIcon {
-    font-size: 30px !important;
-    color: #059669 !important;
+    font-size: 36px !important;
+    color: #10b981 !important; /* Emerald Green */
 }
-
-
-@keyframes successPulse {
-    0% { transform: scale(0.8); opacity: 0; }
-    50% { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
 
 .podVerifiedBox {
-    background: #DCFCE7;
+    background: rgba(16, 185, 129, 0.1);
     border-radius: 12px;
-    padding: 8px 16px;
+    padding: 10px 20px;
     margin: 8px 0;
     align-items: center;
     gap: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
 }
-
 
 .podVerifiedIcon {
     font-size: 16px !important;
-    color: #059669 !important;
+    color: #10b981 !important;
 }
-
 
 .podVerifiedText {
     font-size: 14px !important;
-    color: #059669 !important;
+    color: #047857 !important;
+    font-weight: 700 !important;
+    text-align: center;
+}
+
+.successTitle {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    color: #10b981 !important;
+    text-align: center;
+}
+
+.shipmentId {
+    font-size: 16px !important;
+    color: #64748b !important;
     font-weight: 600 !important;
     text-align: center;
 }
 
-
-.successTitle {
-    font-size: 24px !important;
-    font-weight: 700 !important;
-    color: #059669 !important;
-    text-align: center;
-}
-
-
-.shipmentId {
-    font-size: 16px !important;
-    color: #6B7280 !important;
-    font-weight: 500 !important;
-    text-align: center;
-}
-
-
-/* Security Notice */
+/* ================================================================= */
+/* 6. SECURITY NOTICE (Footer)                                       */
+/* ================================================================= */
 .securityNotice {
     background: white;
     border: 2px solid transparent;
@@ -372,45 +388,35 @@
     gap: 12px;
     align-items: flex-start;
     position: relative;
-    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.15);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.1);
+    margin-top: 10px;
 }
-
 
 .securityNotice::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     border-radius: 16px;
     padding: 2px;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     z-index: -1;
 }
 
-
 .infoIcon {
-    font-size: 18px !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 20px !important;
+    color: #6366f1 !important;
     margin-top: 2px;
     flex-shrink: 0;
-    filter: drop-shadow(0 1px 2px rgba(147, 51, 234, 0.4));
 }
 
-
 .noticeText {
-    font-size: 14px !important;
-    color: #374151 !important;
+    font-size: 13px !important;
+    color: #475569 !important;
     line-height: 1.5 !important;
     font-weight: 500 !important;
 }
-
 
 /* Responsive Design */
 @media (max-width: 480px) {
@@ -418,75 +424,148 @@
         margin: 16px auto;
         padding: 0 12px;
     }
-   
+    
     .podCard, .otpSection, .successSection {
         padding: 20px;
     }
-   
-    .otpInput {
+    
+    .otpInput .sapMInputBaseContentWrapper {
         width: 48px !important;
-        height: 48px !important;
+        height: 60px !important;
     }
-   
+    
     .otpInput .sapMInputBaseInner {
-        font-size: 20px !important;
+        font-size: 22px !important;
     }
 }
 
+/* ============================================================================== */
+/* NO MISSION STATE - PREMIUM STYLE                                               */
+/* ============================================================================== */
 
-/* No Mission State Styling */
+/* 1. Main Container (Centers the card on screen) */
 .noMissionContainer {
-    align-items: center;
-    gap: 24px;
+    height: 100% !important;
+    min-height: 70vh !important; /* Ensures vertical centering */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+    background: transparent !important;
 }
 
+/* 2. The Card (Glassy/White Look) */
+.podCard {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 0 20px 50px rgba(99, 102, 241, 0.15) !important; /* Soft Indigo Shadow */
+    padding: 40px 30px !important;
+    max-width: 450px !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 25px !important;
+}
 
+/* 3. Icon Styling (Elegant Circle) */
 .noMissionIconBox {
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 25px auto !important; /* Centered */
+    
+    /* Circle Background */
+    width: 90px !important;
+    height: 90px !important;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%) !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(99, 102, 241, 0.1) !important;
+    
+    /* Animation */
+    animation: floatIcon 3s ease-in-out infinite !important;
 }
-
 
 .noMissionIcon {
-    font-size: 64px !important;
-    color: #9CA3AF !important;
-    opacity: 0.7;
+    font-size: 2.8rem !important; /* Perfect size, not too big */
+    color: #6366f1 !important; /* Indigo Theme Color */
+    line-height: 90px !important; /* Vertically center in circle */
 }
 
+/* Floating Animation */
+@keyframes floatIcon {
+    0% { transform: translateY(0px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.1); }
+    50% { transform: translateY(-8px); box-shadow: 0 15px 25px rgba(99, 102, 241, 0.2); }
+    100% { transform: translateY(0px); box-shadow: 0 5px 15px rgba(99, 102, 241, 0.1); }
+}
 
+/* 4. Typography */
 .noMissionTitle {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-    color: #374151 !important;
-    text-align: center;
-    margin-bottom: 8px !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: #1e293b !important; /* Dark Slate */
+    margin-bottom: 10px !important;
+    letter-spacing: -0.5px !important;
 }
-
 
 .noMissionText {
-    font-size: 16px !important;
-    color: #6B7280 !important;
-    text-align: center;
-    line-height: 1.5 !important;
-    margin-bottom: 24px !important;
+    font-size: 1rem !important;
+    color: #64748b !important; /* Soft Slate */
+    line-height: 1.6 !important;
+    margin-bottom: 30px !important;
+    padding: 0 10px !important;
 }
 
-
+/* 5. Button Styling (Matches your Theme) */
 .backButton {
     width: 100% !important;
-    height: 48px !important;
-    border-radius: 12px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    background: linear-gradient(135deg, #9333EA 0%, #C084FC 100%) !important;
-    border: none !important;
-    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4) !important;
+    margin-top: 10px !important;
 }
 
-
 .backButton .sapMBtnInner {
+    background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%) !important; /* Indigo Gradient */
+    border: none !important;
     border-radius: 12px !important;
-    background: transparent !important;
+    height: 48px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
     color: white !important;
+    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4) !important;
+    transition: all 0.3s ease !important;
+    text-shadow: none !important;
+}
+
+.backButton:hover .sapMBtnInner {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.5) !important;
+    background: linear-gradient(135deg, #5a5ce0 0%, #6d28d9 100%) !important;
+}
+
+.backButton:active .sapMBtnInner {
+    transform: translateY(1px) !important;
+}
+
+/* 6. Security Notice Section */
+.securityNotice {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(99, 102, 241, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 12px 20px !important;
+    margin: 0 auto !important; /* Centered */
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.infoIcon {
+    font-size: 1.7rem !important;
+    color: #6366f1 !important; /* Indigo */
+}
+
+.noticeText {
+    font-size: 1rem !important;
+    color: #475569 !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
 }

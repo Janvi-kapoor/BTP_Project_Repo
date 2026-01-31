@@ -4,6 +4,8 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     height="100%"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
 >
     <f:DynamicPage
         id="orderHistoryPage"
@@ -12,92 +14,117 @@
         backgroundDesign="Transparent"
         class="sapUiNoContentPadding"
     >
-        <f:title>
-            <f:DynamicPageTitle id="historyTitle" backgroundDesign="Transparent">
-                <f:heading>
-                    <VBox id="_IDGenVBoxh22" class="sapUiMediumMarginBegin sapUiSmallMarginTop">
-                        <Title 
-                            id="_IDGenThitle19" 
-                            text="Order History" 
-                            level="H1" 
-                            titleStyle="H1" 
-                            class="customMainTitle"
-                        />
-                        <Text 
-                            id="_IDGenTehxt43" 
-                            text="View and manage your past shipments" 
-                            class="customSubTitle"
-                        />
-                    </VBox>
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
-
         <f:content>
-            <VBox id="_IDGenVBox26" class="modernCard sapUiMediumMarginTop sapUiSmallMarginBeginEnd">
-                <Table id="historyShipmentsTable" items="{historyModel>/}" class="nexusTable">
-                    <headerToolbar>
-                        <OverflowToolbar id="historyOverflowToolbar">
-                            <Title id="historyTableTitle" text="Completed Orders"/>
-                            <ToolbarSpacer id="historyToolbarSpacer"/>
-                            <SearchField id="historySearchFieldMain" width="40%" search="onHistorySearch" placeholder="Search by Order ID, Origin or Destination"/>
-                            <MenuButton id="historyFilterMenuButton" icon="sap-icon://filter" tooltip="Filter by Status">
-                                <menu>
-                                    <Menu id="_IDGenMenu1" itemSelected="onStatusFilterChange">
-                                        <items>
-                                            <MenuItem id="_IDGenMenuItem" text="Show All" icon="sap-icon://multiselect-all" key="All"/>
-                                            <MenuItem id="historyMenuItemDelivered" text="Delivered" icon="sap-icon://accept" key="Delivered"/>
-                                            <MenuItem id="historyMenuItemCancelled" text="Cancelled" icon="sap-icon://decline" key="Cancelled"/>
-                                        </items>
-                                    </Menu>
-                                </menu>
-                            </MenuButton>
-                            <Button id="exportButton" icon="sap-icon://excel-attachment" text="Export" type="Transparent" press="onExportExcel" tooltip="Download History as Excel"/>
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column id="historyColOrderId" width="14%">
-                            <Text id="historyTextOrderId" text="Order ID"/>
-                        </Column>
-                        <Column id="historyColDate" width="14%">
-                            <Text id="_IDGenText17" text="Date"/>
-                        </Column>
-                        <Column id="historyColRoute" width="31%">
-                            <Text id="historyTextRoute" text="Route"/>
-                        </Column>
-                        <Column id="historyColTonnage" width="10%">
-                            <Text id="historyTextTonnage" text="Tonnage"/>
-                        </Column>
-                        <Column id="historyColAmount" hAlign="End" width="16%">
-                            <Text id="historyTextAmount" text="Amount"/>
-                        </Column>
-                        <Column id="historyColStatus" hAlign="Center" width="15%">
-                            <Text id="_IDGenText62" text="Status"/>
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem id="historyColumnListItem">
-                            <cells>
-                                <Text id="_IDGenText63" text="{historyModel>ID}" class="boldText orderIdText shipmentIdText"/>
-                                <Text id="_IDGenText64" text="{
-                                    path: 'historyModel>createdAt',
-                                    type: 'sap.ui.model.type.Date',
-                                    formatOptions: {
-                                        source: { pattern: 'yyyy-MM-ddTHH:mm:ss.SSSX' },
-                                        pattern: 'dd-MM-yyyy'
-                                    }
-                                }"/>
-                                <Text id="_IDGenText65" text="{
-                                    parts: [{path: 'historyModel>pickupLocation'}, {path: 'historyModel>dropLocation'}],
-                                    formatter: '.formatRoute'
-                                }" class="sapUiFontWeightBold myBoldText"/>
-                                <Text id="historyTextTonnageValue" text="{historyModel>loadWeightTons} MT"/>
-                                <Text id="historyTextAmountValue" text="₹ {historyModel>totalFare}"/>
-                                <ObjectStatus id="_IDGenObjectStatus1" text="{historyModel>status}" state="{path: 'historyModel>status', formatter: '.formatStatusState'}" class="customStatusBadge"/>
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
+        
+            <VBox class="sapUiMediumMarginBeginEnd">
+    
+                <VBox>
+                                <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox ">
+                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Order History"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText" text="View and manage your past shipments" class="performanceSubtitle" />
+                               
+                                </VBox>
+                
+            
+                
+           <VBox id="_IDGenVBox26" class="sapUiMediumMarginTop sapUiSmallMarginBeginEnd">
+    <Table 
+        id="historyShipmentsTable" 
+        items="{historyModel>/}" 
+        class="activeShipmentTable"> <headerToolbar>
+            <OverflowToolbar id="historyOverflowToolbar" style="Clear">
+                <Title id="historyTableTitle" text="Completed Orders"/>
+                <ToolbarSpacer id="historyToolbarSpacer"/>
+                <SearchField 
+                    id="historySearchFieldMain" 
+                    width="40%" 
+                    search="onHistorySearch" 
+                    placeholder="Search by Order ID..."/>
+                <MenuButton id="historyFilterMenuButton" icon="sap-icon://filter">
+                    <menu>
+                        <Menu id="_IDGenMenu1" itemSelected="onStatusFilterChange">
+                            <items>
+                                <MenuItem id="_IDGenMenuItem" text="Show All" icon="sap-icon://multiselect-all" key="All"/>
+                                <MenuItem id="historyMenuItemDelivered" text="Delivered" icon="sap-icon://accept" key="Delivered"/>
+                                <MenuItem id="historyMenuItemCancelled" text="Cancelled" icon="sap-icon://decline" key="Cancelled"/>
+                            </items>
+                        </Menu>
+                    </menu>
+                </MenuButton>
+                <Button id="exportButton" icon="sap-icon://excel-attachment" text="Export" type="Transparent" press="onExportExcel"/>
+            </OverflowToolbar>
+        </headerToolbar>
+
+        <columns>
+            <Column id="historyColOrderId" width="14%">
+                <Text id="historyTextOrderId" text="Order ID"/>
+            </Column>
+            <Column id="historyColDate" width="14%">
+                <Text id="_IDGenText17" text="Date"/>
+            </Column>
+            <Column id="historyColRoute" width="31%">
+                <Text id="historyTextRoute" text="Route"/>
+            </Column>
+            <Column id="historyColTonnage" width="10%">
+                <Text id="historyTextTonnage" text="Tonnage"/>
+            </Column>
+            <Column id="historyColAmount" hAlign="End" width="16%">
+                <Text id="historyTextAmount" text="Amount"/>
+            </Column>
+            <Column id="historyColStatus" hAlign="Center" width="15%">
+                <Text id="_IDGenText62" text="Status"/>
+            </Column>
+        </columns>
+
+        <items>
+            <ColumnListItem id="historyColumnListItem" vAlign="Middle">
+                <cells>
+                    <Text 
+                        id="_IDGenText63" 
+                        text="{historyModel>ID}" 
+                        class="shipmentIdText"/>
+
+                    <Text 
+                        id="_IDGenText64" 
+                        text="{
+                            path: 'historyModel>createdAt',
+                            type: 'sap.ui.model.type.Date',
+                            formatOptions: {
+                                source: { pattern: 'yyyy-MM-ddTHH:mm:ss.SSSX' },
+                                pattern: 'dd-MM-yyyy'
+                            }
+                        }"
+                        class="sapUiFontWeightBold etaText" />
+
+                    <Text 
+                        id="_IDGenText65" 
+                        text="{
+                            parts: [{path: 'historyModel>pickupLocation'}, {path: 'historyModel>dropLocation'}],
+                            formatter: '.formatRoute'
+                        }" 
+                        class="destinationPill"/>
+
+                    <Text 
+                        id="historyTextTonnageValue" 
+                        text="{historyModel>loadWeightTons} MT" 
+                        class="materialTag"/>
+
+                    <Text 
+                        id="historyTextAmountValue" 
+                        text="₹ {historyModel>totalFare}" 
+                        class="fareBadge"/>
+
+                    <Text 
+                        id="_IDGenObjectStatus1" 
+                        text="{historyModel>status}" 
+                        class="statusPill"/>
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+</VBox>
             </VBox>
         </f:content>
     </f:DynamicPage>

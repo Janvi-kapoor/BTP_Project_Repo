@@ -14,34 +14,17 @@
         backgroundDesign="Transparent"
         class="sapUiNoContentPadding"
     >
-        <f:title>
-            <f:DynamicPageTitle
-                id="_IDGenDynamicPageTitle1"
-                backgroundDesign="Transparent"
-            >
-                <f:heading>
-                    <VBox
-                        id="_IDGenVBox22"
-                        class="sapUiMediumMarginBegin sapUiSmallMarginTop"
-                    >
-                        <Title
-                            id="_IDGenTitle19"
-                            text="New Bulk Shipment"
-                            level="H1"
-                            titleStyle="H1"
-                            class="customMainTitle"
-                        />
-                        <Text
-                            id="_IDGenText43"
-                            text="Complete the wizard to initiate a new dispatch"
-                            class="customSubTitle"
-                        />
-                    </VBox>
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
-
         <f:content>
+            <VBox class="sapUiMediumMarginBeginEnd">
+               <VBox>
+                                <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox">
+                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="New Bulk Shipment"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText" text="Complete the wizard to initiate a new dispatch" class="performanceSubtitle" />
+                               
+                                </VBox>
+                
             <VBox
                 id="mainWrapper"
                 width="100%"
@@ -790,6 +773,7 @@
                         </VBox>
                     </Page>
                 </NavContainer>
+            </VBox>
             </VBox>
         </f:content>
     </f:DynamicPage>
