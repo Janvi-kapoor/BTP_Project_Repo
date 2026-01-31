@@ -318,6 +318,15 @@ sap.ui.define(
         }
       },
 
+      _getTruckTypeFromSelection: function() {
+        var truckTypeMap = {
+          "truckOpen": "Open Bed",
+          "truckContainer": "Container", 
+          "truckReefer": "Refrigerated"
+        };
+        return truckTypeMap[this._selectedTruck] || "Container";
+      },
+
      onConfirmDispatch: function () {
         var oView = this.getView();
         var oModel = oView.getModel();
@@ -394,6 +403,8 @@ sap.ui.define(
             receiverPhone: sReceiverPhone,
             receiverEmail: sReceiverEmail,
             priority: sSelectedPriority,
+            totalDistance: this._fCurrentDistance,
+            requiredVehicleType: this._getTruckTypeFromSelection(),
             totalFare: parseFloat(oView.byId("_IDGenTitle28").getText().replace(/[^\d.-]/g, "")),
             status: "Pending",
             customer_ID: sUserID,
