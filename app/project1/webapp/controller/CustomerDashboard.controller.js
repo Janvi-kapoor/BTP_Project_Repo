@@ -297,20 +297,61 @@ sap.ui.define(
           });
       },
 
-      // Sidebar Menu Button Toggle
+      // Sidebar Menu Button Toggle - Updated to match Admin
       onSideNavButtonPress: function () {
-        var oToolPage = this.byId("toolPage");
-        oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+        var oBtn = this.byId("sideNavBtn");
+        var oSideNav = this.byId("_IDGenSideNavigation");
+        var $sideNav = oSideNav.$(); // jQuery Access
+
+        // Mobile Specific Logic
+        if (sap.ui.Device.system.phone || window.innerWidth < 600) {
+          
+          // Check karo agar class already lagi hai
+          if ($sideNav.hasClass("mobile-open")) {
+            // Agar khula hai -> Band karo
+            $sideNav.removeClass("mobile-open");
+            oBtn.setIcon("sap-icon://menu2"); // Menu Icon wapas lao
+          } else {
+            // Agar band hai -> Kholo
+            $sideNav.addClass("mobile-open");
+            oBtn.setIcon("sap-icon://decline"); // Cross Icon lao
+          }
+        } else {
+          // Desktop Standard Logic
+          var oToolPage = this.byId("toolPage");
+          oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+          
+          // Desktop Icon Change Logic
+          var bExpanded = oToolPage.getSideExpanded();
+          oBtn.setIcon(bExpanded ? "sap-icon://menu2" : "sap-icon://menu2"); 
+        }
       },
 
-      // Jab user Sidebar Item par Click kare
+      // Jab user Sidebar Item par Click kare - Updated to match Admin
       onItemSelect: function (oEvent) {
         var sKey = oEvent.getParameter("item").getKey();
         var oRouter = this.getOwnerComponent().getRouter();
+        var oToolPage = this.byId("toolPage");
+        
+        // Desktop: Agar sidebar band hai to pehle expand karo
+        if (!sap.ui.Device.system.phone && window.innerWidth >= 600) {
+          if (!oToolPage.getSideExpanded()) {
+            oToolPage.setSideExpanded(true);
+          }
+        }
+        
+        // Mobile Optimization: Item click karte hi Sidebar band hona chahiye
+        if (sap.ui.Device.system.phone || window.innerWidth < 600) {
+          var $sideNav = this.byId("_IDGenSideNavigation").$();
+          
+          // Sidebar class hatao (Band karo)
+          $sideNav.removeClass("mobile-open");
+          
+          // Button wapas 'Menu' icon ban jaye
+          this.byId("sideNavBtn").setIcon("sap-icon://menu2");
+        }
 
-        // Yahan hum page change nahi karenge, hum sirf URL badlenge.
-        // URL badalne par _onRouteMatched chalega aur wo page badlega.
-
+        // Page Navigation
         if (sKey === "booking") {
           oRouter.navTo("CustomerBooking");
         } else if (sKey === "track") {

@@ -99,10 +99,30 @@ onStartTrip: function () {
     });
 },
 
+        // Updated onItemSelect to match Admin functionality
         onItemSelect: function(oEvent) {
             var sKey = oEvent.getParameter("item").getKey();
             var oRouter = this.getOwnerComponent().getRouter();
             var oNavContainer = this.byId("driverNavContainer");
+            var oToolPage = this.byId("toolPage");
+            
+            // Desktop: Agar sidebar band hai to pehle expand karo
+            if (!sap.ui.Device.system.phone && window.innerWidth >= 600) {
+                if (!oToolPage.getSideExpanded()) {
+                    oToolPage.setSideExpanded(true);
+                }
+            }
+            
+            // Mobile Optimization: Item click karte hi Sidebar band hona chahiye
+            if (sap.ui.Device.system.phone || window.innerWidth < 600) {
+                var $sideNav = this.byId("sideNavigation").$();
+                
+                // Sidebar class hatao (Band karo)
+                $sideNav.removeClass("mobile-open");
+                
+                // Button wapas 'Menu' icon ban jaye
+                this.byId("sideNavBtn").setIcon("sap-icon://menu2");
+            }
             
             switch(sKey) {
                 case "mission":
@@ -124,9 +144,34 @@ onStartTrip: function () {
             }
         },
 
+        // Updated onSideNavButtonPress to match Admin functionality
         onSideNavButtonPress: function() {
-            var oToolPage = this.byId("toolPage");
-            oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+            var oBtn = this.byId("sideNavBtn");
+            var oSideNav = this.byId("sideNavigation");
+            var $sideNav = oSideNav.$(); // jQuery Access
+
+            // Mobile Specific Logic
+            if (sap.ui.Device.system.phone || window.innerWidth < 600) {
+                
+                // Check karo agar class already lagi hai
+                if ($sideNav.hasClass("mobile-open")) {
+                    // Agar khula hai -> Band karo
+                    $sideNav.removeClass("mobile-open");
+                    oBtn.setIcon("sap-icon://menu2"); // Menu Icon wapas lao
+                } else {
+                    // Agar band hai -> Kholo
+                    $sideNav.addClass("mobile-open");
+                    oBtn.setIcon("sap-icon://decline"); // Cross Icon lao
+                }
+            } else {
+                // Desktop Standard Logic
+                var oToolPage = this.byId("toolPage");
+                oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
+                
+                // Desktop Icon Change Logic
+                var bExpanded = oToolPage.getSideExpanded();
+                oBtn.setIcon(bExpanded ? "sap-icon://menu2" : "sap-icon://menu2"); 
+            }
         },
 
         onLogout: function() {

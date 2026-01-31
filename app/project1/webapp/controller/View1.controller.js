@@ -151,7 +151,7 @@ sap.ui.define(
           ),
         ];
 
-        sap.ui.core.BusyIndicator.show(0);
+        sap.ui.core.BusyIndicator.show();
 
         var oListBinding = oModel.bindList(sEntitySet, null, null, aFilters);
         oListBinding
@@ -194,7 +194,7 @@ sap.ui.define(
         var oModel = this.getOwnerComponent().getModel();
         var that = this;
 
-        sap.ui.core.BusyIndicator.show(0); // Driver ke liye bhi loading dikhayein
+        sap.ui.core.BusyIndicator.show(); // Driver ke liye bhi loading dikhayein
 
         // Filter aur FilterOperator upar define hone chahiye
         var oBinding = oModel.bindList("/Drivers", null, null, [

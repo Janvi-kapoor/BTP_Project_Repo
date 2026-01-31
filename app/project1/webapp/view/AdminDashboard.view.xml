@@ -4,7 +4,7 @@
     xmlns:tnt="sap.tnt" 
     xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout">
-    
+
 
     <tnt:ToolPage id="adminToolPage">
     
@@ -18,16 +18,16 @@
             </layoutData>
         </Button>
 
-
-        <HBox id="logoBox2" alignItems="Center" class="logoContainer">
-            <core:Icon id="_IDGenIcofn7" src="sap-icon://dimension" class="logoIcon"/>
-            <Title id="_IDGenTitle5f" text="LogiChain NEXUS" class="companyLogoText"/>
+ <HBox id="logoBox2" alignItems="Center" class="logoContainer">
+            <core:Icon id="_IDGenIcofn7" src="sap-icon://connected" class="logoIcon"/>
+            <Title id="_IDGenTitle5f" text="CargoConnect" class="companyLogoText"/>
             <!-- <Title id="_IDGenTitle5df" text="Admin Control center"/> -->
         </HBox>
+
     
         <ToolbarSpacer id="_IDGenfrToolbarSpacer5" />
         <HBox id="rightSection2" alignItems="Center">
-              <Button id="notificationBtn" icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications" press="onNotificationPress"/>
+              <Button id="notificationBtn" icon="sap-icon://bell" type="Transparent" class=" sapUiTinyMarginEnd" tooltip="Notifications" press="onNotificationPress"/>
             <core:Icon id="_IDGenIcon29"  src="sap-icon://vertical-bar" class="separatorIcon sapUiTinyMarginEnd" color="#e2e8f0"/>
              <HBox id="profileBox2" alignItems="Center" class="profileSection">
                <Avatar id="_IDGengAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>

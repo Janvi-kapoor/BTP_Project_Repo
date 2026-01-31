@@ -21,8 +21,26 @@
 }
 
 .logoIcon { color: #3F51B5 !important; font-size: 1.8rem !important; }
-.logoTextMain { font-weight: 700; font-size: 1.1rem; color: #1e293b; }
-.logoTextSub { font-size: 0.6rem; letter-spacing: 1.5px; opacity: 0.7; }
+.logoTextMain { 
+    font-weight: 900 !important; 
+    font-size: 1.6rem !important; 
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    letter-spacing: -0.5px !important;
+}
+.logoTextSub { 
+    font-size: 0.75rem !important; 
+    font-weight: 700 !important;
+    letter-spacing: 2px !important; 
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    opacity: 0.9 !important;
+}
 
 /* Status Badge Mobile View */
 .statusBadge {
@@ -225,6 +243,7 @@
     border: none !important;
     text-shadow: none !important;
 }
+
 
 /* --- Icon Wrapper Glow --- */
 .iconWrapper {

@@ -4,63 +4,69 @@
     xmlns:tnt="sap.tnt" 
     xmlns:layout="sap.ui.layout"
     xmlns:core="sap.ui.core"
+    displayBlock="true"
     >
 
     <VBox id="_IDGenVBox11" class="mainDashboardContent">
-        
-        <VBox id="_IDGenTitleeBox" class="pageHeaderSection">
-             <Title id="_IDGenTitle6" text="Control Tower" class="premiumTitle" />
-             <Text id="_IDGenText17" text="Real-time fleet monitoring and insights" class="premiumSubtitle" />
-        </VBox>
+                    <VBox>
+                                <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
+                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Control Tower"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText"  text="Real-time fleet monitoring and insights" class="performanceSubtitle" />
+                               
+                                </VBox>
 
-        <HBox id="_IDGenHBox5" justifyContent="Start" wrap="Wrap" class="kpiContainer">
-            <GenericTile id="_IDGenGenericTile" header="Total Revenue" class="customTile alertTile">
-                <TileContent id="_IDGenTileContent" >
-                    <NumericContent 
-                        id="_IDGenNumericContent" 
-                        value="{dashboard>/stats/revenue}" 
-                        valueColor="Neutral"
-                        icon="sap-icon://money-bills"
-                        withMargin="false" 
-                        truncateValueTo="10"/>
-                </TileContent>
-            </GenericTile>
+      <layout:Grid 
+    id="_IDGenTopGrid" 
+    containerQuery="true" 
+    defaultSpan="XL4 L4 M6 S12" 
+    vSpacing="1rem" 
+    hSpacing="1rem">
 
-            <GenericTile id="_IDGenGenericTile1" header="Total Commission" class="customTile">
-                <TileContent id="_IDGenTileContent1">
-                    <NumericContent 
-                        id="_IDGenNumericContent1" 
-                        value="{dashboard>/stats/commission}" 
-                        valueColor="Good" 
-                        icon="sap-icon://currency"
-                        withMargin="false"
-                        truncateValueTo="10" />
-                </TileContent>
-            </GenericTile>
-
-            <GenericTile id="_IDGenGenericTile2" header="Active Drivers" class="customTile">
-                <TileContent id="_IDGenTileContent2">
-                    <NumericContent 
-                        id="_IDGenNumericContent2" 
-                        value="{dashboard>/stats/activeDrivers}" 
-                        valueColor="Good" 
-                        icon="sap-icon://shipping-status"
-                        withMargin="false" />
-                </TileContent>
-            </GenericTile>
+    <VBox id="_IDGenRevenueCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://money-bills" class="cardIcon"/>
+            <Text text="Total Revenue" class="cardLabel"/>
         </HBox>
+        <Title text="{dashboard>/stats/revenue}" level="H2" class="cardValue"/>
+        <Text text="Revenue Status" class="cardSubtext"/>
+    </VBox>
+
+    <VBox id="_IDGenCommissionCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://currency" class="cardIcon"/>
+            <Text text="Total Commission" class="cardLabel"/>
+        </HBox>
+        <Title text="{dashboard>/stats/commission}" level="H2" class="cardValue"/>
+        <Text text="Commission Earned" class="cardSubtext"/>
+    </VBox>
+
+    <VBox id="_IDGenDriversCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://shipping-status" class="cardIcon"/>
+            <Text text="Active Drivers" class="cardLabel"/>
+        </HBox>
+        <Title text="{dashboard>/stats/activeDrivers}" level="H2" class="cardValue"/>
+        <Text text="Currently Active" class="cardSubtext"/>
+    </VBox>
+
+</layout:Grid>
+
+
 
         <layout:Grid id="_IDGenGrid1" defaultSpan="L8 M12 S12" vSpacing="1" hSpacing="0.5">
-            <VBox id="_IDGenVBox12" height="400px" class="dashboardMapStyle">
+            <VBox id="_IDGenVBox12" height="400px" class="dashboardMapStyle liveNav-cardHeader">
             
                 <layoutData><layout:GridData id="_IDGenGridData" span="L8 M12 S12" /></layoutData>
-                <Title id="_IDGenTitle7" text="Live Fleet Map" level="H3" class="sectionTitle" />
+                <Title id="_IDGenTitle7" text="Live Fleet Map" level="H3" class="liveNav-cardTitle" />
                 <core:HTML id="adminMapContainer" content="&lt;div id='adminLeafletMap' style='width: 100%; height: 330px;'&gt;&lt;/div&gt;" />
             </VBox>
+            
 
             <VBox id="_IDGenVBox14" height="400px" class="fleetMonitorArea">
                 <layoutData><layout:GridData id="_IDGenGridData1" span="L4 M12 S12" /></layoutData>
-                <Title id="_IDGenTitle8" text="Live Fleet Monitor" level="H3" class="sectionTitle"/>
+                <Title id="_IDGenTitle8" text="Live Fleet Monitor" level="H3"  class="liveNav-cardTitle"/>
                 <ScrollContainer id="_IDGenScrollContainer" vertical="true" height="100%" class="fleetScroll">
                     <List id="fleetList" items="{fleet>/activeFleet}" class="fleetMonitorList">
                         <CustomListItem class="fleetListItem">

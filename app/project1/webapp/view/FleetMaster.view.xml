@@ -7,10 +7,14 @@
     <Page id="_IDGenPage2" title="Fleet Master" showHeader="false">
         <content>
             <VBox id="_IDGenVBox15" class="mainDashboardContent">
-                <VBox id="_IDGenVBox16" class="pageHeaderSection">
-                    <Title id="_IDGenTitle9" text="Fleet Master" titleStyle="H2" class="premiumTitle" />
-                    <Text id="_IDGenText18" text="Manage drivers and vehicle inventory" class="premiumSubtitle" />
-                </VBox>
+            <VBox>
+              <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
+                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Fleet Master"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText" text="Manage drivers and vehicle inventory"  class="performanceSubtitle" />
+                               
+         </VBox>
 
                 <IconTabBar id="_IDGenIconTabBar" expanded="true" class="customFleetTabs">
                     <items>
@@ -56,7 +60,7 @@
                             </Panel>
                         </IconTabFilter>
                        <IconTabFilter id="_IDGenIconTabFilter1" text="Trucks" key="trucks">
-    <Table id="_IDGenTable1" items="{/Trucks}" sticky="HeaderToolbar,ColumnHeaders" class="customFleetTable">
+    <Table id="_IDGenTable1" items="{/Trucks}" class="customFleetTable">
         <headerToolbar>
             <OverflowToolbar id="_IDGenOverflowToolbar1">
                 <Title id="_IDGenTitle13" text="Truck Inventory" />
