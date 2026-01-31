@@ -78,7 +78,7 @@ onAddTruck: function () {
     var oView = this.getView();
     var oNewTruckModel = new JSONModel({
         truckNo: "",
-        vehicleType: "Heavy Duty",
+        vehicleType: "Open Bed",
         maxCapacityTons: 10,
         odometerKM: 0,
         status: "AVAILABLE"

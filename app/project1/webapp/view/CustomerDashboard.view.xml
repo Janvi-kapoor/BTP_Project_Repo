@@ -104,7 +104,7 @@
     }" class="nexusTable">
                                         <headerToolbar>
                                             <OverflowToolbar id="_IDGenOverflowToolbar11" class="bottomLineToolbar" style="Clear">
-                                                <Title id="_IDGenTitleHistoryTable" text="You Orders" class="tableTitle"/>
+                                                <Title id="_IDGenTitleHistoryTable" text="Your Orders" class="tableTitle"/>
                                                 <ToolbarSpacer id="_IDGenToolbarSpacerHistory"/>
                                                 <SearchField id="historySearchField" width="30%" search="onHistorySearch" placeholder="Search by Material..."/>
                                                 <MenuButton id="historyFilterMenuButton2" icon="sap-icon://filter">

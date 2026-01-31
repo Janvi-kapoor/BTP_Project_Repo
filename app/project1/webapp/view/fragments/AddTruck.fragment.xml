@@ -8,9 +8,9 @@
 
                     <Label id="_IDGenLabel13" text="Vehicle Type" required="true" class="professionalLabel"/>
                     <Select id="_IDGenSelect3" selectedKey="{newTruck>/vehicleType}" class="professionalSelect">
-                        <core:Item id="_IDGenItem5" key="Heavy Duty" text="Heavy Duty" />
-                        <core:Item id="_IDGenItem6" key="Medium Duty" text="Medium Duty" />
-                        <core:Item id="_IDGenItem7" key="Light Duty" text="Light Duty" />
+                        <core:Item id="_IDGenItem5" key="Open Bed" text="Open Bed" />
+                        <core:Item id="_IDGenItem6" key="Container" text="Container" />
+                        <core:Item id="_IDGenItem7" key="Refrigerated" text="Refrigerated" />
                     </Select>
 
                     <Label id="_IDGenLabel14" text="Max Capacity (Tons)" class="professionalLabel" />
