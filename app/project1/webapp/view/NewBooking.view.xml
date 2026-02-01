@@ -18,10 +18,10 @@
             <VBox class="sapUiMediumMarginBeginEnd">
                <VBox>
                                 <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox">
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                                     <Title id="_IDGenHeaderTitle" text="New Bulk Shipment"  class="mainTitleText" />
+                                 <core:Icon id="operationIcon" src="sap-icon://cargo-train" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Create Bulk Shipment"  class="mainTitleText" />
                                      </HBox>
-                                     <Text id="_IDGenHeaderText" text="Complete the wizard to initiate a new dispatch" class="performanceSubtitle" />
+                                     <Text id="_IDGenHeaderText" text="Streamline your logistics: Configure and dispatch multiple orders in one go." class="performanceSubtitle" />
                                
                                 </VBox>
                 

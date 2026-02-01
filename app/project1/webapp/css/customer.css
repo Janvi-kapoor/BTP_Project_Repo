@@ -4,6 +4,7 @@
 /* =========================================
    2. HEADER STYLING (Fixed Spacing)
    ========================================= */
+   
 .nexusHeader {
     background: #ffffff !important;
     height: 4rem !important;
@@ -34,11 +35,74 @@
     -webkit-text-fill-color: transparent;
     line-height: 1.5 !important;
 }
+/* ============================================================
+   NOTIFICATION BELL BUTTON - PERFECT CENTER FIX
+   ============================================================ */
 
-/* Right Side Icons */
-.headerIconBtn .sapUiIcon {
-    font-size: 1.2rem !important;
-    color: #64748b !important;
+/* 1. Main Button Container (Moving it Up) */
+.notificationBtn {
+    margin-top: -13px !important;  /* Button ko thoda upar shift kiya */
+   
+}
+
+/* 2. Inner Box (The Circle) - Flexbox Magic */
+.notificationBtn .sapMBtnInner {
+    display: flex !important;           /* Flexbox on kiya */
+    align-items: center !important;     /* Vertical Center */
+    justify-content: center !important; /* Horizontal Center */
+    
+    background: transparent !important;
+    border: none !important;            /* White border hataya */
+    box-shadow: none !important;        /* Koi shadow nahi */
+    
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    padding-left:2px !important;
+    position: relative !important;
+}
+
+/* 3. Bell Icon Styling */
+.notificationBtn .sapUiIcon {
+    color: #64748b !important;     /* Slate Grey */
+    font-size: 1.4rem !important;
+    
+    /* Extra margins hataye taaki perfect center ho */
+    margin: 0 !important;          
+    padding: 0 !important;
+    line-height: normal !important; 
+    width: auto !important;
+}
+
+/* 4. Hover Effect (Clean Circle) */
+.notificationBtn:hover .sapMBtnInner {
+    background-color: #e3effb !important; /* Soft Blue/Grey Bg */
+    border: none !important;              /* Hover pe border na aaye */
+    border-radius: 50% !important;        /* Perfect Circle */
+}
+
+/* 5. THE BADGE (Number Styling) */
+.notificationBtn .sapMBtnContent {
+    position: absolute !important;
+    top: 0px !important;           /* Badge thoda andar kiya taaki kate nahi */
+    right: 2px !important;         
+    
+    background-color: #ef4444 !important; /* RED Badge */
+    color: #ffffff !important;            
+    
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    font-family: sans-serif !important;
+    
+    padding: 0 !important;         /* Padding hatayi, flex center karega */
+    min-width: 18px !important;    
+    height: 18px !important;       
+    border-radius: 10px !important;
+    
+    display: flex !important;      /* Number ko badge ke beech me lane ke liye */
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    z-index: 99 !important;
 }
 
 /* Vertical Separator Line */

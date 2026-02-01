@@ -119,8 +119,43 @@
     color: white !important;
     border: none !important;
     background: transparent !important;
+}/* ==========================================================
+   KILL THE BLUE BORDER / GLOW (STRICT MODE)
+   ========================================================== */
+
+/* 1. Sabse common: Box Shadow aur Border hatana */
+.nexusButton .sapMBtnInner,
+.nexusButton:focus .sapMBtnInner,
+.nexusButton .sapMBtnInner:focus,
+.nexusButton .sapMBtnInner:active {
+    border: none !important;
+    box-shadow: none !important;    /* Ye hi wo blue glow hai */
+    outline: none !important;
+    text-shadow: none !important;
 }
 
+/* 2. SAP ki "Focus Class" jo click karne ke baad blue line lati hai */
+.nexusButton.sapMFocus .sapMBtnInner {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* 3. Active State (Jab button daba hua ho) - Default Blue background rokna */
+.nexusButton.sapMBtnActive .sapMBtnInner {
+    background: transparent !important; /* Blue background na aaye */
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 4. Agar naye SAP Theme me "::before" element se border aa rahi ho */
+.nexusButton .sapMBtnInner::before,
+.nexusButton .sapMBtnContent::before,
+.nexusButton:focus::before {
+    border: none !important;
+    outline: none !important;
+    display: none !important;
+}
 /* Fixed Footer: Always at bottom */
 .nexusFooter {
     background: #435ccd !important;
@@ -263,14 +298,14 @@
     width: 380px !important;
     max-width: 95% !important;
     border-radius: 12px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+
 }
 
 /* Header styling - Indigo/White theme */
 .simpleLoginDialog .sapMDialogTitle {
     color: #3f51b5 !important;
     font-weight: bold !important;
-    padding-top: 20px !important;
+    padding: 10px !important;
 }
 
 /* Input Fields Spacing */
@@ -298,3 +333,4 @@
         width: 90% !important;
     }
 }
+

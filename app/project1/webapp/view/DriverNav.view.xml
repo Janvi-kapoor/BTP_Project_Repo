@@ -66,7 +66,7 @@
             </HBox>
         </VBox>
     <!-- No Mission Content (when no active mission) -->
-        <VBox id="noMissionContent" visible="false" alignItems="Center" justifyContent="Center" class="liveNav-noMissionContainer">
+         <VBox id="noMissionContent" visible="false" alignItems="Center" justifyContent="Center" class="liveNav-noMissionContainer">
             <core:Icon id="noMissionIcon" src="sap-icon://map-2" size="4rem" color="#94a3b8" class="sapUiLargeMarginBottom"/>
             <Title id="noMissionTitle" text="No Active Mission" level="H2" class="liveNav-noMissionTitle sapUiMediumMarginBottom"/>
             <Text id="noMissionText" text="You don't have any active missions assigned." class="liveNav-noMissionText sapUiMediumMarginBottom"/>

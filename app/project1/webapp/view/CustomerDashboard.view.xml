@@ -13,7 +13,7 @@
                 </HBox>
                 <ToolbarSpacer id="_IDGenToolbarSpacer5"/>
                 <HBox id="rightSection" alignItems="Center">
-                    <Button id="customerNotificationBtn" icon="sap-icon://bell" type="Transparent" class="headerIconBtn sapUiTinyMarginEnd" tooltip="Notifications" press="onNotificationPress"/>
+                    <Button id="customerNotificationBtn" icon="sap-icon://bell" type="Transparent" class="notificationBtn sapUiTinyMarginEnd" tooltip="Notifications" press="onNotificationPress"/>
                     <core:Icon id="_IDGenIcon15" src="sap-icon://vertical-bar" class="separatorIcon sapUiTinyMarginEnd" color="#e2e8f0"/>
                     <HBox id="profileBox" alignItems="Center" class="profileSection">
                         <Avatar id="_IDGenAvatar" src="sap-icon://person-placeholder" displaySize="XS" class="profileAvatar"/>
@@ -46,8 +46,8 @@
                             <VBox>
                                 <VBox>
                                     <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox">
-                                        <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                                        <Title id="_IDGenHeaderTitle" text="Operations Overview" class="mainTitleText"/>
+                                        <core:Icon id="operationIcon" src="sap-icon://radar-chart" class="performanceHeaderIcon"/>
+                                        <Title id="_IDGenHeaderTitle" text="My Shipments" class="mainTitleText"/>
                                     </HBox>
                                     <Text id="_IDGenHeaderText" text="Welcome back, here is your daily logistics summary." class="performanceSubtitle"/>
                                 </VBox>
@@ -114,22 +114,22 @@
                                                 </OverflowToolbar>
                                             </headerToolbar>
                                             <columns>
-                                                <Column id="_IDGenColH1" width="20%">
+                                                <Column id="_IDGenColH1"  hAlign="Center"  width="20%">
                                                     <Text id="_IDGenText27" text="Shipment ID"/>
                                                 </Column>
-                                                <Column id="_IDGenColH4" width="18%">
+                                                <Column id="_IDGenColH4"  hAlign="Center" width="18%">
                                                     <Text id="_IDGenText28" text="Material"/>
                                                 </Column>
-                                                <Column id="_IDGenColH2" width="35%">
+                                                <Column id="_IDGenColH2"  hAlign="Center" width="35%">
                                                     <Text id="_IDGenText29" text="Destination"/>
                                                 </Column>
-                                                <Column id="_IDGenColumn6" width="18%">
+                                                <Column id="_IDGenColumn6" hAlign="Center" width="18%">
                                                     <Text id="_IDGenText30" text="Status"/>
                                                 </Column>
-                                                <Column id="_IDGenColH5" width="18%">
+                                                <Column id="_IDGenColH5" hAlign="Center" width="18%">
                                                     <Text id="_IDGenText31" text="Fare"/>
                                                 </Column>
-                                                <Column id="_IDGenColH6" width="18%">
+                                                <Column id="_IDGenColH6" hAlign="Center" width="18%">
                                                     <Text id="_IDGenText33" text="ETA"/>
                                                 </Column>
                                             </columns>
