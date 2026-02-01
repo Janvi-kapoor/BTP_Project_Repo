@@ -496,17 +496,24 @@ this.on('confirmPickup', async (req) => {
 // Update Driver Location Action
 this.on('updateDriverLocation', async (req) => {
     const { driverID, latitude, longitude } = req.data;
+    console.log(`====> Updating location for driver ${driverID}: lat=${latitude}, lng=${longitude}`);
+    
     try {
         // Fix Decimal(9,6) validation by ensuring proper formatting
         const lat = parseFloat(parseFloat(latitude).toFixed(6));
         const lng = parseFloat(parseFloat(longitude).toFixed(6));
         
+        console.log(`====> Formatted coordinates: lat=${lat}, lng=${lng}`);
+        
         await UPDATE(Drivers).set({ 
             currentLat: lat, 
             currentLong: lng 
         }).where({ ID: driverID });
+        
+        console.log(`====> Location updated successfully for driver ${driverID}`);
         return `Location updated for driver ${driverID}`;
     } catch (error) {
+        console.error(`====> Location update failed for driver ${driverID}:`, error.message);
         return req.error(500, "Location update failed: " + error.message);
     }
 });

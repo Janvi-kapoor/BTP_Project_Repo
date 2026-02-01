@@ -376,6 +376,8 @@ sap.ui.define([
             var sDriverID = localStorage.getItem("loggedDriverID");
             if (!sDriverID) return;
             
+            console.log("Updating driver location:", lat, lng, "for driver:", sDriverID);
+            
             var oModel = this.getOwnerComponent().getModel();
             var oAction = oModel.bindContext("/updateDriverLocation(...)");
             
@@ -383,7 +385,9 @@ sap.ui.define([
             oAction.setParameter("latitude", parseFloat(parseFloat(lat).toFixed(6)));
             oAction.setParameter("longitude", parseFloat(parseFloat(lng).toFixed(6)));
             
-            oAction.execute().catch(function(error) {
+            oAction.execute().then(function() {
+                console.log("Location updated successfully in backend");
+            }).catch(function(error) {
                 console.error("Failed to update location:", error.message);
             });
         },
