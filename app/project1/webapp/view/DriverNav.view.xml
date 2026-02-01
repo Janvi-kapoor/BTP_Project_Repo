@@ -13,10 +13,10 @@
                     </VBox>
                 </HBox>
                 <HBox id="_IDGenHBox19" alignItems="Center" class="liveNav-metric">
-                    <core:Icon id="_IDGenIcon18" src="sap-icon://shipping-status" class="liveNav-metricIcon"/>
+                    <core:Icon id="_IDGenIcon18" src="sap-icon://history" class="liveNav-metricIcon"/>
                     <VBox id="_IDGenVBox32" class="liveNav-metricContent">
-                        <Text id="_IDGenText51" text="Assigned Truck" class="liveNav-metricLabel"/>
-                        <Text id="_IDGenText52" text="{missionData>/truckType}" class="liveNav-metricValue liveNav-purpleText"/>
+                        <Text id="_IDGenText51" text="ETA" class="liveNav-metricLabel"/>
+                        <Text id="_IDGenText52" text="{missionData>/eta}" class="liveNav-metricValue liveNav-purpleText"/>
                     </VBox>
                 </HBox>
             </HBox>

@@ -280,7 +280,7 @@ module.exports = cds.service.impl(async function () {
 
         // 4. Shipments fetch karo with active status
         const activeMissions = await SELECT.from(Shipments)
-            .columns('ID', 'pickupLocation', 'dropLocation', 'status', 'loadWeightTons', 'materialCategory', 'totalDistance', 'totalFare')
+            .columns('ID', 'pickupLocation', 'dropLocation', 'status', 'loadWeightTons', 'materialCategory', 'totalDistance', 'totalFare', 'receiverCompany')
             .where({
                 ID: { in: shipmentIDs },
                 status: { in: ['Assigned', 'In-Transit', 'ConfirmPickup'] }
@@ -316,6 +316,7 @@ module.exports = cds.service.impl(async function () {
                 materialCategory: mission.materialCategory,
                 totalDistance: Math.round(mission.totalDistance || 0),
                 totalFare: mission.totalFare,
+                receiverCompany: mission.receiverCompany,
                 truckNo: truck?.truckNo || 'N/A',
                 truckType: truck?.vehicleType || 'N/A',
                 driverName: driver?.name || 'N/A',

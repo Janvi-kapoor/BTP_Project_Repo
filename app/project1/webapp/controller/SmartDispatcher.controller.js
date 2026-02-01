@@ -107,10 +107,19 @@ if (oTruckSelect && oContext.requiredVehicleType) { // Check agar requirement ex
 
                 // Refresh list: Order list se apne aap gayab hona chahiye
                 oList.getBinding("items").refresh();
-            }).catch(function (oError) {
+                
+                // Reset the details panel
+                this.byId("detailsPanel").setVisible(false);
+                this.byId("emptyState").setVisible(true);
+                
+                // Clear selections
+                oList.removeSelections();
+                this.byId("truckSelect").setSelectedKey("");
+                this.byId("driverSelect").setSelectedKey("");
+            }.bind(this)).catch(function (oError) {
                 oView.setBusy(false);
                 console.error(oError);
-                MessageToast.show("Error: " + oError.message);
+                MessageToast.show("Error: " + (oError.message || "Dispatch failed"));
             });
         }
     });

@@ -20,6 +20,8 @@ sap.ui.define([
             var oNewDriverModel = new JSONModel({
                 name: "",
                 licenseNo: "",
+                phone: "",
+                email: "",
                 rating: 5,
                 status: "AVAILABLE"
             });
@@ -58,16 +60,31 @@ sap.ui.define([
             }
 
             // OData V4 List Binding se connect karna
-            // Ensure karein ki Table ki ID "driversTable" ho XML mein
             var oListBinding = this.byId("_IDGenTable").getBinding("items");
 
-            // Data insert karna
-            var oContext = oListBinding.create(oNewDriverData);
+            // Create proper driver data structure
+            var oDriverPayload = {
+                name: oNewDriverData.name,
+                licenseNo: oNewDriverData.licenseNo,
+                phone: oNewDriverData.phone || "",
+                email: oNewDriverData.email || "",
+                rating: oNewDriverData.rating || 5,
+                status: "AVAILABLE",
+                totalEarning: 0,
+                currentLat: 0,
+                currentLong: 0
+            };
 
+            // Data insert karna
+            var oContext = oListBinding.create(oDriverPayload);
+
+            oView.setBusy(true);
             oContext.created().then(function () {
+                oView.setBusy(false);
                 MessageToast.show("Driver Added Successfully!");
                 oView.byId("addDriverDialog").close();
             }).catch(function (oError) {
+                oView.setBusy(false);
                 MessageToast.show("Error: " + oError.message);
             });
         },
@@ -155,13 +172,21 @@ onViewLocation: function (oEvent) {
     var oBindingContext = oEvent.getSource().getBindingContext();
     var sDriverID = oBindingContext.getProperty("ID");
     var sDriverName = oBindingContext.getProperty("name");
+    var sDriverStatus = oBindingContext.getProperty("status");
     
     console.log("=== DEBUGGING DRIVER LOCATION ===");
     console.log("Driver ID:", sDriverID);
     console.log("Driver Name:", sDriverName);
+    console.log("Driver Status:", sDriverStatus);
     
     if (!sDriverID) {
         sap.m.MessageToast.show("Driver ID not found");
+        return;
+    }
+    
+    // Check if driver is off-duty
+    if (sDriverStatus === 'OFF_DUTY') {
+        sap.m.MessageToast.show(`${sDriverName} is currently off-duty. Location not available.`);
         return;
     }
     

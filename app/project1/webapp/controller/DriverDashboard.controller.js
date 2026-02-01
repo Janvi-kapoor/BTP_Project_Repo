@@ -56,6 +56,12 @@ _loadActiveMission: function() {
         if (aContexts && aContexts.length > 0) {
             var oData = aContexts[0].getObject();
             console.log("Mission Data Loaded:", oData);
+            
+            // Ensure ETA has a proper value
+            if (!oData.eta || oData.eta === 'undefined' || oData.eta === '') {
+                oData.eta = '2-3 hours';
+            }
+            
             oDriverModel.setData(oData);
             
             // Update performance data after mission data is loaded

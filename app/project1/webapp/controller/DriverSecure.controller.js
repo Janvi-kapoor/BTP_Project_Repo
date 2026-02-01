@@ -46,7 +46,7 @@ sap.ui.define([
                     if (oMission && (oMission.status === 'Assigned' || oMission.status === 'In-Transit' || oMission.status === 'ConfirmPickup')) {
                         that._currentShipmentId = oMission.ID;
                         that.byId("handoverLocationText").setText(oMission.dropLocation || "N/A");
-                        that.byId("receivingOfficerText").setText("Receiving Company"); // Default text
+                        that.byId("receivingOfficerText").setText(oMission.receiverCompany || "N/A");
                         that.byId("shipmentIdText").setText("Shipment #" + oMission.ID + " delivered successfully");
                         that._showMissionContent();
                         console.log("✅ DriverSecure - Active Mission loaded:", oMission);
@@ -116,12 +116,16 @@ sap.ui.define([
             var sEnteredOtp = otp1 + otp2 + otp3 + otp4;
             var oCompleteBtn = this.byId("completeBtn");
            
-            if (sEnteredOtp.length === 4 && sEnteredOtp === this._generatedOtp) {
+            console.log("Validating OTP - Entered:", sEnteredOtp, "Generated:", this._generatedOtp);
+           
+            if (sEnteredOtp.length === 4 && this._generatedOtp && sEnteredOtp === this._generatedOtp) {
                 oCompleteBtn.setEnabled(true);
                 oCompleteBtn.removeStyleClass("sapMBtnDisabled");
+                console.log("OTP validation successful - Button enabled");
             } else {
                 oCompleteBtn.setEnabled(false);
                 oCompleteBtn.addStyleClass("sapMBtnDisabled");
+                console.log("OTP validation failed - Button disabled");
             }
         },
 

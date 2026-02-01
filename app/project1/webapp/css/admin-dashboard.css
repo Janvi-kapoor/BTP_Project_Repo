@@ -1024,6 +1024,26 @@ body, html {
     text-decoration: none !important;
 }
 
+/* Location Pill Disabled (Off-Duty) */
+.locationPillDisabled {
+    background-color: #fee2e2 !important;
+    border-radius: 50px !important;
+    padding: 6px 14px !important;
+    border: 1px solid #fecaca !important;
+    justify-content: center !important;
+    min-width: 120px !important;
+}
+.locationPillDisabled .sapUiIcon {
+    color: #ef4444 !important;
+    font-size: 0.9rem !important;
+}
+.locationPillDisabled .sapMLnk {
+    color: #dc2626 !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    cursor: not-allowed !important;
+}
+
 /* Remove blue hover effects - keep same purple color */
 .locationPill .sapMLnk:hover,
 .locationPill .sapMLnk:focus,
@@ -1876,6 +1896,29 @@ body, html {
     font-size: 12px !important;
     color: #4f46e5 !important;
     font-weight: 600 !important;
+}
+
+/* Off-duty and on-duty status text styling */
+.offDutyStatusText {
+    font-size: 12px !important;
+    color: #ef4444 !important;
+    font-weight: 600 !important;
+    background-color: #fee2e2 !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+    margin-top: 4px !important;
+}
+
+.onDutyStatusText {
+    font-size: 12px !important;
+    color: #22c55e !important;
+    font-weight: 600 !important;
+    background-color: #dcfce7 !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+    margin-top: 4px !important;
 }
 
 .viewFleetBtn {

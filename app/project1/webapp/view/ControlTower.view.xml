@@ -83,7 +83,8 @@
                                         <Text text="{fleet>driverContact}" class="contactNumberText"/>
                                     </VBox>
                                 </HBox>
-                                <Button text="View Details" press="onViewFleetDetails" type="Emphasized" class="viewFleetBtn fullWidthBtn"/>
+                                <Text text="{fleet>currentLocation}" class="{= ${fleet>isOffDuty} ? 'offDutyStatusText' : 'onDutyStatusText' }" />
+                                <Button text="View Details" press="onViewFleetDetails" type="Emphasized" class="viewFleetBtn fullWidthBtn" enabled="{= !${fleet>isOffDuty} }"/>
                             </VBox>
                         </CustomListItem>
                     </List>

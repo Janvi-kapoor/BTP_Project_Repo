@@ -413,6 +413,11 @@ sap.ui.define([
                     var oData = aContexts[0].getObject();
                     console.log("Mission Data:", oData);
                     
+                    // Ensure ETA has a proper value
+                    if (!oData.eta || oData.eta === 'undefined' || oData.eta === '') {
+                        oData.eta = '2-3 hours';
+                    }
+                    
                     // Show mission content
                     that._showMissionContent();
                     

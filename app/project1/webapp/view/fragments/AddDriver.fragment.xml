@@ -1,1 +1,26 @@
-enLabel5
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog id="addDriverDialog" title="Add New Driver" contentWidth="400px" contentHeight="350px">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Label text="Driver Name" required="true" class="sapUiSmallMarginBottom"/>
+                <Input id="driverNameInput" value="{newDriver>/name}" placeholder="Enter driver name" class="sapUiSmallMarginBottom"/>
+                
+                <Label text="License Number" required="true" class="sapUiSmallMarginBottom"/>
+                <Input id="licenseInput" value="{newDriver>/licenseNo}" placeholder="e.g. DL-1420110012345" class="sapUiSmallMarginBottom"/>
+                
+                <Label text="Phone Number" class="sapUiSmallMarginBottom"/>
+                <Input id="phoneInput" value="{newDriver>/phone}" placeholder="Enter phone number" class="sapUiSmallMarginBottom"/>
+                
+                <Label text="Email" class="sapUiSmallMarginBottom"/>
+                <Input id="emailInput" value="{newDriver>/email}" placeholder="Enter email address" class="sapUiSmallMarginBottom"/>
+                
+                <Label text="Rating" class="sapUiSmallMarginBottom"/>
+                <RatingIndicator id="ratingInput" value="{newDriver>/rating}" maxValue="5" class="sapUiSmallMarginBottom"/>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Cancel" press="onCancelDriver"/>
+            <Button text="Save" type="Emphasized" press="onSaveDriver"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

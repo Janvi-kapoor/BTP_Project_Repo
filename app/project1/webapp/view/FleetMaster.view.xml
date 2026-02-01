@@ -48,9 +48,9 @@
         <RatingIndicator id="_IDGenRatingIndicator"  class="customStars" value="{rating}" maxValue="5"  enabled="false" />
         <Text id="_IDGenText26" text="{rating}" class="sapUiTinyMarginBegin" />
     </HBox>
-    <HBox id="_IDGenHBox8" alignItems="Center" class="locationPill">
+    <HBox id="_IDGenHBox8" alignItems="Center" class="{= ${status} === 'OFF_DUTY' ? 'locationPillDisabled' : 'locationPill' }">
         <core:Icon id="_IDGenIcon7" src="sap-icon://map-2" size="12px"  class="sapUiTinyMarginEnd" />
-        <Link id="_IDGenLink" text="View Location" press="onViewLocation" /> </HBox>
+        <Link id="_IDGenLink" text="{= ${status} === 'OFF_DUTY' ? 'Off-Duty' : 'View Location' }" press="onViewLocation" enabled="{= ${status} !== 'OFF_DUTY' }" /> </HBox>
     <ObjectStatus id="_IDGenObjectStatus1" class="customStatusPill" text="{status}" 
         state="{= ${status} === 'AVAILABLE' ? 'Success' : 'Warning' }" />
 </cells>

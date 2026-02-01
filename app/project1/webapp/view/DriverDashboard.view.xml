@@ -132,7 +132,7 @@
                                             <core:Icon id="durationIcon" src="sap-icon://time-entry-request" class="drActive-detailIcon"/>
                                             <VBox class="drActive-detailInfo">
                                                 <Text text="EST. DURATION" class="drActive-detailLabel"/>
-                                                <Text id="durationValue" text="3-4 Hours" class="drActive-detailValue"/>
+                                                <Text id="durationValue" text="{driverData>/eta}" class="drActive-detailValue"/>
                                             </VBox>
                                         </HBox>
                                     </VBox>

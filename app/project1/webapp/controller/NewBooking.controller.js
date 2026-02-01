@@ -560,6 +560,10 @@ sap.ui.define(
               sap.ui.core.BusyIndicator.hide();
               sap.m.MessageToast.show("Booking Successful!");
               this._resetForm(); // Helper function for cleanup
+              
+              // Navigate to customer dashboard after successful booking
+              var oRouter = this.getOwnerComponent().getRouter();
+              oRouter.navTo("CustomerDashboard");
             }.bind(this),
           )
           .catch(function (oError) {

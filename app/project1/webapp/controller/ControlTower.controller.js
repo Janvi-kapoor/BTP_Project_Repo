@@ -109,11 +109,17 @@ sap.ui.define([
             const oModel = this.getOwnerComponent().getModel();
             const oFleetModel = this.getView().getModel("fleet");
             
-            console.log("=== STEP 1: LOADING IN-TRANSIT SHIPMENTS ===");
+            console.log("=== STEP 1: LOADING ACTIVE SHIPMENTS ===");
             
-            // First get In-Transit shipments with assignment
+            // First get shipments with In-Transit and ConfirmPickup status (not just In-Transit)
             const oShipmentBinding = oModel.bindList("/AdminShipments", null, [], [
-                new sap.ui.model.Filter("status", sap.ui.model.FilterOperator.EQ, "In-Transit")
+                new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter("status", sap.ui.model.FilterOperator.EQ, "In-Transit"),
+                        new sap.ui.model.Filter("status", sap.ui.model.FilterOperator.EQ, "ConfirmPickup")
+                    ],
+                    and: false
+                })
             ], {
                 $expand: "assignment"
             });
@@ -148,32 +154,59 @@ sap.ui.define([
                         // Get driver details
                         if (shipment.assignment.driver_ID) {
                             this._getDriverDetails(shipment.assignment.driver_ID).then((driverData) => {
-                                // Get truck details
-                                if (shipment.assignment.truck_ID) {
-                                    this._getTruckDetails(shipment.assignment.truck_ID).then((truckData) => {
-                                        // Add to fleet data with driver's current location
-                                        aFleetData.push({
-                                            shipmentId: shipment.ID,
-                                            truckId: truckData.truckNo || "TRK-" + truckData.ID.slice(-4),
-                                            driverName: driverData.name,
-                                            driverInitials: this._getDriverInitials(driverData.name),
-                                            driverContact: driverData.phone,
-                                            pickupLocation: shipment.pickupLocation,
-                                            dropLocation: shipment.dropLocation,
-                                            currentLocation: "En Route",
-                                            eta: shipment.assignment.eta,
-                                            currentLat: driverData.currentLat,
-                                            currentLong: driverData.currentLong
-                                        });
-                                        
-                                        processedCount++;
-                                        if (processedCount === aShipmentContexts.length) {
-                                            oFleetModel.setProperty("/activeFleet", aFleetData);
-                                            this._addTruckMarkersToMap(aFleetData);
-                                        }
+                                // Check if driver is off-duty
+                                if (driverData.status === 'OFF_DUTY') {
+                                    console.log(`Driver ${driverData.name} is OFF_DUTY - not showing location`);
+                                    // Add to fleet data but without location coordinates
+                                    aFleetData.push({
+                                        shipmentId: shipment.ID,
+                                        truckId: "TRK-" + (shipment.assignment.truck_ID ? shipment.assignment.truck_ID.slice(-4) : "XXXX"),
+                                        driverName: driverData.name,
+                                        driverInitials: this._getDriverInitials(driverData.name),
+                                        driverContact: driverData.phone,
+                                        pickupLocation: shipment.pickupLocation,
+                                        dropLocation: shipment.dropLocation,
+                                        currentLocation: "Driver is Off-Duty",
+                                        eta: shipment.assignment.eta,
+                                        currentLat: null,
+                                        currentLong: null,
+                                        isOffDuty: true
                                     });
-                                } else {
+                                    
                                     processedCount++;
+                                    if (processedCount === aShipmentContexts.length) {
+                                        oFleetModel.setProperty("/activeFleet", aFleetData);
+                                        this._addTruckMarkersToMap(aFleetData);
+                                    }
+                                } else {
+                                    // Get truck details for on-duty drivers
+                                    if (shipment.assignment.truck_ID) {
+                                        this._getTruckDetails(shipment.assignment.truck_ID).then((truckData) => {
+                                            // Add to fleet data with driver's current location
+                                            aFleetData.push({
+                                                shipmentId: shipment.ID,
+                                                truckId: truckData.truckNo || "TRK-" + truckData.ID.slice(-4),
+                                                driverName: driverData.name,
+                                                driverInitials: this._getDriverInitials(driverData.name),
+                                                driverContact: driverData.phone,
+                                                pickupLocation: shipment.pickupLocation,
+                                                dropLocation: shipment.dropLocation,
+                                                currentLocation: "En Route",
+                                                eta: shipment.assignment.eta,
+                                                currentLat: driverData.currentLat,
+                                                currentLong: driverData.currentLong,
+                                                isOffDuty: false
+                                            });
+                                            
+                                            processedCount++;
+                                            if (processedCount === aShipmentContexts.length) {
+                                                oFleetModel.setProperty("/activeFleet", aFleetData);
+                                                this._addTruckMarkersToMap(aFleetData);
+                                            }
+                                        });
+                                    } else {
+                                        processedCount++;
+                                    }
                                 }
                             });
                         } else {
@@ -224,7 +257,8 @@ sap.ui.define([
             this.truckMarkersMap = {};
             
             fleetData.forEach(fleet => {
-                if (fleet.currentLat && fleet.currentLong) {
+                // Only add markers for drivers who are not off-duty and have valid coordinates
+                if (!fleet.isOffDuty && fleet.currentLat && fleet.currentLong) {
                     const truckMarker = L.marker([fleet.currentLat, fleet.currentLong], {
                         icon: L.divIcon({
                             html: '🚛',
