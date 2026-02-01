@@ -48,6 +48,17 @@ sap.ui.define([
                         that.byId("handoverLocationText").setText(oMission.dropLocation || "N/A");
                         that.byId("receivingOfficerText").setText(oMission.receiverCompany || "N/A");
                         that.byId("shipmentIdText").setText("Shipment #" + oMission.ID + " delivered successfully");
+                        
+                        // Enable/disable OTP generation based on status
+                        var bCanGenerateOTP = oMission.status === 'ConfirmPickup';
+                        that.byId("generateOtpBtn").setEnabled(bCanGenerateOTP);
+                        
+                        if (!bCanGenerateOTP) {
+                            that.byId("generateOtpBtn").setText("Confirm Pickup First");
+                        } else {
+                            that.byId("generateOtpBtn").setText("Generate OTP");
+                        }
+                        
                         that._showMissionContent();
                         console.log("✅ DriverSecure - Active Mission loaded:", oMission);
                     } else {
@@ -180,27 +191,58 @@ sap.ui.define([
 
         onGenerateOtp: function () {
             var that = this;
-           
-            jQuery.ajax({
-                url: "/odata/v4/logi-chain/sendOTP",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({
-                    phoneNumber: this._receiverPhone
-                }),
-                success: function(oData) {
-                    if (oData.success) {
-                        that._otpRequestId = oData.requestId;
-                        that._generatedOtp = oData.otp;
-                        MessageToast.show("OTP sent successfully");
-                    } else {
-                        MessageToast.show("Failed to send OTP: " + oData.message);
+            
+            // Check if pickup is confirmed before allowing OTP generation
+            if (!this._currentShipmentId) {
+                MessageToast.show("No active shipment found");
+                return;
+            }
+            
+            // Re-check mission status to ensure pickup is confirmed
+            var oModel = this.getOwnerComponent().getModel();
+            var sDriverID = localStorage.getItem("loggedDriverID");
+            
+            var oListBinding = oModel.bindList("/ActiveMission", null, null, [], {
+                "$filter": "driverID eq '" + sDriverID + "'"
+            });
+            
+            oListBinding.requestContexts(0, 1).then(function (aContexts) {
+                if (aContexts && aContexts.length > 0) {
+                    var oMission = aContexts[0].getObject();
+                    
+                    if (oMission.status !== 'ConfirmPickup') {
+                        MessageToast.show("Please confirm pickup first before generating OTP");
+                        return;
                     }
-                },
-                error: function(oError) {
-                    console.error("SMS API Error:", oError);
-                    MessageToast.show("SMS service unavailable");
+                    
+                    // Proceed with OTP generation
+                    jQuery.ajax({
+                        url: "/odata/v4/logi-chain/sendOTP",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            phoneNumber: that._receiverPhone
+                        }),
+                        success: function(oData) {
+                            if (oData.success) {
+                                that._otpRequestId = oData.requestId;
+                                that._generatedOtp = oData.otp;
+                                MessageToast.show("OTP sent successfully");
+                            } else {
+                                MessageToast.show("Failed to send OTP: " + oData.message);
+                            }
+                        },
+                        error: function(oError) {
+                            console.error("SMS API Error:", oError);
+                            MessageToast.show("SMS service unavailable");
+                        }
+                    });
+                } else {
+                    MessageToast.show("No active mission found");
                 }
+            }).catch(function(oError) {
+                console.error("Failed to check mission status:", oError.message);
+                MessageToast.show("Failed to verify pickup status");
             });
         },
 
