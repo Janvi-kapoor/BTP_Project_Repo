@@ -398,6 +398,15 @@ sap.ui.define(
         }
       },
 
+      _getTruckTypeFromSelection: function() {
+        var truckTypeMap = {
+          "truckOpen": "Open Bed",
+          "truckContainer": "Container", 
+          "truckReefer": "Refrigerated"
+        };
+        return truckTypeMap[this._selectedTruck] || "Container";
+      },
+
      onConfirmDispatch: function () {
         var oView = this.getView();
         var oModel = oView.getModel();
@@ -473,11 +482,6 @@ sap.ui.define(
           sap.m.MessageBox.error("Service limited to India only.");
           return;
         }
-
-
-        // 3. AGAR SAB SAHI HAI TO PROCEED KAREIN
-        sap.ui.core.BusyIndicator.show(0);
-
 
         // Baki ka logic (User check and Deep Create)...
         var oListBinding = oModel.bindList("/Users", null, null, [

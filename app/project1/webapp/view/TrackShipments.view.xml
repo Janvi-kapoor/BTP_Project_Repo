@@ -53,21 +53,21 @@
                                 </VBox>
                             </HBox>
                             
-                            <!-- Pickup Done -->
-                            <HBox id="step3" class="timelineStep">
-                                <core:Icon id="icon3" src="sap-icon://cargo-train" class="timelineIcon" />
-                                <VBox id="stepContent3" class="stepContent">
-                                    <Text id="_IDGenText47" text="Pickup Done" class="stepTitle" />
-                                    <Text id="step3Time" text="" class="stepTime" />
-                                </VBox>
-                            </HBox>
-                            
                             <!-- En-route -->
                             <HBox id="step4" class="timelineStep">
                                 <core:Icon id="icon4" src="sap-icon://map-2" class="timelineIcon" />
                                 <VBox id="stepContent4" class="stepContent">
                                     <Text id="_IDGenText48" text="En-route" class="stepTitle" />
                                     <Text id="step4Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Confirm Pickup -->
+                            <HBox id="step3" class="timelineStep">
+                                <core:Icon id="icon3" src="sap-icon://cargo-train" class="timelineIcon" />
+                                <VBox id="stepContent3" class="stepContent">
+                                    <Text id="_IDGenText47" text="Confirm Pickup" class="stepTitle" />
+                                    <Text id="step3Time" text="" class="stepTime" />
                                 </VBox>
                             </HBox>
                             
@@ -93,45 +93,6 @@
                         <!-- Map Area -->
                         <core:HTML id="mapArea" content='&lt;div id="leafletMap" style="height: 400px; width: 100%; border-radius: 8px; position: relative;"&gt;&lt;/div&gt;' />
                     </VBox>
-                    
-                </HBox>
-                
-                <!-- Driver Section -->
-                <HBox id="driverSection" class="driverSection">
-                    
-                    <!-- Driver Card (shown when assigned) -->
-                    <HBox id="driverCard" class="sapUiContentPadding driverCard" width="100%" visible="false" alignItems="Center" justifyContent="SpaceBetween">
-                        <!-- Left: Driver Info -->
-                        <HBox id="_IDGenHBox5" alignItems="Center" class="sapUiMediumMarginEnd">
-                            <Avatar id="driverAvatar" displaySize="L" class="sapUiMediumMarginEnd" backgroundColor="Accent6" />
-                            <VBox id="_IDGenVBox24">
-                                <Title id="driverName" text="" level="H3" class="sapUiTinyMarginBottom" />
-                                <HBox id="_IDGenHBox6" alignItems="Center" class="sapUiTinyMarginTop">
-                                    <core:Icon id="_IDGenIcon26" src="sap-icon://favorite" color="#ffcc00" size="1rem" class="sapUiTinyMarginEnd" />
-                                    <Text id="driverRating" text="" class="driverRatingText" />
-                                    <Text id="_IDGenText50" text=" • Verified Driver" class="sapUiSecondaryText sapUiTinyMarginBegin" />
-                                </HBox>
-                            </VBox>
-                        </HBox>
-                        
-                        <!-- Center: Phone Number with Call Icon -->
-                        <VBox id="_IDGenVBox25" alignItems="End" class="driverPhoneSection">
-                            <Label id="_IDGenLabel10" text="Contact" class="sapUiTinyMarginBottom" />
-                            <HBox id="_IDGenHBox7" alignItems="End" class="phoneWithIcon">
-                                <core:Icon id="_IDGenIcon27" src="sap-icon://phone" class="phoneIcon sapUiTinyMarginEnd" />
-                                <Text id="driverPhone" text="" class="driverPhoneText" />
-                            </HBox>
-                        </VBox>
-                    </HBox>
-                    
-                    <!-- No Driver Message (shown when not assigned) -->
-                    <HBox id="noDriverCard" class="noDriverCard" visible="true">
-                        <core:Icon id="_IDGenIcon28" src="sap-icon://pending" class="noDriverIcon" />
-                        <VBox id="_IDGenVBox29" class="noDriverContent">
-                            <Text id="_IDGenText59" text="Driver Assignment Pending" class="noDriverTitle" />
-                            <Text id="_IDGenText61" text="We are finding the best driver for your shipment. You will be notified once assigned." class="noDriverMessage" />
-                        </VBox>
-                    </HBox>
                     
                 </HBox>
                 

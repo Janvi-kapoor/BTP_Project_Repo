@@ -190,9 +190,9 @@ sap.ui.define([
         },
         
         _updateTimeline: function(status) {
-            const steps = ["step1", "step2", "step3", "step4", "step5", "step6"];
-            const icons = ["icon1", "icon2", "icon3", "icon4", "icon5", "icon6"];
-            const times = ["step1Time", "step2Time", "step3Time", "step4Time", "step5Time", "step6Time"];
+            const steps = ["step1", "step2", "step4", "step3", "step5"];
+            const icons = ["icon1", "icon2", "icon4", "icon3", "icon5"];
+            const times = ["step1Time", "step2Time", "step4Time", "step3Time", "step5Time"];
             
             steps.forEach((stepId, index) => {
                 const step = this.byId(stepId);
@@ -205,13 +205,6 @@ sap.ui.define([
                     timeText.setText("");
                 }
             });
-            
-            const currentDate = new Date();
-            const formatTime = (date) => {
-                return date.toLocaleDateString('en-US', { 
-                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
-                });
-            };
             
             switch(status) {
                 case "Pending":
@@ -230,45 +223,45 @@ sap.ui.define([
                     this.byId("step2Time").setText("Driver assigned and notified");
                     break;
                     
-                case "ConfirmPickup":
+                case "In-Transit":
                     ["step1", "step2"].forEach((stepId, index) => {
                         this.byId(stepId).removeStyleClass("pending").addStyleClass("completed");
-                        this.byId(icons[index]).removeStyleClass("pending").addStyleClass("completed");
+                        this.byId(["icon1", "icon2"][index]).removeStyleClass("pending").addStyleClass("completed");
                     });
                     
                     this.byId("step1Time").setText("✓ Order confirmed");
                     this.byId("step2Time").setText("✓ Driver assigned");
-                    
-                    this.byId("step3").removeStyleClass("pending").addStyleClass("current");
-                    this.byId("icon3").removeStyleClass("pending").addStyleClass("current");
-                    this.byId("step3Time").setText("Pickup confirmed by driver");
-                    break;
-                    
-                case "In-Transit":
-                    ["step1", "step2", "step3"].forEach((stepId, index) => {
-                        this.byId(stepId).removeStyleClass("pending").addStyleClass("completed");
-                        this.byId(icons[index]).removeStyleClass("pending").addStyleClass("completed");
-                    });
-                    
-                    this.byId("step1Time").setText("✓ Order confirmed");
-                    this.byId("step2Time").setText("✓ Driver assigned");
-                    this.byId("step3Time").setText("✓ Goods loaded");
                     
                     this.byId("step4").removeStyleClass("pending").addStyleClass("current");
                     this.byId("icon4").removeStyleClass("pending").addStyleClass("current");
                     this.byId("step4Time").setText("Vehicle is on the way");
                     break;
                     
-                case "Delivered":
-                    ["step1", "step2", "step3", "step4", "step5"].forEach((stepId, index) => {
-                        this.byId(stepId).removeStyleClass("pending current").addStyleClass("completed");
-                        this.byId(icons[index]).removeStyleClass("pending current").addStyleClass("completed");
+                case "ConfirmPickup":
+                    ["step1", "step2", "step4"].forEach((stepId, index) => {
+                        this.byId(stepId).removeStyleClass("pending").addStyleClass("completed");
+                        this.byId(["icon1", "icon2", "icon4"][index]).removeStyleClass("pending").addStyleClass("completed");
                     });
                     
                     this.byId("step1Time").setText("✓ Order confirmed");
                     this.byId("step2Time").setText("✓ Driver assigned");
-                    this.byId("step3Time").setText("✓ Goods loaded");
-                    this.byId("step4Time").setText("✓ In transit");
+                    this.byId("step4Time").setText("✓ En route to pickup");
+                    
+                    this.byId("step3").removeStyleClass("pending").addStyleClass("current");
+                    this.byId("icon3").removeStyleClass("pending").addStyleClass("current");
+                    this.byId("step3Time").setText("Pickup confirmed by driver");
+                    break;
+                    
+                case "Delivered":
+                    ["step1", "step2", "step4", "step3", "step5"].forEach((stepId, index) => {
+                        this.byId(stepId).removeStyleClass("pending current").addStyleClass("completed");
+                        this.byId(["icon1", "icon2", "icon4", "icon3", "icon5"][index]).removeStyleClass("pending current").addStyleClass("completed");
+                    });
+                    
+                    this.byId("step1Time").setText("✓ Order confirmed");
+                    this.byId("step2Time").setText("✓ Driver assigned");
+                    this.byId("step4Time").setText("✓ En route");
+                    this.byId("step3Time").setText("✓ Pickup confirmed");
                     this.byId("step5Time").setText("✓ Successfully delivered");
                     break;
                     
@@ -276,22 +269,7 @@ sap.ui.define([
                     this.byId("step1").removeStyleClass("pending").addStyleClass("completed");
                     this.byId("icon1").removeStyleClass("pending").addStyleClass("completed");
                     this.byId("step1Time").setText("Order received");
-                    
-                    this.byId("step6").removeStyleClass("pending").addStyleClass("current");
-                    this.byId("icon6").removeStyleClass("pending").addStyleClass("current");
-                    this.byId("step6Time").setText("❌ Shipment cancelled");
                     break;
-            }
-            
-            const driverCard = this.byId("driverCard");
-            const noDriverCard = this.byId("noDriverCard");
-            
-            if (status === "Pending" || status === "Cancelled") {
-                driverCard.setVisible(false);
-                noDriverCard.setVisible(true);
-            } else {
-                driverCard.setVisible(true);
-                noDriverCard.setVisible(false);
             }
         },
         

@@ -226,7 +226,15 @@ sap.ui.define([
             const oModel = this.getOwnerComponent().getModel();
             const sDriverPath = "/Fleet_Drivers('" + driverId + "')";
             
-            return oModel.bindContext(sDriverPath).requestObject();
+            return oModel.bindContext(sDriverPath).requestObject().then((driverData) => {
+                console.log("Driver details fetched:", {
+                    name: driverData.name,
+                    status: driverData.status,
+                    currentLat: driverData.currentLat,
+                    currentLong: driverData.currentLong
+                });
+                return driverData;
+            });
         },
         
         _getTruckDetails: function(truckId) {
@@ -250,8 +258,12 @@ sap.ui.define([
         _addTruckMarkersToMap: function(fleetData) {
             if (!this.adminMap || !window.L) return;
             
-            if (this.truckMarkers) {
-                this.truckMarkers.forEach(marker => this.adminMap.removeLayer(marker));
+            if (this.truckMarkers && this.adminMap) {
+                this.truckMarkers.forEach(marker => {
+                    if (marker && this.adminMap.hasLayer(marker)) {
+                        this.adminMap.removeLayer(marker);
+                    }
+                });
             }
             this.truckMarkers = [];
             this.truckMarkersMap = {};
