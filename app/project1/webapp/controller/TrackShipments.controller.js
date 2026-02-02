@@ -271,6 +271,17 @@ sap.ui.define([
                     this.byId("step1Time").setText("Order received");
                     break;
             }
+            
+            const driverCard = this.byId("driverCard");
+            const noDriverCard = this.byId("noDriverCard");
+            
+            if (status === "Pending" || status === "Cancelled") {
+                driverCard.setVisible(false);
+                noDriverCard.setVisible(true);
+            } else {
+                driverCard.setVisible(true);
+                noDriverCard.setVisible(false);
+            }
         },
         
         _loadRouteOnMap: function(pickupLocation, dropLocation) {

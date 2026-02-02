@@ -96,6 +96,45 @@
                     
                 </HBox>
                 
+                <!-- Driver Section -->
+                <HBox id="driverSection" class="driverSection">
+                    
+                    <!-- Driver Card (shown when assigned) -->
+                    <HBox id="driverCard" class="sapUiContentPadding driverCard" width="100%" visible="false" alignItems="Center" justifyContent="SpaceBetween">
+                        <!-- Left: Driver Info -->
+                        <HBox id="_IDGenHBox5" alignItems="Center" class="sapUiMediumMarginEnd">
+                            <Avatar id="driverAvatar" displaySize="L" class="sapUiMediumMarginEnd" backgroundColor="Accent6" />
+                            <VBox id="_IDGenVBox24">
+                                <Title id="driverName" text="" level="H3" class="sapUiTinyMarginBottom" />
+                                <HBox id="_IDGenHBox6" alignItems="Center" class="sapUiTinyMarginTop">
+                                    <core:Icon id="_IDGenIcon26" src="sap-icon://favorite" color="#ffcc00" size="1rem" class="sapUiTinyMarginEnd" />
+                                    <Text id="driverRating" text="" class="driverRatingText" />
+                                    <Text id="_IDGenText50" text=" • Verified Driver" class="sapUiSecondaryText sapUiTinyMarginBegin" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        
+                        <!-- Center: Phone Number with Call Icon -->
+                        <VBox id="_IDGenVBox25" alignItems="End" class="driverPhoneSection">
+                            <Label id="_IDGenLabel10" text="Contact" class="sapUiTinyMarginBottom" />
+                            <HBox id="_IDGenHBox7" alignItems="End" class="phoneWithIcon">
+                                <core:Icon id="_IDGenIcon27" src="sap-icon://phone" class="phoneIcon sapUiTinyMarginEnd" />
+                                <Text id="driverPhone" text="" class="driverPhoneText" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                    
+                    <!-- No Driver Message (shown when not assigned) -->
+                    <HBox id="noDriverCard" class="noDriverCard" visible="true">
+                        <core:Icon id="_IDGenIcon28" src="sap-icon://pending" class="noDriverIcon" />
+                        <VBox id="_IDGenVBox29" class="noDriverContent">
+                            <Text id="_IDGenText59" text="Driver Assignment Pending" class="noDriverTitle" />
+                            <Text id="_IDGenText61" text="We are finding the best driver for your shipment. You will be notified once assigned." class="noDriverMessage" />
+                        </VBox>
+                    </HBox>
+                    
+                </HBox>
+                
             </VBox>
             </VBox>
         </f:content>
