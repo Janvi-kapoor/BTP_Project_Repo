@@ -10,7 +10,7 @@
       <layout:Grid 
     id="performanceCardsContainer" 
     containerQuery="true" 
-    defaultSpan="XL4 L4 M6 S12" 
+    defaultSpan="XL4 L4 M4 S12" 
     vSpacing="1rem" 
     hSpacing="1rem">
     
