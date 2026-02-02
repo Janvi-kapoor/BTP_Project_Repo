@@ -132,6 +132,9 @@
                                                 <Column id="_IDGenColH6" width="18%">
                                                     <Text id="_IDGenText33" text="ETA"/>
                                                 </Column>
+                                                <Column id="_IDGenColH7" width="10%">
+                                                    <Text id="_IDGenText34" text="Action"/>
+                                                </Column>
                                             </columns>
                                             <items>
                                                 <ColumnListItem id="_IDGenCLIHistory" vAlign="Middle">
@@ -142,6 +145,7 @@
                                                         <Text id="_IDGenText41" text="{status}" class="statusPill"/>
                                                         <Text id="_IDGenText42" text="₹ {totalFare}" class="fareBadge"/>
                                                         <Text id="_IDGenText60" text="{= ${assignment/eta} ? ${assignment/eta} : 'Not Assigned' }" class="etaText"/>
+                                                        <Button id="_IDGenDeleteBtn" icon="sap-icon://delete" type="Transparent" press="onDeleteShipment" tooltip="Cancel Shipment"/>
                                                     </cells>
                                                 </ColumnListItem>
                                             </items>

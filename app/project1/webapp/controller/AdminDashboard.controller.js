@@ -160,7 +160,7 @@ sap.ui.define([
         // Notification System
         onNotificationPress: function() {
             if (!this._notificationPopover) {
-                this._notificationPopover = sap.ui.xmlfragment("project1.fragment.NotificationPopover", this);
+                this._notificationPopover = sap.ui.xmlfragment("adminNotificationPopover", "project1.fragment.NotificationPopover", this);
                 this.getView().addDependent(this._notificationPopover);
             }
             
@@ -174,7 +174,10 @@ sap.ui.define([
             
             console.log("Loading admin notifications...");
             
-            var oListBinding = oModel.bindList("/ActiveDelays");
+            // Filter to show only notifications with driver names (exclude system notifications)
+            var oListBinding = oModel.bindList("/ActiveDelays", null, [], [
+                new sap.ui.model.Filter("driverName", sap.ui.model.FilterOperator.NE, null)
+            ]);
             
             oListBinding.requestContexts().then(function(aContexts) {
                 console.log("ActiveDelays contexts received:", aContexts.length);
@@ -182,7 +185,23 @@ sap.ui.define([
                 var aNotifications = aContexts.map(function(oContext) {
                     var oData = oContext.getObject();
                     console.log("Delay notification:", oData);
-                    return oData;
+                    
+                    // Format message based on notification type
+                    var sMessage = "";
+                    if (!oData.driverName) {
+                        sMessage = "Driver/Truck unavailable for shipment " + oData.shipmentID;
+                    } else {
+                        sMessage = "Delay reported: " + oData.delayReason + " by " + oData.driverName;
+                    }
+                    
+                    return {
+                        ID: oData.ID,
+                        shipmentID: oData.shipmentID,
+                        driverName: oData.driverName || "System",
+                        delayReason: oData.delayReason,
+                        message: sMessage,
+                        reportedAt: oData.reportedAt
+                    };
                 });
                 
                 // Sort notifications by reportedAt date (newest first)
@@ -267,6 +286,19 @@ sap.ui.define([
 
         onCloseNotifications: function() {
             this._notificationPopover.close();
+        },
+        
+        formatDate: function(sDate) {
+            if (!sDate) return "";
+            var oDate = new Date(sDate);
+            var now = new Date();
+            var diffMs = now - oDate;
+            var diffMins = Math.floor(diffMs / 60000);
+            
+            if (diffMins < 1) return "Just now";
+            if (diffMins < 60) return diffMins + "m ago";
+            if (diffMins < 1440) return Math.floor(diffMins / 60) + "h ago";
+            return Math.floor(diffMins / 1440) + "d ago";
         },
         
         onExit: function() {

@@ -117,6 +117,8 @@ entity DelayLogs : cuid, managed {
         VehicleBreakdown = 'Vehicle Breakdown';
         Weather = 'Weather';
         Accident = 'Accident';
+        DriverNotAvailable = 'Driver Not Available';
+        TruckNotAvailable = 'Truck Not Available';
     };
     status       : String(20) enum {
         Active = 'Active';

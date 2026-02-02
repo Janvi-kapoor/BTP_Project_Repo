@@ -96,6 +96,12 @@
                     </layout:Grid>
 
                     <Button id="_IDGenButton3" text="Confirm &amp; Dispatch" type="Emphasized" width="100%" class="sapUiMediumMarginTop dispatchBtn" press="onConfirmDispatch" />
+                    
+                    <!-- Unavailability Notification Section -->
+                    <VBox id="unavailabilitySection" visible="false" class="sapUiMediumMarginTop">
+                        <MessageStrip id="unavailabilityMessage" text="" type="Warning" showIcon="true" class="sapUiSmallMarginBottom"/>
+                        <Button id="notifyCustomerBtn" text="Notify Customer" type="Emphasized" width="100%" press="onNotifyCustomer" icon="sap-icon://email"/>
+                    </VBox>
                 </VBox>
 
                 <VBox id="emptyState" alignItems="Center" justifyContent="Center" height="450px" class="routeMapPlaceholder">

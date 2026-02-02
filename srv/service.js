@@ -688,4 +688,48 @@ this.on('getNotificationCount', async (req) => {
         return 0;
     }
 });
+
+// Availability Notification Handler using DelayLogs table
+this.on('notifyCustomerUnavailability', async (req) => {
+    const { shipmentID, notificationType, message } = req.data;
+    console.log(`====> Creating availability notification for shipment: ${shipmentID}`);
+
+    try {
+        // Get customer ID from shipment
+        const shipment = await SELECT.one.from(Shipments)
+            .columns('customer_ID')
+            .where({ ID: shipmentID });
+
+        if (!shipment) {
+            return req.error(404, "Shipment not found");
+        }
+
+        // Map notification type to proper delay reason
+        let delayReason = 'DriverNotAvailable'; // Default
+        
+        if (notificationType === 'NoDriver') {
+            delayReason = 'DriverNotAvailable';
+        } else if (notificationType === 'NoTruck') {
+            delayReason = 'TruckNotAvailable';
+        } else if (notificationType === 'NoBoth') {
+            delayReason = 'DriverNotAvailable'; // Use driver as primary reason
+        }
+
+        // Use DelayLogs table with proper reason for availability issues
+        await INSERT.into(DelayLogs).entries({
+            shipment_ID: shipmentID,
+            driver_ID: null, // No specific driver for availability issues
+            delayReason: delayReason,
+            status: 'Active'
+        });
+
+        return {
+            success: true,
+            message: "Customer notified about unavailability"
+        };
+    } catch (error) {
+        console.error("Availability notification error:", error.message);
+        return req.error(500, "Failed to notify customer: " + error.message);
+    }
+});
 });

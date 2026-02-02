@@ -401,7 +401,7 @@ sap.ui.define(
       // Customer Notification System
       onNotificationPress: function() {
         if (!this._notificationPopover) {
-          this._notificationPopover = sap.ui.xmlfragment("project1.fragment.NotificationPopover", this);
+          this._notificationPopover = sap.ui.xmlfragment("customerNotificationPopover", "project1.fragment.NotificationPopover", this);
           this.getView().addDependent(this._notificationPopover);
         }
         
@@ -429,43 +429,38 @@ sap.ui.define(
             var sCustomerID = aUserContexts[0].getObject().ID;
             console.log("Customer ID found:", sCustomerID);
             
-            // Now get notifications for customer's shipments
+            // Load delay notifications (includes availability notifications)
             var oDelayBinding = oModel.bindList("/ActiveDelays", null, [], [
               new sap.ui.model.Filter("customerID", sap.ui.model.FilterOperator.EQ, sCustomerID)
             ]);
             
             oDelayBinding.requestContexts().then(function(aContexts) {
               var aNotifications = aContexts.map(function(oContext) {
-                return oContext.getObject();
+                var oData = oContext.getObject();
+                var sMessage = "";
+                
+                // Check if it's availability notification (no driver name)
+                if (!oData.driverName) {
+                  sMessage = "Driver/Truck not available for shipment " + oData.shipmentID + ". You can cancel or wait for availability.";
+                } else {
+                  sMessage = "Delay reported by " + oData.driverName + ": " + oData.delayReason;
+                }
+                
+                return {
+                  ID: oData.ID,
+                  shipmentID: oData.shipmentID,
+                  message: sMessage,
+                  type: oData.driverName ? "delay" : "availability",
+                  reportedAt: oData.reportedAt
+                };
               });
               
-              // Sort notifications by reportedAt date (newest first)
+              // Sort by date (newest first)
               aNotifications.sort(function(a, b) {
                 var dateA = new Date(a.reportedAt);
                 var dateB = new Date(b.reportedAt);
                 return dateB - dateA;
               });
-              
-              // If no real notifications, add some sample data for testing
-              if (aNotifications.length === 0) {
-                aNotifications = [
-                  {
-                    ID: "1",
-                    shipmentID: "LOG-789012",
-                    driverName: "Customer Sample Driver",
-                    delayReason: "Weather",
-                    reportedAt: new Date().toISOString()
-                  },
-                  {
-                    ID: "2",
-                    shipmentID: "LOG-210987",
-                    driverName: "Customer Driver 2",
-                    delayReason: "Accident",
-                    reportedAt: new Date(Date.now() - 1800000).toISOString() // 30 minutes ago
-                  }
-                ];
-                console.log("Using sample customer notification data");
-              }
               
               console.log("Customer notifications loaded:", aNotifications.length);
               
@@ -475,53 +470,32 @@ sap.ui.define(
               // Update notification count
               that._updateNotificationCount(aNotifications.length);
             }).catch(function(oError) {
-              console.error("Failed to load delay notifications:", oError.message);
-              // Set sample data in case of error
-              var aSampleNotifications = [
-                {
-                  ID: "1",
-                  shipmentID: "LOG-789012",
-                  driverName: "Customer Driver",
-                  delayReason: "Weather",
-                  reportedAt: new Date().toISOString()
-                }
-              ];
-              var oNotificationModel = new sap.ui.model.json.JSONModel(aSampleNotifications);
-              that.getView().setModel(oNotificationModel, "notificationModel");
-              that._updateNotificationCount(aSampleNotifications.length);
+              console.error("Failed to load notifications:", oError);
+              that._setFallbackNotifications();
             });
           } else {
             console.error("Customer not found for email:", sUserEmail);
-            // Set sample data if customer not found
-            var aSampleNotifications = [
-              {
-                ID: "1",
-                shipmentID: "LOG-789012",
-                driverName: "Customer Driver",
-                delayReason: "Weather",
-                reportedAt: new Date().toISOString()
-              }
-            ];
-            var oNotificationModel = new sap.ui.model.json.JSONModel(aSampleNotifications);
-            that.getView().setModel(oNotificationModel, "notificationModel");
-            that._updateNotificationCount(aSampleNotifications.length);
+            that._setFallbackNotifications();
           }
         }).catch(function(oError) {
-          console.error("Failed to load customer data:", oError.message);
-          // Set sample data in case of error
-          var aSampleNotifications = [
-            {
-              ID: "1",
-              shipmentID: "LOG-789012",
-              driverName: "Customer Driver",
-              delayReason: "Weather",
-              reportedAt: new Date().toISOString()
-            }
-          ];
-          var oNotificationModel = new sap.ui.model.json.JSONModel(aSampleNotifications);
-          that.getView().setModel(oNotificationModel, "notificationModel");
-          that._updateNotificationCount(aSampleNotifications.length);
+          console.error("Failed to load customer data:", oError);
+          that._setFallbackNotifications();
         });
+      },
+      
+      _setFallbackNotifications: function() {
+        var aSampleNotifications = [
+          {
+            ID: "1",
+            shipmentID: "LOG-789012",
+            message: "Driver/Truck not available. You can cancel or wait for availability.",
+            type: "availability",
+            reportedAt: new Date().toISOString()
+          }
+        ];
+        var oNotificationModel = new sap.ui.model.json.JSONModel(aSampleNotifications);
+        this.getView().setModel(oNotificationModel, "notificationModel");
+        this._updateNotificationCount(aSampleNotifications.length);
       },
 
       _updateNotificationCount: function(iCount) {
@@ -550,6 +524,57 @@ sap.ui.define(
         if (this._notificationTimer) {
           clearInterval(this._notificationTimer);
         }
+      },
+
+      onDeleteShipment: function(oEvent) {
+        var oBindingContext = oEvent.getSource().getBindingContext();
+        var sShipmentId = oBindingContext.getProperty("ID");
+        var sStatus = oBindingContext.getProperty("status");
+        
+        // Only allow deletion for Pending status
+        if (sStatus !== "Pending") {
+          sap.m.MessageToast.show("Only pending shipments can be cancelled");
+          return;
+        }
+        
+        var that = this;
+        sap.m.MessageBox.confirm("Are you sure you want to cancel this shipment?", {
+          title: "Cancel Shipment",
+          onClose: function(oAction) {
+            if (oAction === sap.m.MessageBox.Action.OK) {
+              that._cancelShipment(oBindingContext, sShipmentId);
+            }
+          }
+        });
+      },
+
+      _cancelShipment: function(oBindingContext, sShipmentId) {
+        // Update status to Cancelled using binding context
+        oBindingContext.setProperty("status", "Cancelled");
+        
+        var oModel = this.getOwnerComponent().getModel();
+        oModel.submitBatch().then(function() {
+          sap.m.MessageToast.show("Shipment cancelled successfully");
+          // Refresh table binding to immediately remove cancelled item
+          var oTable = this.byId("recentShipmentsTable");
+          var oBinding = oTable.getBinding("items");
+          if (oBinding) {
+            oBinding.refresh();
+          }
+        }.bind(this)).catch(function(oError) {
+          console.error("Error cancelling shipment:", oError);
+          sap.m.MessageToast.show("Error cancelling shipment");
+        });
+      },
+
+      formatDeleteEnabled: function(sStatus) {
+        return sStatus === "Pending";
+      },
+
+      formatDate: function(sDate) {
+        if (!sDate) return "";
+        var oDate = new Date(sDate);
+        return oDate.toLocaleDateString() + " " + oDate.toLocaleTimeString();
       },
     });
   },

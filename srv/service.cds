@@ -2,6 +2,7 @@ using {logichain.db as db} from '../db/schema';
 
 service LogiChainService {
     @odata.draft.enabled
+    @odata.draft.bypass
     @cds.redirection.target
     entity AdminShipments    as projection on db.Shipments;
     entity Users             as projection on db.Users;
@@ -177,4 +178,6 @@ service LogiChainService {
     } where status = 'Active';
     
     function getNotificationCount(userID: UUID, userRole: String) returns Integer;
+    
+    action notifyCustomerUnavailability(shipmentID: String, notificationType: String, message: String) returns { success: Boolean; message: String; };
 }

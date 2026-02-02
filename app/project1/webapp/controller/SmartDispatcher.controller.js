@@ -87,12 +87,52 @@ if (oTruckSelect && oContext.requiredVehicleType) { // Check agar requirement ex
             var sTruckID = this.byId("truckSelect").getSelectedKey();
             var sDriverID = this.byId("driverSelect").getSelectedKey();
 
-            if (!sTruckID || !sDriverID) {
-                MessageToast.show("Please select both Truck and Driver!");
-                return;
+            // Check availability and show notification option
+            this._checkAvailabilityAndNotify(sOrderID, sTruckID, sDriverID);
+        },
+        
+        _checkAvailabilityAndNotify: function(sOrderID, sTruckID, sDriverID) {
+            var bDriverAvailable = !!sDriverID;
+            var bTruckAvailable = !!sTruckID;
+            
+            if (bDriverAvailable && bTruckAvailable) {
+                // Both available - proceed with dispatch
+                this._proceedWithDispatch(sOrderID, sTruckID, sDriverID);
+            } else {
+                // Show unavailability notification
+                this._showUnavailabilityNotification(bDriverAvailable, bTruckAvailable, sOrderID);
             }
-
-            // Backend Action Call (OData V4)
+        },
+        
+        _showUnavailabilityNotification: function(bDriverAvailable, bTruckAvailable, sOrderID) {
+            var sMessage = "";
+            var sNotificationType = "";
+            
+            if (!bDriverAvailable && !bTruckAvailable) {
+                sMessage = "No drivers or trucks are currently available for this shipment.";
+                sNotificationType = "NoBoth";
+            } else if (!bDriverAvailable) {
+                sMessage = "No drivers are currently available for this shipment.";
+                sNotificationType = "NoDriver";
+            } else if (!bTruckAvailable) {
+                sMessage = "No trucks are currently available for this shipment.";
+                sNotificationType = "NoTruck";
+            }
+            
+            // Store for notification
+            this._currentNotification = {
+                shipmentID: sOrderID,
+                message: sMessage,
+                type: sNotificationType
+            };
+            
+            // Show notification UI
+            this.byId("unavailabilityMessage").setText(sMessage);
+            this.byId("unavailabilitySection").setVisible(true);
+        },
+        
+        _proceedWithDispatch: function(sOrderID, sTruckID, sDriverID) {
+            var oView = this.getView();
             var oModel = this.getOwnerComponent().getModel();
             var oOperation = oModel.bindContext("/assignOrder(...)");
 
@@ -104,23 +144,58 @@ if (oTruckSelect && oContext.requiredVehicleType) { // Check agar requirement ex
             oOperation.execute().then(function () {
                 oView.setBusy(false);
                 MessageToast.show("Order Dispatched Successfully!");
-
-                // Refresh list: Order list se apne aap gayab hona chahiye
-                oList.getBinding("items").refresh();
-                
-                // Reset the details panel
-                this.byId("detailsPanel").setVisible(false);
-                this.byId("emptyState").setVisible(true);
-                
-                // Clear selections
-                oList.removeSelections();
-                this.byId("truckSelect").setSelectedKey("");
-                this.byId("driverSelect").setSelectedKey("");
+                this._resetDispatcherView();
             }.bind(this)).catch(function (oError) {
                 oView.setBusy(false);
                 console.error(oError);
                 MessageToast.show("Error: " + (oError.message || "Dispatch failed"));
             });
+        },
+        
+        onNotifyCustomer: function() {
+            var that = this;
+            if (!this._currentNotification) {
+                MessageToast.show("No notification data available");
+                return;
+            }
+            
+            var oModel = this.getOwnerComponent().getModel();
+            var oOperation = oModel.bindContext("/notifyCustomerUnavailability(...)");
+            
+            oOperation.setParameter("shipmentID", this._currentNotification.shipmentID);
+            oOperation.setParameter("notificationType", this._currentNotification.type);
+            oOperation.setParameter("message", this._currentNotification.message);
+            
+            this.getView().setBusy(true);
+            oOperation.execute().then(function() {
+                that.getView().setBusy(false);
+                MessageToast.show("Customer notified successfully!");
+                that._resetDispatcherView();
+            }).catch(function(oError) {
+                that.getView().setBusy(false);
+                console.error("Error notifying customer:", oError);
+                MessageToast.show("Error notifying customer");
+            });
+        },
+        
+        _resetDispatcherView: function() {
+            var oList = this.byId("ordersList");
+            
+            // Refresh list
+            oList.getBinding("items").refresh();
+            
+            // Reset panels
+            this.byId("detailsPanel").setVisible(false);
+            this.byId("emptyState").setVisible(true);
+            this.byId("unavailabilitySection").setVisible(false);
+            
+            // Clear selections
+            oList.removeSelections();
+            this.byId("truckSelect").setSelectedKey("");
+            this.byId("driverSelect").setSelectedKey("");
+            
+            // Clear notification data
+            this._currentNotification = null;
         }
     });
 });
