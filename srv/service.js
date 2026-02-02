@@ -482,14 +482,115 @@ this.on('getDriverPerformance', async (req) => {
     }
 });
 
-// Confirm Pickup Action
-this.on('confirmPickup', async (req) => {
+// Store pickup OTPs temporarily
+const pickupOTPs = new Map();
+
+// Send Pickup OTP (matches sendOTP pattern)
+this.on('sendPickupOTP', async (req) => {
     const { shipmentID } = req.data;
+    console.log(`====> Sending pickup OTP for shipment: ${shipmentID}`);
+   
     try {
-        await UPDATE(Shipments).set({ status: 'ConfirmPickup' }).where({ ID: shipmentID });
-        return `Pickup confirmed for shipment ${shipmentID}`;
+        const shipment = await SELECT.one.from(Shipments)
+            .columns('ID', 'customer_ID', 'status')
+            .where({ ID: shipmentID });
+       
+        if (!shipment) {
+            return { success: false, message: "Shipment not found" };
+        }
+        
+        if (shipment.status !== 'In-Transit') {
+            return { success: false, message: "Pickup OTP only available for In-Transit shipments" };
+        }
+        
+        // Get customer email (company email)
+        const customer = await SELECT.one.from(Users)
+            .columns('email', 'companyName')
+            .where({ ID: shipment.customer_ID });
+       
+        const otp = Math.floor(1000 + Math.random() * 9000).toString();
+        
+        // Store OTP
+        pickupOTPs.set(shipmentID, {
+            otp: otp,
+            timestamp: Date.now(),
+            expiry: Date.now() + (10 * 60 * 1000)
+        });
+        
+        if (!customer || !customer.email) {
+            console.log(`\n📧 PICKUP OTP for shipment ${shipmentID}: ${otp}\n`);
+            return {
+                success: false,
+                message: "Customer email not found. Please contact support."
+            };
+        }
+        
+        console.log(`\n📧 PICKUP OTP for ${customer.email}: ${otp}`);
+        console.log(`📼 Company: ${customer.companyName}`);
+        console.log(`📦 Shipment: ${shipmentID}\n`);
+        
+        try {
+            const result = await emailService.sendPickupOTP(customer.email, otp, customer.companyName);
+           
+            if (result.success) {
+                return {
+                    success: true,
+                    otp: otp,
+                    message: `Pickup OTP sent to ${customer.email}`
+                };
+            }
+        } catch (emailError) {
+            console.error('Email service error:', emailError.message);
+        }
+        
+        return {
+            success: true,
+            otp: otp,
+            message: "Pickup OTP ready (check console)"
+        };
+       
     } catch (error) {
-        return req.error(500, "Confirm pickup failed: " + error.message);
+        console.error("Pickup OTP error:", error.message);
+        return { success: false, message: "Failed to generate pickup OTP" };
+    }
+});
+
+// Verify Pickup OTP
+this.on('verifyPickupOTP', async (req) => {
+    const { shipmentID, enteredOTP } = req.data;
+    console.log(`====> Verifying pickup OTP for shipment: ${shipmentID}`);
+    
+    try {
+        const storedData = pickupOTPs.get(shipmentID);
+        
+        if (!storedData) {
+            return { success: false, message: "No OTP found. Please request OTP first." };
+        }
+        
+        if (Date.now() > storedData.expiry) {
+            pickupOTPs.delete(shipmentID);
+            return { success: false, message: "OTP expired. Please request new OTP." };
+        }
+        
+        if (storedData.otp !== enteredOTP) {
+            return { success: false, message: "Invalid OTP. Please try again." };
+        }
+        
+        // Update status to ConfirmPickup
+        await UPDATE(Shipments).set({ status: 'ConfirmPickup' }).where({ ID: shipmentID });
+        
+        pickupOTPs.delete(shipmentID);
+        
+        console.log(`✅ Pickup confirmed for shipment: ${shipmentID}`);
+        
+        return {
+            success: true,
+            message: "Pickup confirmed successfully!"
+        };
+        
+    } catch (error) {
+        console.error("Pickup OTP verification error:", error.message);
+        return { success: false, message: "Verification failed" };
     }
 });
 

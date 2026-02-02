@@ -155,6 +155,8 @@ service LogiChainService {
     };
 
     action confirmPickup(shipmentID: String) returns String;
+    action sendPickupOTP(shipmentID: String) returns { success: Boolean; otp: String; message: String; };
+    action verifyPickupOTP(shipmentID: String, enteredOTP: String) returns { success: Boolean; message: String; };
     action updateDriverLocation(driverID: UUID, latitude: Decimal(9,6), longitude: Decimal(9,6)) returns String;
 
     // --- Secure Delivery Actions ---

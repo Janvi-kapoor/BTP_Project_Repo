@@ -19,6 +19,68 @@ class EmailOTPService {
         console.log('Email OTP Service initialized');
     }
 
+    async sendPickupOTP(email, otp, companyName = 'Customer') {
+        try {
+            const mailOptions = {
+                from: process.env.GMAIL_USER || 'LogiChain <noreply@logichain.com>',
+                to: email,
+                subject: 'LogiChain Pickup Confirmation OTP',
+                html: `
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 20px; text-align: center;">
+                            <h1 style="color: white; margin: 0;">LogiChain NEXUS</h1>
+                            <p style="color: white; margin: 5px 0;">Pickup Confirmation</p>
+                        </div>
+                       
+                        <div style="padding: 30px; background: #f8fafc;">
+                            <h2 style="color: #1e293b; margin-bottom: 20px;">Pickup Confirmation Required</h2>
+                           
+                            <p style="color: #64748b; font-size: 16px; line-height: 1.5;">
+                                Dear ${companyName},<br><br>
+                                Your shipment is ready for pickup. Please provide this OTP to the driver:
+                            </p>
+                           
+                            <div style="background: white; border: 2px solid #10b981; border-radius: 12px; padding: 20px; text-align: center; margin: 20px 0;">
+                                <h1 style="color: #059669; font-size: 36px; margin: 0; letter-spacing: 8px;">${otp}</h1>
+                            </div>
+                           
+                            <p style="color: #64748b; font-size: 14px;">
+                                • This OTP is valid for 10 minutes<br>
+                                • Share this OTP only with the LogiChain driver<br>
+                                • Pickup will be confirmed once OTP is verified
+                            </p>
+                        </div>
+                       
+                        <div style="background: #1e293b; padding: 20px; text-align: center;">
+                            <p style="color: #94a3b8; margin: 0; font-size: 12px;">
+                                © 2024 LogiChain NEXUS. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                `
+            };
+
+            const result = await this.transporter.sendMail(mailOptions);
+           
+            console.log('✅ Pickup OTP email sent successfully');
+            console.log('📧 Email ID:', email);
+            console.log('🔐 Pickup OTP:', otp);
+            console.log('📬 Message ID:', result.messageId);
+           
+            return {
+                success: true,
+                message: 'Pickup OTP sent to email successfully'
+            };
+
+        } catch (error) {
+            console.error('❌ Pickup OTP email sending error:', error.message);
+            return {
+                success: false,
+                message: 'Failed to send pickup OTP email'
+            };
+        }
+    }
+
     async sendOTP(email, otp) {
         try {
             const mailOptions = {

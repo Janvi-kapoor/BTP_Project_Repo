@@ -504,7 +504,6 @@ sap.ui.define([
 
         onConfirmPickup: function () {
             var oMissionModel = this.getView().getModel("missionData");
-            var oModel = this.getOwnerComponent().getModel();
             var that = this;
             
             if (!oMissionModel) {
@@ -513,22 +512,171 @@ sap.ui.define([
             }
             
             var sShipmentID = oMissionModel.getProperty("/ID");
-            console.log("Confirming pickup for shipment:", sShipmentID);
+            var sStatus = oMissionModel.getProperty("/status");
             
-            var oAction = oModel.bindContext("/confirmPickup(...)");
+            // Check if shipment is in correct status for pickup
+            if (sStatus !== 'In-Transit') {
+                MessageToast.show("Pickup can only be confirmed for In-Transit shipments");
+                return;
+            }
+            
+            console.log("Requesting pickup OTP for shipment:", sShipmentID);
+            
+            // Request pickup OTP (matches delivery pattern)
+            var oModel = this.getOwnerComponent().getModel();
+            var oAction = oModel.bindContext("/sendPickupOTP(...)");
             oAction.setParameter("shipmentID", sShipmentID);
             
             oAction.execute().then(function() {
-                MessageToast.show("Pickup confirmed successfully!");
-                
-                // Refresh mission data from server to get updated status
-                setTimeout(() => {
-                    that._loadActiveMission();
-                }, 500);
-                
+                oAction.requestObject().then(function(oData) {
+                    var oResult = oData.value || oData;
+                    if (oResult.success) {
+                        MessageToast.show(oResult.message);
+                        that._showPickupOTPDialog(sShipmentID);
+                    } else {
+                        MessageToast.show("Failed to send pickup OTP: " + oResult.message);
+                    }
+                }).catch(function(oError) {
+                    console.error("Send pickup OTP failed:", oError.message);
+                    MessageToast.show("Failed to request pickup OTP");
+                });
             }).catch(function(oError) {
-                console.error("Confirm pickup failed:", oError.message);
-                MessageToast.show("Failed to confirm pickup: " + oError.message);
+                console.error("Send pickup OTP failed:", oError.message);
+                MessageToast.show("Failed to request pickup OTP");
+            });
+        },
+        
+        _showPickupOTPDialog: function(sShipmentID) {
+            var that = this;
+            
+            if (!this._pickupOTPDialog) {
+                this._pickupOTPDialog = new sap.m.Dialog({
+                    title: "🚛 Pickup Confirmation",
+                    contentWidth: "450px",
+                    contentHeight: "280px",
+                    draggable: true,
+                    resizable: false,
+                    content: [
+                        new sap.m.VBox({
+                            class: "sapUiMediumMargin",
+                            items: [
+                                new sap.m.HBox({
+                                    alignItems: "Center",
+                                    class: "sapUiMediumMarginBottom",
+                                    items: [
+                                        new sap.ui.core.Icon({
+                                            src: "sap-icon://email",
+                                            size: "1.5rem",
+                                            color: "#10b981",
+                                            class: "sapUiTinyMarginEnd"
+                                        }),
+                                        new sap.m.Text({
+                                            text: "OTP sent to company email",
+                                            class: "sapUiMediumText"
+                                        })
+                                    ]
+                                }),
+                                new sap.m.Text({
+                                    text: "Please enter the 4-digit OTP to confirm pickup:",
+                                    class: "sapUiSmallMarginBottom"
+                                }),
+                                new sap.m.Input(this.createId("pickupOtpInput"), {
+                                    placeholder: "Enter 4-digit OTP",
+                                    maxLength: 4,
+                                    type: "Number",
+                                    width: "200px",
+                                    textAlign: "Center",
+                                    class: "sapUiMediumMarginBottom",
+                                    liveChange: function(oEvent) {
+                                        var sValue = oEvent.getParameter("value");
+                                        if (sValue.length === 4) {
+                                            that.byId("verifyPickupBtn").setEnabled(true);
+                                        } else {
+                                            that.byId("verifyPickupBtn").setEnabled(false);
+                                        }
+                                    }
+                                }),
+                                new sap.m.HBox({
+                                    alignItems: "Center",
+                                    class: "sapUiTinyMarginTop",
+                                    items: [
+                                        new sap.ui.core.Icon({
+                                            src: "sap-icon://information",
+                                            size: "1rem",
+                                            color: "#0070f2",
+                                            class: "sapUiTinyMarginEnd"
+                                        }),
+                                        new sap.m.Text({
+                                            text: "OTP is valid for 10 minutes",
+                                            class: "sapUiSmallText"
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    ],
+                    beginButton: new sap.m.Button(this.createId("verifyPickupBtn"), {
+                        text: "✓ Verify & Confirm",
+                        type: "Emphasized",
+                        enabled: false,
+                        press: function() {
+                            that._verifyPickupOTP(sShipmentID);
+                        }
+                    }),
+                    endButton: new sap.m.Button({
+                        text: "Cancel",
+                        press: function() {
+                            that._pickupOTPDialog.close();
+                        }
+                    })
+                });
+                this.getView().addDependent(this._pickupOTPDialog);
+            }
+            
+            // Reset dialog state
+            this.byId("pickupOtpInput").setValue("");
+            this.byId("verifyPickupBtn").setEnabled(false);
+            this._pickupOTPDialog.open();
+        },
+        
+        _verifyPickupOTP: function(sShipmentID) {
+            var sEnteredOTP = this.byId("pickupOtpInput").getValue();
+            var that = this;
+            
+            if (!sEnteredOTP || sEnteredOTP.length !== 4) {
+                MessageToast.show("Please enter a valid 4-digit OTP");
+                return;
+            }
+            
+            console.log("Verifying pickup OTP for shipment:", sShipmentID, "OTP:", sEnteredOTP);
+            
+            var oModel = this.getOwnerComponent().getModel();
+            var oAction = oModel.bindContext("/verifyPickupOTP(...)");
+            oAction.setParameter("shipmentID", sShipmentID);
+            oAction.setParameter("enteredOTP", sEnteredOTP);
+            
+            oAction.execute().then(function() {
+                oAction.requestObject().then(function(oData) {
+                    var oResult = oData.value || oData;
+                    
+                    if (oResult.success) {
+                        MessageToast.show(oResult.message);
+                        that._pickupOTPDialog.close();
+                        
+                        // Refresh mission data to show updated status
+                        setTimeout(() => {
+                            that._loadActiveMission();
+                        }, 500);
+                    } else {
+                        MessageToast.show(oResult.message);
+                    }
+                }).catch(function(oError) {
+                    console.error("Verify pickup OTP failed:", oError.message);
+                    MessageToast.show("Failed to verify pickup OTP");
+                });
+            }).catch(function(oError) {
+                console.error("Verify pickup OTP failed:", oError.message);
+                MessageToast.show("Failed to verify pickup OTP");
             });
         },
 
