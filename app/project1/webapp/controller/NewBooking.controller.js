@@ -28,6 +28,25 @@ sap.ui.define(
           }
         }, this);
       },
+      
+      _loadCurrentCustomerInfo: function() {
+        var sUserEmail = localStorage.getItem("userEmail");
+        if (sUserEmail) {
+          var oModel = this.getOwnerComponent().getModel();
+          var oBinding = oModel.bindList("/Users", null, [], [
+            new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.EQ, sUserEmail)
+          ]);
+          
+          oBinding.requestContexts().then(function(aContexts) {
+            if (aContexts.length > 0) {
+              var oUserData = aContexts[0].getObject();
+              if (oUserData.companyName) {
+                this.byId("inputSender").setValue(oUserData.companyName);
+              }
+            }
+          }.bind(this));
+        }
+      },
 
       onPickupChange: function() {
         this._pickupCoords = null;
@@ -206,6 +225,17 @@ sap.ui.define(
           this._oNavContainer.to(oPage1);
         }
         this._updateHeader(1);
+        
+        // Auto-fill sender company with current customer info every time page renders
+        this._loadCurrentCustomerInfo();
+        
+        // Also set up a timer to refresh customer info periodically
+        if (this._customerInfoTimer) {
+          clearInterval(this._customerInfoTimer);
+        }
+        this._customerInfoTimer = setInterval(function() {
+          this._loadCurrentCustomerInfo();
+        }.bind(this), 2000);
       },
 
       onIncrement: function () {
@@ -617,6 +647,12 @@ sap.ui.define(
           this._oNavContainer.to(oPage1);
         }
         this._updateHeader(1);
+      },
+      
+      onExit: function() {
+        if (this._customerInfoTimer) {
+          clearInterval(this._customerInfoTimer);
+        }
       }
     });
   },

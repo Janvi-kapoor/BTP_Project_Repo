@@ -75,7 +75,14 @@ sap.ui.define(
           console.log("Backend se filtered data aa gaya! Count:", aContexts.length);
 
 
-          var aData = aContexts.map(oCtx => oCtx.getObject());
+          var aData = aContexts.map(function(oCtx) {
+            var oData = oCtx.getObject();
+            // Format totalFare with Indian number formatting
+            if (oData.totalFare) {
+              oData.totalFare = parseFloat(oData.totalFare).toLocaleString("en-IN");
+            }
+            return oData;
+          });
           var oJsonModel = new sap.ui.model.json.JSONModel(aData);
           oView.setModel(oJsonModel, "historyModel");
 

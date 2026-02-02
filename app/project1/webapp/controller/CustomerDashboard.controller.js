@@ -285,7 +285,7 @@ sap.ui.define(
               var oMetricsModel = new sap.ui.model.json.JSONModel({
                 active: oData.activeShipments || 0,
                 pending: oData.pendingDispatch || 0,
-                spend: oData.monthlySpend || 0,
+                spend: (oData.monthlySpend || 0).toLocaleString("en-IN"),
               });
 
               this.getView().setModel(oMetricsModel, "metrics");

@@ -52,8 +52,8 @@ sap.ui.define([
                 var oContext = oFunction.getBoundContext();
                 var oData = oContext.getObject();
 
-                oDashboardModel.setProperty("/stats/revenue", oData.totalRevenue);
-                oDashboardModel.setProperty("/stats/commission", Math.round(oData.totalCommission));
+                oDashboardModel.setProperty("/stats/revenue", parseFloat(oData.totalRevenue || 0).toLocaleString("en-IN"));
+                oDashboardModel.setProperty("/stats/commission", Math.round(oData.totalCommission || 0).toLocaleString("en-IN"));
                 oDashboardModel.setProperty("/stats/activeDrivers", oData.activeDrivers);
                 
             }).catch(function(err) {
