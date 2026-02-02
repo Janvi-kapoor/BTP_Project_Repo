@@ -53,7 +53,7 @@ sap.ui.define([
                 var oData = oContext.getObject();
 
                 oDashboardModel.setProperty("/stats/revenue", oData.totalRevenue);
-                oDashboardModel.setProperty("/stats/commission", oData.totalCommission);
+                oDashboardModel.setProperty("/stats/commission", Math.round(oData.totalCommission));
                 oDashboardModel.setProperty("/stats/activeDrivers", oData.activeDrivers);
                 
             }).catch(function(err) {

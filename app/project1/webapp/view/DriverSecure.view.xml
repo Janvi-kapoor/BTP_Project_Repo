@@ -1,7 +1,7 @@
 <mvc:View controllerName="project1.controller.DriverSecure" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
     <Page id="driverSecurePage" showHeader="false" >
         <content>
-            <VBox id="_IDGenVBox26" class="activeMissionContainer">
+            <VBox id="_IDGenVBox26" class="activeMissionContainer" alignItems="Center" justifyContent="Center">
                 <!-- Header Section -->
                 <VBox id="_IDGenVBox30" class="secureHeader">
                     <HBox id="_IDGenHBox18" class="iconContainer">
