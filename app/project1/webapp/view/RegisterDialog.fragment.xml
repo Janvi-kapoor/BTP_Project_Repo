@@ -13,9 +13,6 @@
                     
                     <Label id="passwordLabel" text="Password" labelFor="passwordRegInput" design="Bold" class="sapUiSmallMarginTop"/>
                     <Input id="passwordRegInput" placeholder="Enter password" type="Password" required="true"/>
-                    
-                    <Label id="creditLabel" text="Credit Line (Optional)" labelFor="creditInput" design="Bold" class="sapUiSmallMarginTop"/>
-                    <Input id="creditInput" placeholder="0.00" type="Number" />
                 </VBox>
             </VBox>
         </content>

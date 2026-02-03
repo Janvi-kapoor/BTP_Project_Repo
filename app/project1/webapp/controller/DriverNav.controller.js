@@ -552,41 +552,43 @@ sap.ui.define([
             if (!this._pickupOTPDialog) {
                 this._pickupOTPDialog = new sap.m.Dialog({
                     title: "🚛 Pickup Confirmation",
-                    contentWidth: "450px",
-                    contentHeight: "280px",
+                    contentWidth: "420px",
+                    contentHeight: "300px",
                     draggable: true,
                     resizable: false,
+                    class: "otpDialog",
                     content: [
                         new sap.m.VBox({
-                            class: "sapUiMediumMargin",
+                            class: "otpDialogContent",
+                            alignItems: "Center",
                             items: [
-                                new sap.m.HBox({
+                                new sap.m.VBox({
+                                    class: "otpTitleSection",
                                     alignItems: "Center",
-                                    class: "sapUiMediumMarginBottom",
                                     items: [
                                         new sap.ui.core.Icon({
                                             src: "sap-icon://email",
-                                            size: "1.5rem",
-                                            color: "#10b981",
-                                            class: "sapUiTinyMarginEnd"
+                                            size: "2rem",
+                                            color: "#6366f1",
+                                            class: "otpSuccessIcon"
                                         }),
                                         new sap.m.Text({
-                                            text: "OTP sent to company email",
-                                            class: "sapUiMediumText"
+                                            text: "Enter OTP Code",
+                                            class: "otpMainTitle"
+                                        }),
+                                        new sap.m.Text({
+                                            text: "OTP sent to company email. Enter the 4-digit code to confirm pickup:",
+                                            class: "otpSubTitle",
+                                            textAlign: "Center"
                                         })
                                     ]
-                                }),
-                                new sap.m.Text({
-                                    text: "Please enter the 4-digit OTP to confirm pickup:",
-                                    class: "sapUiSmallMarginBottom"
                                 }),
                                 new sap.m.Input(this.createId("pickupOtpInput"), {
                                     placeholder: "Enter 4-digit OTP",
                                     maxLength: 4,
                                     type: "Number",
-                                    width: "200px",
+                                    class: "otpDigitInput",
                                     textAlign: "Center",
-                                    class: "sapUiMediumMarginBottom",
                                     liveChange: function(oEvent) {
                                         var sValue = oEvent.getParameter("value");
                                         if (sValue.length === 4) {
@@ -596,39 +598,47 @@ sap.ui.define([
                                         }
                                     }
                                 }),
+                                new sap.m.VBox({
+                                    class: "otpActionButtons",
+                                    alignItems: "Center",
+                                    items: [
+                                        new sap.m.Button(this.createId("verifyPickupBtn"), {
+                                            text: "✓ Verify & Confirm Pickup",
+                                            type: "Emphasized",
+                                            enabled: false,
+                                            class: "otpVerifyBtn",
+                                            press: function() {
+                                                that._verifyPickupOTP(sShipmentID);
+                                            }
+                                        }),
+                                        new sap.m.Button({
+                                            text: "Cancel",
+                                            class: "otpCancelBtn",
+                                            press: function() {
+                                                that._pickupOTPDialog.close();
+                                            }
+                                        })
+                                    ]
+                                }),
                                 new sap.m.HBox({
                                     alignItems: "Center",
-                                    class: "sapUiTinyMarginTop",
+                                    justifyContent: "Center",
+                                    class: "otpLoadingSpinner",
                                     items: [
                                         new sap.ui.core.Icon({
                                             src: "sap-icon://information",
                                             size: "1rem",
-                                            color: "#0070f2",
-                                            class: "sapUiTinyMarginEnd"
+                                            color: "#6b7280"
                                         }),
                                         new sap.m.Text({
-                                            text: "OTP is valid for 10 minutes",
-                                            class: "sapUiSmallText"
+                                            text: "Valid for 10 minutes",
+                                            class: "otpLoadingText"
                                         })
                                     ]
                                 })
                             ]
                         })
-                    ],
-                    beginButton: new sap.m.Button(this.createId("verifyPickupBtn"), {
-                        text: "✓ Verify & Confirm",
-                        type: "Emphasized",
-                        enabled: false,
-                        press: function() {
-                            that._verifyPickupOTP(sShipmentID);
-                        }
-                    }),
-                    endButton: new sap.m.Button({
-                        text: "Cancel",
-                        press: function() {
-                            that._pickupOTPDialog.close();
-                        }
-                    })
+                    ]
                 });
                 this.getView().addDependent(this._pickupOTPDialog);
             }
