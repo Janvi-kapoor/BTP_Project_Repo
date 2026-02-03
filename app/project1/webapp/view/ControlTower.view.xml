@@ -10,8 +10,8 @@
     <VBox id="_IDGenVBox11" class="mainDashboardContent">
                     <VBox>
                                 <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                                     <Title id="_IDGenHeaderTitle" text="Control Tower"  class="mainTitleText" />
+                                 <core:Icon id="operationIcon" src="sap-icon://official-service" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Fleet Command Center"  class="mainTitleText" />
                                      </HBox>
                                      <Text id="_IDGenHeaderText"  text="Real-time fleet monitoring and insights" class="performanceSubtitle" />
                                

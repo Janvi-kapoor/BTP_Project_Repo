@@ -1151,48 +1151,6 @@
     }
 }
 
-/* ============================================================================== */
-/* 10. MOBILE RESPONSIVENESS                                                      */
-/* ============================================================================== */
-
-@media (max-width: 1024px) {
-    .liveNav-contentArea {
-        flex-direction: column !important;
-    }
-    
-    .liveNav-timelineCard {
-        width: 100% !important;
-        margin-bottom: 20px !important;
-        order: 2 !important; /* Map first on tablets if needed, or keep 2 for card below */
-    }
-
-    .liveNav-mapArea {
-        width: 100% !important;
-        height: 500px !important;
-        order: 1 !important;
-    }
-}
-
-@media (max-width: 600px) {
-    .liveNav-glassHeader {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 15px !important;
-        padding: 15px !important;
-    }
-
-    .liveNav-metric {
-        width: 100% !important;
-    }
-
-    .liveNav-metricValue {
-        font-size: 1.3rem !important;
-    }
-
-    .liveNav-mapArea {
-        height: 400px !important;
-    }
-}
 
 /* ============================================================================== */
 /* ENHANCED SHIPMENT STATUS TIMELINE - BETTER VISUAL PROGRESSION */

@@ -4,10 +4,10 @@
             <VBox class="sapUiMediumMarginBeginEnd">
                 <VBox>
                     <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox">
-                        <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                        <Title id="_IDGenHeaderTitle" text="New Bulk Shipment" class="mainTitleText"/>
+                        <core:Icon id="operationIcon" src="sap-icon://cargo-train" class="performanceHeaderIcon"/>
+                        <Title id="_IDGenHeaderTitle" text="Create Bulk Shipment" class="mainTitleText"/>
                     </HBox>
-                    <Text id="_IDGenHeaderText" text="Complete the wizard to initiate a new dispatch" class="performanceSubtitle"/>
+                    <Text id="_IDGenHeaderText" text="Streamline your logistics: Configure and dispatch multiple orders in one go." class="performanceSubtitle"/>
                 </VBox>
                 <VBox id="mainWrapper" width="100%" height="100%" alignItems="Stretch" justifyContent="Start" class="sapUiMediumMarginTop">
                     <HBox id="customHeader" class="customWizardHeader" alignItems="Center" justifyContent="SpaceBetween">
@@ -154,7 +154,7 @@
                                                 </VBox>
                                             </HBox>
                                             <VBox id="visualLineContainer" width="100%" class="sapUiSmallMarginTop">
-                                                <core:HTML id="_IDGenHTML1" content="&lt;div class=&quot;gradientLine&quot;&gt;&lt;/div&gt;"/>
+                                                <core:HTML id="gradientLineHTML1" content='&lt;div class="gradientLine"&gt;&lt;/div&gt;'/>
                                                 <HBox id="_IDGenHBox11" justifyContent="SpaceBetween" class="sapUiTinyMarginTop">
                                                     <Label id="_IDGenLabel12" text="Pickup" class="miniLabel"/>
                                                     <Label id="_IDGenLabel13" text="Destination" class="miniLabel"/>
@@ -190,7 +190,7 @@
                                                     <Text id="_IDGenText37" text="GST (18%)" class="billLabel"/>
                                                     <Text id="_IDGenText38" text="₹ 1,530" class="billValue"/>
                                                 </HBox>
-                                                <core:HTML id="_IDGenHTML2" content="&lt;div class=&quot;dashedDivider&quot;&gt;&lt;/div&gt;"/>
+                                                <core:HTML id="dashedDividerHTML" content='&lt;div class="gradientLine"&gt;&lt;/div&gt;'/>
                                             </VBox>
                                             <VBox id="billBottom" class="sapUiMediumMarginTop">
                                                 <HBox id="_IDGenHBox20" justifyContent="SpaceBetween" alignItems="End">

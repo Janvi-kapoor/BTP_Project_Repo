@@ -13,7 +13,7 @@
             <VBox>
              <VBox >
                                 <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox ">
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                 <core:Icon id="operationIcon" src="sap-icon://locate-me" class="performanceHeaderIcon"/>
                                      <Title id="_IDGenHeaderTitle"  text="Track Shipments"   class="mainTitleText" />
                                      </HBox>
                                      <Text id="_IDGenHeaderText" text="Monitor and manage your active dispatches in real-time" class="performanceSubtitle" />

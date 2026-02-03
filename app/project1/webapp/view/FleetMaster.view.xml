@@ -9,10 +9,10 @@
             <VBox id="_IDGenVBox15" class="mainDashboardContent">
             <VBox>
               <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
-                                     <Title id="_IDGenHeaderTitle" text="Fleet Master"  class="mainTitleText" />
+                                 <core:Icon id="operationIcon" src="sap-icon://customer-and-contacts" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Fleet Control Center"  class="mainTitleText" />
                                      </HBox>
-                                     <Text id="_IDGenHeaderText" text="Manage drivers and vehicle inventory"  class="performanceSubtitle" />
+                                     <Text id="_IDGenHeaderText" text="Centralized management for drivers, assets, and vehicle inventory."  class="performanceSubtitle" />
                                
          </VBox>
 
@@ -22,7 +22,7 @@
                             <Panel id="_IDGenPanel" class="fleetCard sapUiNoContentPadding">
                                 <headerToolbar>
                                     <Toolbar id="_IDGenToolbar">
-                                        <Title id="_IDGenTitle10" text="Driver Registry" level="H3" />
+                                        <Title id="_IDGenTitle10" text="Driver Registry" level="H3"  />
                                         <ToolbarSpacer id="_IDGenToolbarSpacer4" />
                                         <Button id="_IDGenButton6" text="Add Driver" press=".onAddDriver"  icon="sap-icon://add" type="Emphasized" class="purpleBtn" />
                                     </Toolbar>
@@ -33,7 +33,7 @@
                                         <Column id="_IDGenColumn" width="250px"><Text id="_IDGenText19" text="DRIVER" /></Column>
                                         <Column id="_IDGenColumn1" minScreenWidth="Tablet" demandPopin="true"><Text id="_IDGenText20" text="LICENSE NO." /></Column>
                                         <Column id="_IDGenColumn2" minScreenWidth="Tablet" demandPopin="true"><Text id="_IDGenText21" text="RATING" /></Column>
-                                        <Column id="_IDGenColumn3" minScreenWidth="Desktop" demandPopin="true"><Text id="_IDGenText22" text="LAST LOCATION" /></Column>
+                                        <Column id="_IDGenColumn3"  minScreenWidth="Desktop" demandPopin="true"><Text id="_IDGenText22"  text="LAST LOCATION" /></Column>
                                         <Column id="_IDGenColumn4" hAlign="End"><Text id="_IDGenText23" text="STATUS" /></Column>
                                     </columns>
                                     <items>
@@ -76,7 +76,7 @@
             <Column id="_IDGenColumn7" minScreenWidth="Tablet" demandPopin="true">
                 <Text id="_IDGenText36" text="Type" />
             </Column>
-            <Column id="_IDGenColumn8" minScreenWidth="Tablet" demandPopin="true">
+            <Column id="_IDGenColumn8"  minScreenWidth="Tablet" demandPopin="true">
                 <Text id="_IDGenText37" text="Capacity (Tons)" />
             </Column>
             <Column id="_IDGenColumn9" minScreenWidth="Desktop" demandPopin="true">

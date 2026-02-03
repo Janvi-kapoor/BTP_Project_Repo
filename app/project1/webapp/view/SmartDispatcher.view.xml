@@ -7,7 +7,7 @@
     <VBox id="_IDGenVBox18" class="mainDashboardContent smartDispatcherMain">
         <VBox>
               <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                 <core:Icon id="operationIcon" src="sap-icon://process" class="performanceHeaderIcon"/>
                                      <Title id="_IDGenHeaderTitle" text="Smart Dispatcher"  class="mainTitleText" />
                                      </HBox>
                                      <Text id="_IDGenHeaderText"  text="Intelligent order assignment and route optimization"  class="performanceSubtitle" />

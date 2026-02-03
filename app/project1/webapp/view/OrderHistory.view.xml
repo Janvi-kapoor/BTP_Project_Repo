@@ -3,9 +3,11 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
-    height="100%"
     xmlns:core="sap.ui.core"
     xmlns:layout="sap.ui.layout"
+    height="100%"
+    displayBlock="true"
+    
 >
     <f:DynamicPage
         id="orderHistoryPage"
@@ -13,14 +15,17 @@
         showFooter="false"
         backgroundDesign="Transparent"
         class="sapUiNoContentPadding"
-    >
-        <f:content>
         
-            <VBox class="sapUiMediumMarginBeginEnd">
     
-                <VBox>
+    >
+<f:content>
+        
+        
+<VBox class="sapUiMediumMarginBeginEnd">
+    
+ <VBox>
                                 <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox ">
-                                 <core:Icon id="operationIcon" src="sap-icon://marketing-campaign" class="performanceHeaderIcon"/>
+                                 <core:Icon id="operationIcon" src="sap-icon://history" class="performanceHeaderIcon"/>
                                      <Title id="_IDGenHeaderTitle" text="Order History"  class="mainTitleText" />
                                      </HBox>
                                      <Text id="_IDGenHeaderText" text="View and manage your past shipments" class="performanceSubtitle" />
@@ -29,13 +34,15 @@
                 
             
                 
-           <VBox id="_IDGenVBox26" class="sapUiMediumMarginTop sapUiSmallMarginBeginEnd">
+           <VBox id="_IDGenVBox26" class="sapUiMediumMarginTop sapUiSmallMarginBeginEnd mainTrackContainer">
     <Table 
         id="historyShipmentsTable" 
         items="{historyModel>/}" 
+        
         class="activeShipmentTable"> <headerToolbar>
             <OverflowToolbar id="historyOverflowToolbar" style="Clear">
-                <Title id="historyTableTitle" text="Completed Orders"/>
+                <Title id="historyTableTitle" text="Completed Orders"  />
+                
                 <ToolbarSpacer id="historyToolbarSpacer"/>
                 <SearchField 
                     id="historySearchFieldMain" 
@@ -58,19 +65,19 @@
         </headerToolbar>
 
         <columns>
-            <Column id="historyColOrderId" width="14%">
+            <Column id="historyColOrderId" hAlign="Center" width="14%">
                 <Text id="historyTextOrderId" text="Order ID"/>
             </Column>
-            <Column id="historyColDate" width="14%">
+            <Column id="historyColDate" hAlign="Center" width="14%">
                 <Text id="_IDGenText17" text="Date"/>
             </Column>
-            <Column id="historyColRoute" width="31%">
+            <Column id="historyColRoute"  hAlign="Center" width="31%">
                 <Text id="historyTextRoute" text="Route"/>
             </Column>
-            <Column id="historyColTonnage" width="10%">
+            <Column id="historyColTonnage" hAlign="Center" width="13%">
                 <Text id="historyTextTonnage" text="Tonnage"/>
             </Column>
-            <Column id="historyColAmount" hAlign="End" width="16%">
+            <Column id="historyColAmount" hAlign="Center" width="16%">
                 <Text id="historyTextAmount" text="Amount"/>
             </Column>
             <Column id="historyColStatus" hAlign="Center" width="15%">
@@ -125,7 +132,7 @@
         </items>
     </Table>
 </VBox>
-            </VBox>
+</VBox>
         </f:content>
     </f:DynamicPage>
 </mvc:View>
