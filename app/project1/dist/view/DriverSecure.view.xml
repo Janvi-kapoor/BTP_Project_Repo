@@ -1,0 +1,94 @@
+<mvc:View controllerName="project1.controller.DriverSecure" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Page id="driverSecurePage" showHeader="false" >
+        <content>
+            <VBox id="_IDGenVBox26" class="activeMissionContainer" alignItems="Center" justifyContent="Center">
+                <!-- Header Section -->
+                <VBox id="_IDGenVBox30" class="secureHeader">
+                    <HBox id="_IDGenHBox18" class="iconContainer">
+                        <core:Icon id="_IDGenIcon14" src="sap-icon://shield" class="shieldIcon"/>
+                    </HBox>
+                    <Title id="_IDGenTitle16" text="Secure Delivery" class="secureTitle"/>
+                    <Text id="_IDGenText44" text="Complete the handover process" class="secureSubtitle"/>
+                </VBox>
+               
+                <!-- Mission Content (Visible when active mission exists) -->
+                <VBox id="missionContent" visible="true">
+                    <!-- Combined POD and OTP Card -->
+                    <VBox id="_IDGenVBox32" class="podCard">
+                        <VBox id="_IDGenVBox33" class="podHeaderSection">
+                            <HBox id="_IDGenHBox19" class="podTitleRow">
+                                <core:Icon id="_IDGenIcon16" src="sap-icon://checklist" class="podTitleIcon"/>
+                                <Title id="_IDGenTitle17" text="Proof of Delivery" class="podTitle"/>
+                            </HBox>
+                            <HBox id="_IDGenHBox20" class="podDetailsRow">
+                                <HBox id="_IDGenHBox21" class="podDetail">
+                                    <HBox id="_IDGenHBox22" class="iconCircle">
+                                        <core:Icon id="_IDGenIcon17" src="sap-icon://map-2" class="podIcon"/>
+                                    </HBox>
+                                    <VBox id="_IDGenVBox34">
+                                        <Text id="_IDGenText45" text="Handover Location" class="podLabel"/>
+                                        <Text id="handoverLocationText" text="Loading..." class="podValue"/>
+                                    </VBox>
+                                </HBox>
+                                <HBox id="_IDGenHBox23" class="podDetail">
+                                    <HBox id="_IDGenHBox24" class="iconCircle">
+                                        <core:Icon id="_IDGenIcon18" src="sap-icon://person-placeholder" class="podIcon"/>
+                                    </HBox>
+                                    <VBox id="_IDGenVBox35">
+                                        <Text id="_IDGenText47" text="Receiving Company" class="podLabel"/>
+                                        <Text id="receivingOfficerText" text="Loading..." class="podValue"/>
+                                    </VBox>
+                                </HBox>
+                            </HBox>
+                        </VBox>
+                        <!-- OTP Section -->
+                        <VBox id="otpSection" class="otpSectionInside">
+                            <HBox id="_IDGenHBox25" class="otpTitleBox">
+                                <core:Icon id="_IDGenIcon19" src="sap-icon://locked" class="lockIcon"/>
+                                <Title id="_IDGenTitle19" text="Enter OTP shared by receiver" class="otpTitle"/>
+                            </HBox>
+                            <Text id="_IDGenText49" text="Request the 4-digit verification code from the receiving officer" class="otpSubtitle"/>
+                            <HBox id="_IDGenHBox26" class="otpInputs">
+                                <Input id="otp1" value="" maxLength="1" class="otpInput" liveChange="onOtpChange"/>
+                                <Input id="otp2" value="" maxLength="1" class="otpInput" liveChange="onOtpChange"/>
+                                <Input id="otp3" value="" maxLength="1" class="otpInput" liveChange="onOtpChange"/>
+                                <Input id="otp4" value="" maxLength="1" class="otpInput" liveChange="onOtpChange"/>
+                            </HBox>
+                            <Button id="generateOtpBtn" text="Generate OTP" type="Default" class="generateButton" press="onGenerateOtp"/>
+                            <Button id="completeBtn" text="Complete Delivery" type="Emphasized" class="completeButton" enabled="false" press="onCompleteDelivery"/>
+                        </VBox>
+                        <!-- Success Section (Initially Hidden) -->
+                        <VBox id="successSection" class="successSectionInside" visible="false">
+                            <HBox id="_IDGenHBox27" class="successIconCircle">
+                                <core:Icon id="_IDGenIcon20" src="sap-icon://accept" class="successIcon"/>
+                            </HBox>
+                            <Title id="_IDGenTitle20" text="Delivery Complete!" class="successTitle"/>
+                            <Text id="shipmentIdText" text="Loading..." class="shipmentId"/>
+                            <HBox id="_IDGenHBox28" class="podVerifiedBox">
+                                <core:Icon id="_IDGenIcon22" src="sap-icon://accept" class="podVerifiedIcon"/>
+                                <Text id="_IDGenText50" text="POD Verified and Recorded" class="podVerifiedText"/>
+                            </HBox>
+                        </VBox>
+                    </VBox>
+                </VBox>
+               
+                <!-- No Mission Content (Visible when no active mission) -->
+                <VBox id="noMissionContent" visible="false" class="noMissionContainer">
+                    <VBox id="noMissionCard" class="podCard">
+                        <VBox id="noMissionIconContainer" class="noMissionIconBox">
+                            <core:Icon id="noMissionIcon" src="sap-icon://inbox" class="noMissionIcon"/>
+                        </VBox>
+                        <Title id="noMissionTitle" text="No Active Mission" class="noMissionTitle"/>
+                        <Text id="noMissionText" text="You don't have any active deliveries to complete at the moment." class="noMissionText"/>
+                        <Button id="backToDashboardBtn" text="Back to Dashboard" type="Emphasized" class="backButton" press="onBackToDashboard"/>
+                    </VBox>
+                </VBox>
+                <!-- Security Notice -->
+                <HBox id="_IDGenVBox36" class="securityNotice">
+                    <core:Icon id="_IDGenIcon21" src="sap-icon://information" class="infoIcon"/>
+                    <Text id="_IDGenText52" text="OTP verification ensures secure handover and protects both parties from delivery disputes." class="noticeText"/>
+                </HBox>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

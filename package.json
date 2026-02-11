@@ -4,7 +4,6 @@
   "description": "A simple CAP project.",
   "dependencies": {
     "@cap-js/hana": "^2",
-    "@cap-js/notifications": "*",
     "@sap/cds": "^9",
     "@sap/xssec": "^4",
     "dotenv": "^16.0.0",

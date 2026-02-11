@@ -1,0 +1,302 @@
+{
+	"_version": "1.81.0",
+	"sap.app": {
+		"id": "project1",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				""
+			]
+		},
+		"applicationVersion": {
+			"version": "0.0.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"resources": "resources.json",
+		"sourceTemplate": {
+			"id": "@sap/generator-fiori:basic",
+			"version": "1.20.1",
+			"toolsId": "5e5058a9-2505-4477-a318-efa2f587909e"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v4/logi-chain/",
+				"type": "OData",
+				"settings": {
+					"annotations": [],
+					"odataVersion": "4.0"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"flexEnabled": true,
+		"dependencies": {
+			"minUI5Version": "1.143.2",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.core": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "project1.i18n.i18n",
+					"supportedLocales": [
+						""
+					]
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"autoExpandSelect": true,
+					"earlyRequests": true
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				},
+				{
+					"uri": "css/customer.css"
+				},
+				{
+					"uri": "css/booking.css"
+				},
+				{
+					"uri": "css/admin-dashboard.css"
+				},
+				{
+					"uri": "css/driver-activeMission-tab.css"
+				},
+				{
+					"uri": "css/DriverPerformance.css"
+				},
+				{
+					"uri": "css/DriverDashboard.css"
+				},
+				{
+					"uri": "css/DriverSecure.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"transition": "slide",
+				"type": "View",
+				"viewType": "XML",
+				"path": "project1.view",
+				"async": true,
+				"viewPath": "project1.view"
+			},
+			"routes": [
+				{
+					"name": "RouteView1",
+					"pattern": "",
+					"target": [
+						"TargetView1"
+					]
+				},
+				{
+					"name": "CustomerDashboard",
+					"pattern": "customer",
+					"target": [
+						"TargetCustomer"
+					]
+				},
+				{
+					"name": "CustomerBooking",
+					"pattern": "customer/booking",
+					"target": [
+						"TargetCustomer"
+					]
+				},
+				{
+					"name": "CustomerTracking",
+					"pattern": "customer/tracking",
+					"target": [
+						"TargetCustomer"
+					]
+				},
+				{
+					"name": "CustomerHistory",
+					"pattern": "customer/history",
+					"target": [
+						"TargetCustomer"
+					]
+				},
+				{
+					"name": "AdminDashboard",
+					"pattern": "admin",
+					"target": [
+						"TargetAdmin"
+					]
+				},
+				{
+					"name": "ControlTower",
+					"pattern": "admin/dashboard",
+					"target": [
+						"TargetAdmin",
+						"TargetControlTower"
+					]
+				},
+				{
+					"name": "FleetMaster",
+					"pattern": "admin/fleet",
+					"target": [
+						"TargetAdmin",
+						"TargetFleetMaster"
+					]
+				},
+				{
+					"name": "DriverDashboard",
+					"pattern": "driver",
+					"target": [
+						"TargetDriver"
+					]
+				},
+				{
+					"name": "SmartDispatcher",
+					"pattern": "admin/dispatcher",
+					"target": [
+						"TargetAdmin",
+						"TargetSmartDispatcher"
+					]
+				},
+				{
+					"name": "DriverMission",
+					"pattern": "driver/mission",
+					"target": [
+						"TargetDriver"
+					]
+				},
+				{
+					"name": "DriverNav",
+					"pattern": "driver/navigation",
+					"target": [
+						"TargetDriver",
+						"TargetNav"
+					]
+				},
+				{
+					"name": "DriverSecure",
+					"pattern": "driver/secure",
+					"target": [
+						"TargetDriver",
+						"TargetSecure"
+					]
+				},
+				{
+					"name": "DriverPerformance",
+					"pattern": "driver/performance",
+					"target": [
+						"TargetDriver",
+						"TargetPerformance"
+					]
+				}
+			],
+			"targets": {
+				"TargetView1": {
+					"id": "View1",
+					"name": "View1"
+				},
+				"TargetCustomer": {
+					"id": "CustomerDashboard",
+					"name": "CustomerDashboard"
+				},
+				"TargetAdmin": {
+					"id": "AdminDashboard",
+					"name": "AdminDashboard"
+				},
+				"TargetDriver": {
+					"id": "DriverDashboard",
+					"name": "DriverDashboard"
+				},
+				"TargetNewBooking": {
+					"id": "NewBooking",
+					"name": "NewBooking"
+				},
+				"TargetControlTower": {
+					"id": "ControlTower",
+					"name": "ControlTower",
+					"parent": "TargetAdmin",
+					"controlId": "adminMainContent",
+					"controlAggregation": "pages"
+				},
+				"TargetFleetMaster": {
+					"id": "FleetMaster",
+					"name": "FleetMaster",
+					"parent": "TargetAdmin",
+					"controlId": "adminMainContent",
+					"controlAggregation": "pages"
+				},
+				"TargetSmartDispatcher": {
+					"id": "SmartDispatcher",
+					"name": "SmartDispatcher",
+					"parent": "TargetAdmin",
+					"controlId": "adminMainContent",
+					"controlAggregation": "pages"
+				},
+				"TargetNav": {
+					"id": "DriverNav",
+					"name": "DriverNav",
+					"parent": "TargetDriver",
+					"controlId": "driverNavContainer",
+					"controlAggregation": "pages"
+				},
+				"TargetSecure": {
+					"id": "DriverSecure",
+					"name": "DriverSecure",
+					"parent": "TargetDriver",
+					"controlId": "driverNavContainer",
+					"controlAggregation": "pages"
+				},
+				"TargetPerformance": {
+					"id": "DriverPerformance",
+					"name": "DriverPerformance",
+					"parent": "TargetDriver",
+					"controlId": "driverNavContainer",
+					"controlAggregation": "pages"
+				}
+			}
+		},
+		"rootView": {
+			"viewName": "project1.view.App",
+			"type": "XML",
+			"id": "App",
+			"async": true
+		},
+		"flexBundle": false
+	}
+}

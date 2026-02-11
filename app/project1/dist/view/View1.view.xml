@@ -1,0 +1,92 @@
+<mvc:View
+    controllerName="project1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true">
+    
+    <Page id="page" showHeader="false" class="nexusPage">
+        <content>
+            <FlexBox id="_IDGenFlexBox1" alignItems="Center" justifyContent="SpaceBetween" class="nexusNavbar">
+                <HBox id="_IDGenHBox" alignItems="Center" class="logoContainer">
+                    <core:Icon id="_IDGenIcon" src="sap-icon://connected" class="logoIcon"/>
+                    <VBox id="_IDGenVBox" class="sapUiTinyMarginBegin">
+                        <Text id="_IDGenText" text="Cargo" class="logoTextMain"/>
+                        <Text id="_IDGenText1" text="CONNECT" class="logoTextSub"/>
+                    </VBox>
+                </HBox>
+                <HBox id="_IDGenHBox1" class="statusBadge" alignItems="Center">
+                    <core:HTML id="_IDGenHTML" content='&lt;div class="statusDot"&gt;&lt;/div&gt;'/>
+                    <Text id="_IDGenText2" text="System Status: " class="statusTextLabel hideMobile"/>
+                    <Text id="_IDGenText3" text="Optimal" class="statusTextValue"/>
+                </HBox>
+            </FlexBox>
+
+            <VBox id="_IDGenVBox1" alignItems="Center" class="mainContentScroll">
+                <VBox id="_IDGenVBox2" alignItems="Center" justifyContent="Center" class="heroSection">
+                    <Title id="_IDGenTitle" text="Integrated Fleet" class="heroTitle" />
+                    <Title id="_IDGenTitle1" text="Intelligence" class="heroTitle accentText" />
+                    <Text id="_IDGenText4" text="  Select your portal to begin" class="heroSubtitle sapUiSmallMarginTop" />
+                </VBox>
+
+                <layout:Grid id="_IDGenGrid" containerQuery="true" defaultSpan="XL4 L4 M6 S12" class="portalGrid">
+                    <VBox id="_IDGenVBox3" class="portalCard">
+                        <VBox id="_IDGenVBox4" class="iconWrapper clientIcon">
+                            <core:Icon id="_IDGenIcon1" src="sap-icon://building" />
+                        </VBox>
+                        <Text id="_IDGenText5" text="ENTERPRISE HUB" class="cardSubtitle" />
+                        <Title id="_IDGenTitle2" text="Corporate Client" level="H3" class="cardTitle" />
+                        <Text id="_IDGenText6" text="Seamlessly book and monitor bulk shipments with analytics." class="cardDesc" />
+                        <Button id="_IDGenButton" text="Launch Workspace"  press="onLaunchWorkspace" icon="sap-icon://arrow-right" iconFirst="false" class="nexusButton" />
+                    </VBox>
+
+                    <VBox id="_IDGenVBox5" class="portalCard adminCard">
+                        <VBox id="_IDGenVBox6" class="iconWrapper adminIcon">
+                            <core:Icon id="_IDGenIcon2" src="sap-icon://monitor-payments" />
+                        </VBox>
+                        <Text id="_IDGenText7" text="CONTROL TOWER" class="cardSubtitle" />
+                        <Title id="_IDGenTitle3" text="Operations Admin" level="H3" class="cardTitle" />
+                        <Text id="_IDGenText8" text="Real-time fleet dispatch and intelligent route optimization." class="cardDesc" />
+                        <Button id="_IDGenButton1" press="onLaunchWorkspace"  text="Launch Workspace" icon="sap-icon://arrow-right" iconFirst="false" class="nexusButton" />
+                    </VBox>
+
+                    <VBox id="_IDGenVBox7" class="portalCard">
+                        <VBox id="_IDGenVBox8" class="iconWrapper driverIcon">
+                            <core:Icon id="_IDGenIcon3" src="sap-icon://shipping-status" />
+                        </VBox>
+                        <Text id="_IDGenText9" text="EXECUTION PORTAL" class="cardSubtitle" />
+                        <Title id="_IDGenTitle4" text="Fleet Driver" level="H3" class="cardTitle" />
+                        <Text id="_IDGenText10" text="On-ground trip management and secure delivery workflows." class="cardDesc" />
+                        <Button id="_IDGenButton2"  press="onLaunchWorkspace" text="Launch Workspace" icon="sap-icon://arrow-right" iconFirst="false" class="nexusButton" />
+                    </VBox>
+                </layout:Grid>
+            </VBox>
+        </content>
+
+        <footer>
+            <OverflowToolbar id="_IDGenOverflowToolbar" class="nexusFooter">
+                <ToolbarSpacer id="_IDGenToolbarSpacer" />
+                <HBox id="_IDGenHBox2" alignItems="Center" class="statItem">
+                    <core:Icon id="_IDGenIcon4" src="sap-icon://shipping-status" size="1rem"/>
+                    <Text id="_IDGenText11" text="1,248" class="statValue" />
+                    <Text id="_IDGenText12" text="Active Trucks" class="statLabel" />
+                </HBox>
+                <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                <HBox id="_IDGenHBox3" alignItems="Center" class="statItem">
+                    <core:Icon id="_IDGenIcon5" src="sap-icon://map-2" size="1rem"/>
+                    <Text id="_IDGenText13" text="42" class="statValue" />
+                    <Text id="_IDGenText14" text="Active Hubs" class="statLabel" />
+                </HBox>
+                <ToolbarSpacer id="_IDGenToolbarSpacer2" />
+                <HBox id="_IDGenHBox4" alignItems="Center" class="statItem hideMobile">
+                    <core:Icon id="_IDGenIcon6" src="sap-icon://shield" size="1rem"/>
+                    <Text id="_IDGenText15" text="99.2%" class="statValue" />
+                    <Text id="_IDGenText16" text="Security Rating" class="statLabel" />
+                </HBox>
+                <ToolbarSpacer id="_IDGenToolbarSpacer3" />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

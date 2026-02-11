@@ -39,30 +39,16 @@ modules:
       url: ~{srv-url}
   - name: Route_Optimizer-auth
   - name: Route_Optimizer-destination
+  - name: Route_Optimizer-repo-runtime    # <--- Ye line maine sahi jagah add ki hai
   provides:
   - name: app-api
     properties:
       app-protocol: ${protocol}
       app-uri: ${default-uri}
   parameters:
-    disk-quota: 256M
+    disk-quota: 512M
     keep-existing-routes: true
-    memory: 256M
-- name: notification-content-deployment
-  type: nodejs
-  path: gen/srv
-  requires:
-  - name: Route_Optimizer-destination
-  parameters:
-    disk-quota: 1GB
-    memory: 256MB
-    no-route: true
-    no-start: true
-    tasks:
-    - command: node node_modules/@cap-js/notifications/lib/content-deployment.js
-      disk-quota: 1GB
-      memory: 256MB
-      name: notification-content-deployment
+    memory: 512M
 - name: Route_Optimizer-app-content
   type: com.sap.application.content
   path: .
@@ -119,7 +105,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -137,6 +123,11 @@ resources:
     service: html5-apps-repo
     service-name: Route_Optimizer-html5-service
     service-plan: app-host
+- name: Route_Optimizer-repo-runtime      # <--- Ye nayi service niche add ki hai
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

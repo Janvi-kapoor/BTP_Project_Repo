@@ -1,0 +1,79 @@
+<mvc:View controllerName="project1.controller.DriverPerformance" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"  xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" displayBlock="true">
+    <Page id="performancePage" showHeader="false">
+        <VBox id="performanceContainer" class="contentPadding performancePageContainer">
+            <HBox id="performanceHeader" alignItems="Center" class="performanceHeaderBox">
+                <core:Icon id="performanceIcon" src="sap-icon://trend-up"  class="performanceHeaderIcon"/>
+                <Title id="performanceTitle" text="Performance Logs"  class="mainTitleText"/>
+            </HBox>
+            <Text id="performanceSubtitle" text="Track your achievements and trip history" class="performanceSubtitle"/>
+            
+      <layout:Grid 
+    id="performanceCardsContainer" 
+    containerQuery="true" 
+    defaultSpan="XL4 L4 M4 S12" 
+    vSpacing="1rem" 
+    hSpacing="1rem">
+    
+    <VBox id="earningsCard" class="performanceCard">
+        <HBox id="earningsHeader" alignItems="Center" class="cardHeader">
+            <core:Icon id="earningsIcon" src="sap-icon://money-bills" class="cardIcon"/>
+            <Text id="earningsLabel" text="Overall Earnings" class="cardLabel"/>
+        </HBox>
+        <Title id="earningsValue" text="₹0" level="H2" class="cardValue"/>
+        <Text id="earningsSubtext" text="Total Earned" class="cardSubtext"/>
+    </VBox>
+    
+    <VBox id="safetyCard" class="performanceCard">
+        <HBox id="safetyHeader" alignItems="Center" class="cardHeader">
+            <core:Icon id="safetyIcon" src="sap-icon://shield" class="cardIcon"/>
+            <Text id="safetyLabel" text="Safety Ratings" class="cardLabel"/>
+        </HBox>
+        <Title id="safetyValue" text="4.8/5" level="H2" class="cardValue"/>
+        <Text id="safetySubtext" text="Excellent" class="cardSubtext"/>
+    </VBox>
+    
+    <VBox id="tripsCard" class="performanceCard">
+        <HBox id="tripsHeader" alignItems="Center" class="cardHeader">
+            <core:Icon id="tripsIcon" src="sap-icon://journey-arrive" class="cardIcon"/>
+            <Text id="tripsLabel" text="Trips Completed" class="cardLabel"/>
+        </HBox>
+        <Title id="tripsValue" text="0" level="H2" class="cardValue"/>
+        <Text id="tripsSubtext" text="Total Trips" class="cardSubtext"/>
+    </VBox>
+
+</layout:Grid>
+            
+            <VBox id="tripHistorySection" class="tripHistoryContainer">
+                <Table id="tripHistoryTable" class="customFleetTable">
+                    <headerToolbar>
+                        <OverflowToolbar id="tableToolbar" class="tableToolbar" style="Clear">
+                            <Title id="tripHistoryTitle" text="Trip History" level="H3" class="sectionTitle"/>
+                            <ToolbarSpacer id="_IDGenToolbarSpacer"/>
+                            <Button id="refreshBtn" text="Refresh" icon="sap-icon://refresh" type="Transparent" press="onRefreshData"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column id="dateColumn">
+                            <Text id="dateHeader" text="Date" class="tableHeader"/>
+                        </Column>
+                        <Column id="tripIdColumn">
+                            <Text id="tripIdHeader" text="Trip ID" class="tableHeader"/>
+                        </Column>
+                        <Column id="kmColumn">
+                            <Text id="kmHeader" text="Total KM" class="tableHeader"/>
+                        </Column>
+                        <Column id="statusColumn">
+                            <Text id="statusHeader" text="Status" class="tableHeader"/>
+                        </Column>
+                        <Column id="amountColumn">
+                            <Text id="amountHeader" text="Amount" class="tableHeader"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <!-- Dynamic items will be bound from controller -->
+                    </items>
+                </Table>
+            </VBox>
+        </VBox>
+    </Page>
+</mvc:View>

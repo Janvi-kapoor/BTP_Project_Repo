@@ -1,0 +1,32 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Popover id="notificationPopover" title="Notifications" placement="Bottom" contentWidth="450px" contentHeight="400px" class="notificationPopover">
+        <content>
+            <List id="notificationList" items="{notificationModel>/}" showSeparators="Inner" class="notificationList">
+                <CustomListItem class="notificationItem">
+                    <VBox class="sapUiMediumMargin notificationContent">
+                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <core:Icon src="sap-icon://alert" color="#ff9500" size="1rem" class="sapUiTinyMarginEnd"/>
+                            <Text text="{notificationModel>shipmentID}" class="shipmentIdBadge"/>
+                        </HBox>
+                        <Text text="{notificationModel>message}" class="notificationMessage sapUiSmallMarginBottom"/>
+                        <HBox alignItems="Center" justifyContent="SpaceBetween">
+                            <Text text="{notificationModel>driverName}" class="driverNameText"/>
+                            <Text text="{notificationModel>reportedAt}" class="timestampText"/>
+                        </HBox>
+                    </VBox>
+                </CustomListItem>
+            </List>
+            <VBox visible="{= ${notificationModel>/length} === 0}" alignItems="Center" justifyContent="Center" height="200px">
+                <core:Icon src="sap-icon://bell" size="3rem" color="#d1d9e6"/>
+                <Text text="No notifications" class="sapUiMediumMarginTop"/>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar class="notificationFooter">
+                <ToolbarSpacer/>
+                <Button text="Refresh" press="onRefreshNotifications" icon="sap-icon://refresh" type="Transparent"/>
+                <Button text="Close" press="onCloseNotifications" type="Emphasized"/>
+            </Toolbar>
+        </footer>
+    </Popover>
+</core:FragmentDefinition>

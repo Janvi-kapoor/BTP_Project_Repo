@@ -1,0 +1,142 @@
+<mvc:View
+    controllerName="project1.controller.TrackShipments"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    height="100%">
+    
+    <f:DynamicPage id="trackShipmentPage" headerExpanded="true" backgroundDesign="Transparent">
+        <f:content>
+       
+            <VBox>
+             <VBox >
+                                <HBox id="_IDGenHeaderyBox" alignItems="Center" class="performanceHeaderBox ">
+                                 <core:Icon id="operationIcon" src="sap-icon://locate-me" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle"  text="Track Shipments"   class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText" text="Monitor and manage your active dispatches in real-time" class="performanceSubtitle" />
+                               
+                                </VBox>
+                
+            <!-- Main Container -->
+            <VBox id="mainContainer" class="mainTrackContainer">
+                
+                <!-- Top Section: Left Timeline + Right Map -->
+                <HBox id="topSection" class="topSectionContainer">
+                    
+                    <!-- Left Container: Shipment Progress Timeline -->
+                    <VBox id="leftContainer" class="timelineContainer">
+                        <Title id="_IDGenTitle14" text="Shipment Progress" level="H3" class="progressTitle" />
+                        <Title id="shipmentTitle" text="LOG-393902" level="H4" class="shipmentIdTitle" />
+                        <Text id="routeInfo" text="Mumbai → Chennai" class="routeText" />
+                        
+                        <!-- Timeline -->
+                        <VBox id="timelineBox" class="timelineBox">
+                            
+                            <!-- Order Placed -->
+                            <HBox id="step1" class="timelineStep">
+                                <core:Icon id="icon1" src="sap-icon://accept" class="timelineIcon " />
+                                <VBox id="stepContent1" class="stepContent">
+                                    <Text id="_IDGenText44" text="Order Placed" class="stepTitle" />
+                                    <Text id="step1Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Driver Assigned -->
+                            <HBox id="step2" class="timelineStep">
+                                <core:Icon id="icon2" src="sap-icon://shipping-status" class="timelineIcon" />
+                                <VBox id="stepContent2" class="stepContent">
+                                    <Text id="_IDGenText46" text="Driver Assigned" class="stepTitle" />
+                                    <Text id="step2Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- En-route -->
+                            <HBox id="step4" class="timelineStep">
+                                <core:Icon id="icon4" src="sap-icon://map-2" class="timelineIcon" />
+                                <VBox id="stepContent4" class="stepContent">
+                                    <Text id="_IDGenText48" text="En-route" class="stepTitle" />
+                                    <Text id="step4Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Confirm Pickup -->
+                            <HBox id="step3" class="timelineStep">
+                                <core:Icon id="icon3" src="sap-icon://cargo-train" class="timelineIcon" />
+                                <VBox id="stepContent3" class="stepContent">
+                                    <Text id="_IDGenText47" text="Confirm Pickup" class="stepTitle" />
+                                    <Text id="step3Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                            <!-- Delivered -->
+                            <HBox id="step5" class="timelineStep">
+                                <core:Icon id="icon5" src="sap-icon://complete" class="timelineIcon" />
+                                <VBox id="stepContent5" class="stepContent">
+                                    <Text id="_IDGenText49" text="Delivered" class="stepTitle" />
+                                    <Text id="step5Time" text="" class="stepTime" />
+                                </VBox>
+                            </HBox>
+                            
+                        </VBox>
+                    </VBox>
+                    
+                    <!-- Right Container: Live Route Map -->
+                    <VBox id="rightContainer" class="mapContainer">
+                        <HBox id="mapHeader" class="mapHeader">
+                            <Title id="_IDGenTitle15" text="Live Route Tracking" level="H3" class="mapTitle progressTitle" />
+                            <core:Icon id="_IDGenIcon16" src="sap-icon://map-2" class="mapHeaderIcon" />
+                        </HBox>
+                        
+                        <!-- Map Area -->
+                        <core:HTML id="mapArea" content='&lt;div id="leafletMap" style="height: 400px; width: 100%; border-radius: 8px; position: relative;"&gt;&lt;/div&gt;' />
+                    </VBox>
+                    
+                </HBox>
+                
+                <!-- Driver Section -->
+                <HBox id="driverSection" class="driverSection">
+                    
+                    <!-- Driver Card (shown when assigned) -->
+                    <HBox id="driverCard" class="sapUiContentPadding driverCard" width="100%" visible="false" alignItems="Center" justifyContent="SpaceBetween">
+                        <!-- Left: Driver Info -->
+                        <HBox id="_IDGenHBox5" alignItems="Center" class="sapUiMediumMarginEnd">
+                            <Avatar id="driverAvatar" displaySize="L" class="sapUiMediumMarginEnd" backgroundColor="Accent6" />
+                            <VBox id="_IDGenVBox24">
+                                <Title id="driverName" text="" level="H3" class="sapUiTinyMarginBottom" />
+                                <HBox id="_IDGenHBox6" alignItems="Center" class="sapUiTinyMarginTop">
+                                    <core:Icon id="_IDGenIcon26" src="sap-icon://favorite" color="#ffcc00" size="1rem" class="sapUiTinyMarginEnd" />
+                                    <Text id="driverRating" text="" class="driverRatingText" />
+                                    <Text id="_IDGenText50" text=" • Verified Driver" class="sapUiSecondaryText sapUiTinyMarginBegin" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                        
+                        <!-- Center: Phone Number with Call Icon -->
+                        <VBox id="_IDGenVBox25" alignItems="End" class="driverPhoneSection">
+                            <Label id="_IDGenLabel10" text="Contact" class="sapUiTinyMarginBottom" />
+                            <HBox id="_IDGenHBox7" alignItems="End" class="phoneWithIcon">
+                                <core:Icon id="_IDGenIcon27" src="sap-icon://phone" class="phoneIcon sapUiTinyMarginEnd" />
+                                <Text id="driverPhone" text="" class="driverPhoneText" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                    
+                    <!-- No Driver Message (shown when not assigned) -->
+                    <HBox id="noDriverCard" class="noDriverCard" visible="true">
+                        <core:Icon id="_IDGenIcon28" src="sap-icon://pending" class="noDriverIcon" />
+                        <VBox id="_IDGenVBox29" class="noDriverContent">
+                            <Text id="_IDGenText59" text="Driver Assignment Pending" class="noDriverTitle" />
+                            <Text id="_IDGenText61" text="We are finding the best driver for your shipment. You will be notified once assigned." class="noDriverMessage" />
+                        </VBox>
+                    </HBox>
+                    
+                </HBox>
+                
+            </VBox>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

@@ -1,0 +1,530 @@
+/* =========================================
+   1. GLOBAL RESET & FONTS
+   ========================================= */
+/* =========================================
+   2. HEADER STYLING (Fixed Spacing)
+   ========================================= */
+   
+.nexusHeader {
+    background: #ffffff !important;
+    height: 4rem !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 0 1.5rem !important; /* Thodi zyada padding side mein */
+}
+
+/* Menu Button */
+.headerMenuBtn {
+    margin-right: 1rem !important; /* Logo se thoda door */
+    color: #64748b !important;
+}
+
+/* Logo Section */
+.logoIcon {
+    font-size: 1.5rem !important;
+    color: #6366f1 !important;
+    margin-right: 0.5rem !important; /* Icon aur Text ke beech gap */
+}
+
+.companyLogoText {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800 !important;
+    font-size: 1.25rem !important;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.5 !important;
+}
+/* ============================================================
+   NOTIFICATION BELL BUTTON - PERFECT CENTER FIX
+   ============================================================ */
+
+/* 1. Main Button Container (Moving it Up) */
+.notificationBtn {
+    margin-top: -13px !important;  /* Button ko thoda upar shift kiya */
+   
+}
+
+/* 2. Inner Box (The Circle) - Flexbox Magic */
+.notificationBtn .sapMBtnInner {
+    display: flex !important;           /* Flexbox on kiya */
+    align-items: center !important;     /* Vertical Center */
+    justify-content: center !important; /* Horizontal Center */
+    
+    background: transparent !important;
+    border: none !important;            /* White border hataya */
+    box-shadow: none !important;        /* Koi shadow nahi */
+    
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    padding-left:2px !important;
+    position: relative !important;
+}
+
+/* 3. Bell Icon Styling */
+.notificationBtn .sapUiIcon {
+    color: #64748b !important;     /* Slate Grey */
+    font-size: 1.4rem !important;
+    
+    /* Extra margins hataye taaki perfect center ho */
+    margin: 0 !important;          
+    padding: 0 !important;
+    line-height: normal !important; 
+    width: auto !important;
+}
+
+/* 4. Hover Effect (Clean Circle) */
+.notificationBtn:hover .sapMBtnInner {
+    background-color: #e3effb !important; /* Soft Blue/Grey Bg */
+    border: none !important;              /* Hover pe border na aaye */
+    border-radius: 50% !important;        /* Perfect Circle */
+}
+
+/* 5. THE BADGE (Number Styling) */
+.notificationBtn .sapMBtnContent {
+    position: absolute !important;
+    top: 0px !important;           /* Badge thoda andar kiya taaki kate nahi */
+    right: 2px !important;         
+    
+    background-color: #ef4444 !important; /* RED Badge */
+    color: #ffffff !important;            
+    
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    font-family: sans-serif !important;
+    
+    padding: 0 !important;         /* Padding hatayi, flex center karega */
+    min-width: 18px !important;    
+    height: 18px !important;       
+    border-radius: 10px !important;
+    
+    display: flex !important;      /* Number ko badge ke beech me lane ke liye */
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+    z-index: 99 !important;
+}
+
+/* Vertical Separator Line */
+.separatorIcon {
+    opacity: 0.5;
+    font-size: 1.2rem !important;
+}
+
+/* Profile Section */
+.profileSection {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.profileSection:hover {
+    background-color: #f1f5f9; /* Hover par halka grey effect */
+}
+
+.profileAvatar {
+    border: 2px solid #e2e8f0;
+    background-color: #f8fafc !important;
+}
+
+.profileName {
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    color: #1e293b;
+    line-height: 1.1 !important;
+}
+
+.profileRole {
+    font-size: 0.75rem !important;
+    color: #64748b;
+    margin-top: 2px !important;
+}
+
+/* =========================================
+   3. SIDEBAR STYLING (FIXED & SPACIOUS)
+   ========================================= */
+/* Match Sidebar background to Footer color */
+.nexusSidebar,
+.nexusSidebar .sapTntNavLI,
+.nexusSidebar aside {
+    background-color:  #3f51b5 !important; /* Dark Indigo matching footer */
+    border-right: none !important;
+}
+
+/* Default Text Color (Grey) & Spacing */
+.nexusSidebar .sapTntNavListItem {
+    margin-bottom: 8px !important; /* Space between items */
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    border-radius: 8px !important;
+    height: 3 rem !important; /* Taller items */
+}
+
+.nexusSidebar .sapTntNavListItem .sapMText {
+    color: #c6cae9 !important; /* Light Grey Text */
+    font-size: 1rem !important; /* Bigger Text */
+    font-weight: 500 !important;
+    margin-left: 12px !important; /* Gap between icon and text */
+}
+
+.nexusSidebar .sapTntNavListItem .sapUiIcon {
+    color: #cbd5e1 !important;
+    font-size: 1rem !important;
+}
+
+/* Hover Effect: Glassy White */
+.nexusSidebar .sapTntNavListItem:hover:not(.sapTntNavListItemSelected) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nexusSidebar .sapTntNavListItem:hover .sapMText,
+.nexusSidebar .sapTntNavListItem:hover .sapUiIcon {
+    color: #ffffff !important;
+   
+
+}
+
+/* Selected Item: Indigo Gradient */
+.nexusSidebar .sapTntNavListItemSelected {
+    background: linear-gradient(90deg, #6366f1, #4f46e5) !important;
+   
+}
+
+.nexusSidebar .sapTntNavListItemSelected .sapMText, 
+.nexusSidebar .sapTntNavListItemSelected .sapUiIcon {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* =========================================
+   4. DASHBOARD CONTENT (CARDS & LAYOUT)
+   ========================================= */
+.contentWrapper {
+    padding: 2rem !important;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+
+/* KPI Cards */
+.kpiCard {
+    background: white !important;
+    padding: 1.5rem !important;
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpiCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #c7d2fe !important; /* Light Indigo Border on Hover */
+}
+
+.kpiLabel {
+    color: #64748b !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpiValue {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: #1e293b !important;
+    margin-top: 0.25rem !important;
+}
+
+/* Colored Icons Backgrounds */
+.kpiIcon {
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 1.5rem !important;
+}
+.iconPurple { background: #e0e7ff; color: #4f46e5 !important; }
+.iconBlue { background: #dbeafe; color: #2563eb !important; }
+.iconGreen { background: #dcfce7; color: #16a34a !important; }
+
+/* Trend Text */
+.trendText { font-size: 0.85rem !important; font-weight: 500 !important; margin-left: 5px; }
+.positive { color: #16a34a !important; }
+.negative { color: #dc2626 !important; }
+
+/* =========================================
+   5. MODERN TABLE STYLING
+   ========================================= */
+.tableCardContainer {
+    background: white !important;
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0;
+    overflow: hidden; /* Rounds the table corners */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.tableHeaderArea {
+    padding: 1.5rem !important;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.modernTable { background: transparent !important; }
+
+/* Header Formatting */
+.modernTable .sapMListTblHeader {
+    background: #f8fafc !important;
+    height: 3rem !important;
+}
+
+.tableColHeader {
+    color: #64748b !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+}
+
+/* Rows Formatting */
+.modernTable .sapMListTblRow {
+    height: 4rem !important; /* Spaced out rows */
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.tableCellBold { font-weight: 600 !important; color: #334155 !important; font-size: 0.95rem !important; }
+.tableCellLight { color: #64748b !important; }
+.shipmentId .sapMObjectIdentifierTitle { font-weight: 700 !important; color: #4f46e5 !important; }
+
+/* Status Pills */
+.statusPill .sapMObjStatusText {
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+}
+
+/* =========================================
+   6. FOOTER (Matching Sidebar)
+   ========================================= */
+.nexusFooter {
+    background-color: #364ba7 !important; /* Exact match with Sidebar */
+    height: 3.5rem !important;
+    border-top: none !important;
+}
+
+.footerText {
+    color: #e2e8f0 !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    margin-left: 8px;
+}
+
+/* =========================================
+   7. MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 600px) {
+    .contentWrapper { padding: 1rem !important; }
+    .pageTitle { font-size: 1.5rem !important; }
+    .hideOnMobile { display: none !important; }
+    
+    /* On Mobile, Sidebar behaves differently (Standard SAP behavior handles toggle, we just ensure colors stay) */
+    .nexusSidebar { width: 100% !important; }
+    
+    /* Footer adjustments */
+    .nexusFooter { padding: 0 10px !important; }
+}
+.modernCard {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    overflow: hidden; /* Taaki table corners card se bahar na niklein */
+    border: 1px solid #e5e7eb !important;
+    padding: 0.5rem !important; /* Card ke andar ka space */
+}
+/* Clickable Shipment ID Styling */
+.clickableShipmentId {
+    color: #2563eb !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+.clickableShipmentId:hover {
+    color: #1d4ed8 !important;
+    text-decoration: underline !important;
+}
+
+/* CSS file mein */
+.bottomLineToolbar {
+    border-bottom: 2px solid #e6e2e2 !important; /* Ye line ka kaam karegi */
+}
+
+/* Professional Header Styling - View Classes Only */
+.pageHeaderSection {
+    margin-bottom: 1rem !important;
+    margin-top: 0.5rem !important;
+    padding: 0.8rem !important;
+   background: linear-gradient(90deg, #f3f0fe 0%, #ede9fe 50%, #e9d5ff 100%) !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.premiumTitle {
+    font-size: 2rem !important;
+    font-weight: 500 !important;
+    color: #6366f1 !important;
+    margin: 0 !important;
+    letter-spacing: -0.5px !important;
+}
+
+.premiumSubtitle {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.15)) !important;
+    color: #4c1d95 !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    margin-top: 0.2rem !important;
+    padding: 0.3rem 0.8rem !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
+    display: inline-block !important;
+}/* ============================================================
+   ACTIVE SHIPMENTS TABLE STYLING
+   ============================================================ */
+/* ============================================================
+   ACTIVE SHIPMENTS TABLE STYLING - FINAL FIX
+   ============================================================ */
+
+/* 1. Main Toolbar Styling (Height & Title Color) */
+.customTableToolbar {
+    height: 3.5rem !important;        /* Toolbar ki height badha di */
+    border-bottom: 1px solid #f1f5f9 !important;
+    padding-left: 0.5rem !important;
+}
+
+.customTableTitle {
+    color: #1e293b !important;        /* Dark Slate (Not Black) */
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+}
+
+/* 2. Main Table Background */
+.activeShipmentTable {
+     background: transparent !important;   /* Light Grey */
+    margin-top: 5px !important;
+     border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* 3. Column Headers (Height Fixed & Clean) */
+.activeShipmentTable .sapMListTblHeader {
+    background: #b3cee9 !important;   /* Light Grey */
+    border-bottom: 1px solid #e2e8f0 !important;
+    height: 50px !important;          /* Header ki height forcefully set ki */
+}
+
+/* Text inside Header */
+.activeShipmentTable .sapMListTblHeader .sapMText {
+    color: #64748b !important;        /* Slate Grey */
+    font-size: 0.9rem !important;  
+    font-weight: 500 !important;    
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    line-height: 50px !important;     /* Vertical center alignment fix */
+}
+
+/* 4. Row Styling */
+.activeShipmentTable .sapMListTblRow {
+    background: #ffffff !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    height: 70px !important;
+    vertical-align: middle !important;
+}
+
+/* Row Hover */
+.activeShipmentTable .sapMListTblRow:hover {
+    background: #f8fafc !important; 
+    box-shadow: inset 3px 0 0 #7c3aed !important; 
+}
+
+/* ============================================================
+   CELL STYLING (UPDATED)
+   ============================================================ */
+
+/* Shipment ID */
+.shipmentIdText {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    text-decoration: none !important;
+}
+
+.shipmentIdText:focus {
+    background: rgba(20, 19, 19, 0.1) !important; /* Soft Red Bg */
+    color: #222020 !important; /* Darker Red */
+}
+/* MATERIAL TAG (New Look - Grey Box) */
+.materialTag {
+    display: inline-block !important;
+    background: #f1f5f9 !important;   /* Very Light Grey */
+    color: #475569 !important;        /* Medium Grey Text */
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;    /* Square Edges */
+    border: 1px solid #e2e8f0 !important;
+}
+
+
+
+.destinationPill {
+
+    display: inline-block !important;
+background-color: #f3e8ff !important;
+    color: #6b21a8 !important;
+   font-weight: 600 !important;
+    font-size: 0.9rem !important; 
+ padding: 8px 10px !important; 
+ border-radius: 8px !important;   
+  border: 1px solid #d8b4fe !important;
+  text-overflow: ellipsis !important;
+    text-align: center !important;
+     width: 100% !important;
+
+}
+/* STATUS PILL (Same as before) */
+.statusPill {
+    display: inline-block !important;
+    background-color: #e0f2fe !important;
+    color: #0369a1 !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    padding: 4px 12px !important;
+    border-radius: 50px !important;
+    text-transform: uppercase !important;
+    min-width: 90px !important;
+    text-align: center !important;
+}
+
+/* FARE BADGE */
+.fareBadge {
+    display: inline-block !important;
+    background-color: #dcfce7 !important;
+    color: #15803d !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+    border: 1px solid #bbf7d0 !important;
+}
+
+/* ETA TEXT (New Look - Bold) */
+.etaText {
+    display: inline-block !important;
+    color: #d97706 !important;        /* Dark Grey */
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    background-color: #feeba0 !important;
+     font-weight: 700 !important;
+    font-size: 0.9rem !important;
+    padding: 4px 10px !important;
+    border-radius: 8px !important;
+}

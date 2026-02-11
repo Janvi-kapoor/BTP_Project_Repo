@@ -1,0 +1,76 @@
+ <mvc:View controllerName="project1.controller.DriverNav" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <!-- Scrollable Container -->
+    <ScrollContainer id="_IDGenScrollContainer2" height="100vh" vertical="true" horizontal="false">
+        <!-- Mission Content (when active mission exists) -->
+        <VBox id="missionContent" class="liveNav-mapBackground activeMissionContainer2">
+        <!-- Floating Header Strip with Glassmorphism -->
+            <HBox id="_IDGenHBox16" class="liveNav-glassHeader" justifyContent="SpaceBetween" alignItems="Center">
+                <HBox id="_IDGenHBox18" alignItems="Center" class="liveNav-metric">
+                    <core:Icon id="_IDGenIcon14" src="sap-icon://map-2" class="liveNav-metricIcon"/>
+                    <VBox id="_IDGenVBox27" class="liveNav-metricContent">
+                        <Text id="_IDGenText48" text="Total Distance" class="liveNav-metricLabel"/>
+                        <Text id="_IDGenText50" text="{missionData>/totalDistance} KM" class="liveNav-metricValue"/>
+                    </VBox>
+                </HBox>
+                <HBox id="_IDGenHBox19" alignItems="Center" class="liveNav-metric">
+                    <core:Icon id="_IDGenIcon18" src="sap-icon://history" class="liveNav-metricIcon"/>
+                    <VBox id="_IDGenVBox32" class="liveNav-metricContent">
+                        <Text id="_IDGenText51" text="ETA" class="liveNav-metricLabel"/>
+                        <Text id="_IDGenText52" text="{missionData>/eta}" class="liveNav-metricValue liveNav-purpleText"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+        <!-- Main Content Area -->
+            <HBox id="_IDGenHBox20" class="liveNav-contentArea">
+            <!-- Floating Timeline Card (Left Side) -->
+                <VBox id="_IDGenVBox33" class="liveNav-timelineCard">
+                    <VBox id="_IDGenVBox34" class="liveNav-cardHeader">
+                        <Title id="_IDGenTitle20" text="Shipment Status" level="H4" class="liveNav-cardTitle"/>
+                        <Text id="_IDGenText53" text="Track your shipment progress" class="liveNav-cardSubtitle"/>
+                    </VBox>
+                <!-- Professional Status Box -->
+                    <VBox class="liveNav-professionalStatusBox">
+                        <HBox class="liveNav-statusHeader">
+                            <VBox class="liveNav-statusIcon {= ${missionData>/status} === 'Assigned' ? 'status-assigned' : ${missionData>/status} === 'In-Transit' ? 'status-in-transit' : ${missionData>/status} === 'ConfirmPickup' ? 'status-confirm-pickup' : 'status-delivered' }"/>
+                            <Text text="{missionData>/status}" class="liveNav-statusText"/>
+                        </HBox>
+                        <Text text="{= ${missionData>/status} === 'Assigned' ? 'Driver has been assigned to this shipment' : ${missionData>/status} === 'In-Transit' ? 'Driver is en route to pickup location' : ${missionData>/status} === 'ConfirmPickup' ? 'Cargo has been loaded and secured' : 'Package delivered successfully' }" class="liveNav-statusDescription"/>
+                    </VBox>
+                <!-- Action Buttons -->
+                    <VBox id="_IDGenVBox47" class="liveNav-actionSection">
+                        <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay"/>
+                        <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup" visible="{= ${missionData>/status} === 'In-Transit' }"/>
+                        <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' &amp;&amp; ${missionData>/status} !== 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                            <core:Icon id="pickupConfirmedIcon" src="sap-icon://accept" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
+                            <Text id="pickupConfirmedText" text="Pickup Confirmed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
+                            <Text id="pickupConfirmedSubtext" text="Ready for delivery" class="liveNav-stepTime"/>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            <!-- Interactive Map Area (Right Side) -->
+                <VBox id="_IDGenVBox48" class="liveNav-mapArea">
+                <!-- Map Header -->
+                    <HBox id="_IDGenHBox25" class="liveNav-mapHeader" justifyContent="SpaceBetween" alignItems="Center">
+                        <Title id="_IDGenTitle22" text="Live Route Tracking" level="H5" class="liveNav-mapTitle"/>
+                        <HBox id="_IDGenHBox26" class="liveNav-mapControls">
+                            <Button id="_IDGenButton12" icon="sap-icon://my-location" type="Transparent" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
+                            <Button id="_IDGenButton13" icon="sap-icon://refresh" type="Transparent" class="liveNav-mapBtn" tooltip="Refresh Location"/>
+                            <Button id="_IDGenButton14" icon="sap-icon://full-screen" type="Transparent" class="liveNav-mapBtn" tooltip="Full Screen"/>
+                        </HBox>
+                    </HBox>
+                <!-- Map Container -->
+                    <VBox id="_IDGenVBox49" class="liveNav-mapContainer">
+                        <core:HTML id="mapContainer" content="&lt;div id='map' style='height: 600px; width: 100%; border-radius: 12px;'&gt;&lt;/div&gt;"/>
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    <!-- No Mission Content (when no active mission) -->
+         <VBox id="noMissionContent" visible="false" alignItems="Center" justifyContent="Center" class="liveNav-noMissionContainer">
+            <core:Icon id="noMissionIcon" src="sap-icon://map-2" size="4rem" color="#94a3b8" class="sapUiLargeMarginBottom"/>
+            <Title id="noMissionTitle" text="No Active Mission" level="H2" class="liveNav-noMissionTitle sapUiMediumMarginBottom"/>
+            <Text id="noMissionText" text="You don't have any active missions assigned." class="liveNav-noMissionText sapUiMediumMarginBottom"/>
+            <Text id="noMissionSubtext" text="Please wait for the administrator to assign a new shipment." class="liveNav-noMissionSubtext"/>
+        </VBox>
+    </ScrollContainer>
+</mvc:View>

@@ -1,0 +1,114 @@
+<mvc:View controllerName="project1.controller.SmartDispatcher"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+
+    <VBox id="_IDGenVBox18" class="mainDashboardContent smartDispatcherMain">
+        <VBox>
+              <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
+                                 <core:Icon id="operationIcon" src="sap-icon://process" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Smart Dispatcher"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText"  text="Intelligent order assignment and route optimization"  class="performanceSubtitle" />
+                               
+         </VBox>
+
+        <layout:Grid id="_IDGenGrid2" defaultSpan="L4 M12 S12" vSpacing="1" hSpacing="0.5">
+            
+            <VBox id="_IDGenVBox19" class="whiteBackground ordersPanel">
+                <layoutData><layout:GridData id="_IDGenGridData2" span="L4 M12 S12" /></layoutData>
+                <HBox id="_IDGenHBox9" justifyContent="SpaceBetween" alignItems="Center" class="sapUiSmallMarginBottom">
+                    <HBox id="_IDGenHBox10" alignItems="Center">
+                        <core:Icon id="_IDGenIcon9" src="sap-icon://shipping-status" class="sapUiTinyMarginEnd" color="#5e5ce6" />
+                        <Title id="_IDGenTitle12" text="Unassigned Orders" level="H4" />
+                    </HBox>
+                </HBox>
+
+               <List id="ordersList" items="{/UnassignedOrders}" mode="SingleSelectMaster" selectionChange="onOrderSelect" showSeparators="None" class="customOrdersList">
+    <CustomListItem id="_IDGenCustomListItem">
+        <VBox id="_IDGenVBox17" class="orderCard">
+            <HBox id="_IDGenHBox11" justifyContent="SpaceBetween">
+                <Text id="_IDGenText29" text="{ID}" />
+                <ObjectStatus id="_IDGenObjectStatus" text="{priority}" state="{path: 'priority', formatter: '.formatPriority'}" />
+            </HBox>
+            
+            <HBox id="_IDGenHBox12" alignItems="Center" class="sapUiTinyMarginTop">
+                <core:Icon id="_IDGenIcon10" src="sap-icon://money-bills" size="0.8rem" color="Gray" class="sapUiTinyMarginEnd" />
+                <Text id="_IDGenText30" text="{totalFare} INR" />
+            </HBox>
+
+            <HBox id="_IDGenHBox17" visible="false">
+                <Text id="_IDGenText32" text="{loadWeightTons}" />
+                <Text id="_IDGenText33" text="{requiredVehicleType}" />
+                <Text id="_IDGenText34" text="{materialCategory}" />
+                <Text id="_IDGenText35" text="{pickupLocation}" />
+                <Text id="_IDGenText43" text="{dropLocation}" />
+            </HBox>
+        </VBox>
+    </CustomListItem>
+</List>
+            </VBox>
+
+            <VBox id="_IDGenVBox21" class="whiteBackground detailsPanel">
+                <layoutData><layout:GridData id="_IDGenGridData3" span="L8 M12 S12" /></layoutData>
+                
+                <VBox id="detailsPanel" visible="false" class="sapUiSmallMargin">
+                    <HBox id="_IDGenHBox13" justifyContent="SpaceBetween" alignItems="Center">
+                        <VBox id="_IDGenVBox20">
+                            <Title id="selectedOrderId" text="" titleStyle="H3" />
+                            <Text id="selectedOrderDetails" text=""  />
+                        </VBox>
+                       <ObjectStatus id="selectedPriority" class="customStatusPill" text="" state="None" />
+                    </HBox>
+
+                    <layout:Grid id="_IDGenGrid3" defaultSpan="L6 M6 S12" class="sapUiMediumMarginTop">
+                        <VBox id="_IDGenVBox22" class="requirementCard">
+                            <Title id="_IDGenTitle14" text="Requirement Details" level="H5" class="sapUiTinyMarginBottom" />
+                            <HBox id="_IDGenHBox14" alignItems="Center" class="sapUiTinyMarginBottom">
+                                <core:Icon id="_IDGenIcon11" src="sap-icon://BusinessSuiteInboundBins" size="1rem" class="sapUiTinyMarginEnd" />
+                                <Text id="reqMaterial" text="" />
+                            </HBox>
+                            <HBox id="_IDGenHBox15" alignItems="Center">
+                                <core:Icon id="_IDGenIcon12" src="sap-icon://BBYO-truck" size="1rem" class="sapUiTinyMarginEnd" />
+                                <Text id="reqVehicle" text="" />
+                            </HBox>
+                        </VBox>
+                        <VBox id="_IDGenVBox23" class="routeCard">
+                            <Title id="_IDGenTitle15" text="Destination" level="H5" class="sapUiTinyMarginBottom" />
+                            <Text id="reqRoute" text="" />
+                        </VBox>
+                    </layout:Grid>
+
+                    <layout:Grid id="_IDGenGrid4" defaultSpan="L6 M6 S12" class="sapUiMediumMarginTop">
+                        <VBox id="_IDGenVBox24">
+                            <Label id="_IDGenLabel3" text="Truck Matcher" showColon="true" />
+                            <Select id="truckSelect" width="100%" items="{/AvailableTrucks}">
+                                <core:Item id="_IDGenItem" key="{ID}" text="{truckNo}" />
+                            </Select>
+                        </VBox>
+                        <VBox id="_IDGenVBox25">
+                            <Label id="_IDGenLabel4" text="Driver Selector" showColon="true" />
+                            <Select id="driverSelect" width="100%" items="{/AvailableDrivers}">
+                                <core:Item id="_IDGenItem1" key="{ID}" text="{name}" />
+                            </Select>
+                        </VBox>
+                    </layout:Grid>
+
+                    <Button id="_IDGenButton3" text="Confirm &amp; Dispatch" type="Emphasized" width="100%" class="sapUiMediumMarginTop dispatchBtn" press="onConfirmDispatch" />
+                    
+                    <!-- Unavailability Notification Section -->
+                    <VBox id="unavailabilitySection" visible="false" class="sapUiMediumMarginTop">
+                        <MessageStrip id="unavailabilityMessage" text="" type="Warning" showIcon="true" class="sapUiSmallMarginBottom"/>
+                        <Button id="notifyCustomerBtn" text="Notify Customer" type="Emphasized" width="100%" press="onNotifyCustomer" icon="sap-icon://email"/>
+                    </VBox>
+                </VBox>
+
+                <VBox id="emptyState" alignItems="Center" justifyContent="Center" height="450px" class="routeMapPlaceholder">
+                    <core:Icon id="_IDGenIcon13" src="sap-icon://TableChart" size="4rem" color="#d1d9e6" />
+                    <Text id="_IDGenText31" text="Select an order to begin assignment" class="sapUiSmallMarginTop" />
+                </VBox>
+            </VBox>
+        </layout:Grid>
+    </VBox>
+</mvc:View>

@@ -1,0 +1,95 @@
+<mvc:View controllerName="project1.controller.ControlTower" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt" 
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    >
+
+    <VBox id="_IDGenVBox11" class="mainDashboardContent">
+                    <VBox>
+                                <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >
+                                 <core:Icon id="operationIcon" src="sap-icon://official-service" class="performanceHeaderIcon"/>
+                                     <Title id="_IDGenHeaderTitle" text="Fleet Command Center"  class="mainTitleText" />
+                                     </HBox>
+                                     <Text id="_IDGenHeaderText"  text="Real-time fleet monitoring and insights" class="performanceSubtitle" />
+                               
+                                </VBox>
+
+      <layout:Grid 
+    id="_IDGenTopGrid" 
+    containerQuery="true" 
+    defaultSpan="XL4 L4 M6 S12" 
+    vSpacing="1rem" 
+    hSpacing="1rem">
+
+    <VBox id="_IDGenRevenueCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://money-bills" class="cardIcon"/>
+            <Text text="Total Revenue" class="cardLabel"/>
+        </HBox>
+        <Title text="{dashboard>/stats/revenue}" level="H2" class="cardValue"/>
+        <Text text="Revenue Status" class="cardSubtext"/>
+    </VBox>
+
+    <VBox id="_IDGenCommissionCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://currency" class="cardIcon"/>
+            <Text text="Total Commission" class="cardLabel"/>
+        </HBox>
+        <Title text="{dashboard>/stats/commission}" level="H2" class="cardValue"/>
+        <Text text="Commission Earned" class="cardSubtext"/>
+    </VBox>
+
+    <VBox id="_IDGenDriversCard" class="performanceCard">
+        <HBox alignItems="Center" class="cardHeader">
+            <core:Icon src="sap-icon://shipping-status" class="cardIcon"/>
+            <Text text="Active Drivers" class="cardLabel"/>
+        </HBox>
+        <Title text="{dashboard>/stats/activeDrivers}" level="H2" class="cardValue"/>
+        <Text text="Currently Active" class="cardSubtext"/>
+    </VBox>
+
+</layout:Grid>
+
+
+
+        <layout:Grid id="_IDGenGrid1" defaultSpan="L8 M12 S12" vSpacing="1" hSpacing="0.5">
+            <VBox id="_IDGenVBox12" height="400px" class="dashboardMapStyle liveNav-cardHeader">
+            
+                <layoutData><layout:GridData id="_IDGenGridData" span="L8 M12 S12" /></layoutData>
+                <Title id="_IDGenTitle7" text="Live Fleet Map" level="H3" class="liveNav-cardTitle" />
+                <core:HTML id="adminMapContainer" content="&lt;div id='adminLeafletMap' style='width: 100%; height: 330px;'&gt;&lt;/div&gt;" />
+            </VBox>
+            
+
+            <VBox id="_IDGenVBox14" height="400px" class="fleetMonitorArea">
+                <layoutData><layout:GridData id="_IDGenGridData1" span="L4 M12 S12" /></layoutData>
+                <Title id="_IDGenTitle8" text="Live Fleet Monitor" level="H3"  class="liveNav-cardTitle"/>
+                <ScrollContainer id="_IDGenScrollContainer" vertical="true" height="100%" class="fleetScroll">
+                    <List id="fleetList" items="{fleet>/activeFleet}" class="fleetMonitorList">
+                        <CustomListItem class="fleetListItem">
+                            <VBox class="fleetItemContainer">
+                                <HBox justifyContent="SpaceBetween" alignItems="Center" class="fleetTopRow">
+                                    <HBox alignItems="Center" class="driverInfoContainer">
+                                        <core:HTML content="&lt;div class='driver-circle'&gt;{fleet>driverInitials}&lt;/div&gt;" class="driverCircle"/>
+                                        <VBox class="driverDetailsBox">
+                                            <Text text="{fleet>driverName}" class="driverNameText"/>
+                                            <Text text="{fleet>truckId}" class="truckNumberText"/>
+                                        </VBox>
+                                    </HBox>
+                                    <VBox alignItems="Center" class="contactInfoBox">
+                                        <Text text="{fleet>driverContact}" class="contactNumberText"/>
+                                    </VBox>
+                                </HBox>
+                               
+                                <Button text="View Details" press="onViewFleetDetails" type="Emphasized" class="viewFleetBtn fullWidthBtn" enabled="{= !${fleet>isOffDuty} }"/>
+                            </VBox>
+                        </CustomListItem>
+                    </List>
+                </ScrollContainer>
+            </VBox>
+        </layout:Grid>
+    </VBox>
+</mvc:View>
