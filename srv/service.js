@@ -81,37 +81,6 @@ module.exports = cds.service.impl(async function () {
     console.log("Saving shipment to database...");
   });
 
-    this.on('getDashboardStats', async (req) => {
-        console.log("===> Dashboard API Hit!");
-
-        try {
-            // 1. Total Revenue calculation
-            // Note: DB level par entity ka naam use hoga
-            const revResult = await SELECT.one.from(Shipments)
-                .columns('sum(totalFare) as total')
-                .where({ status: 'Delivered' });
-
-            // 2. Active Drivers calculation
-           const driversResult = await SELECT.from(Drivers)
-    .where({ status: 'AVAILABLE' });
-
-            const totalRev = revResult && revResult.total ? Number(revResult.total) : 0;
-            
-            const responseData = {
-                totalRevenue: totalRev,
-                totalCommission: totalRev * 0.15,
-                activeDrivers: driversResult ? driversResult.length : 0
-            };
-
-            console.log("Data fetched from HANA successfully:", responseData);
-            return responseData;
-
-        } catch (error) {
-            console.error("HANA Query Error:", error.message);
-            return req.error(500, "Database lookup failed: " + error.message);
-        }
-    });
-
     //smart dispatcher ka code
 
     // Smart Dispatcher: Order Assign karne ka logic

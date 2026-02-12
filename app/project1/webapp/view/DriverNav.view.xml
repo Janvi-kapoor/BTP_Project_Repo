@@ -53,7 +53,7 @@
                     <HBox id="_IDGenHBox25" class="liveNav-mapHeader" justifyContent="SpaceBetween" alignItems="Center">
                         <Title id="_IDGenTitle22" text="Live Route Tracking" level="H5" class="liveNav-mapTitle"/>
                         <HBox id="_IDGenHBox26" class="liveNav-mapControls">
-                            <Button id="_IDGenButton12" icon="sap-icon://my-location" type="Transparent" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
+                            <Button id="_IDGenButton12" icon="sap-icon://locate-me" type="Emphasized" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
                             <Button id="_IDGenButton13" icon="sap-icon://refresh" type="Transparent" class="liveNav-mapBtn" tooltip="Refresh Location"/>
                             <Button id="_IDGenButton14" icon="sap-icon://full-screen" type="Transparent" class="liveNav-mapBtn" tooltip="Full Screen"/>
                         </HBox>
