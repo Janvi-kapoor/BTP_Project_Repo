@@ -477,6 +477,18 @@ this.on('sendPickupOTP', async (req) => {
             .columns('email', 'companyName')
             .where({ ID: shipment.customer_ID });
        
+        if (!customer || !customer.email) {
+            console.log(`❌ Customer email not found for shipment ${shipmentID}`);
+            return {
+                success: false,
+                message: "Customer email not found. Please contact support."
+            };
+        }
+        
+        console.log(`📧 Sending pickup OTP to: ${customer.email}`);
+        console.log(`🏢 Company: ${customer.companyName}`);
+        console.log(`📦 Shipment: ${shipmentID}`);
+       
         const otp = Math.floor(1000 + Math.random() * 9000).toString();
         
         // Store OTP
@@ -486,37 +498,30 @@ this.on('sendPickupOTP', async (req) => {
             expiry: Date.now() + (10 * 60 * 1000)
         });
         
-        if (!customer || !customer.email) {
-            console.log(`\n📧 PICKUP OTP for shipment ${shipmentID}: ${otp}\n`);
-            return {
-                success: false,
-                message: "Customer email not found. Please contact support."
-            };
-        }
-        
-        console.log(`\n📧 PICKUP OTP for ${customer.email}: ${otp}`);
-        console.log(`📼 Company: ${customer.companyName}`);
-        console.log(`📦 Shipment: ${shipmentID}\n`);
+        console.log(`🔐 Generated OTP: ${otp}`);
         
         try {
             const result = await emailService.sendPickupOTP(customer.email, otp, customer.companyName);
+            console.log(`📬 Email service result:`, result);
            
             if (result.success) {
                 return {
                     success: true,
-                    otp: otp,
-                    message: `Pickup OTP sent to ${customer.email}`
+                    message: result.message
+                };
+            } else {
+                return {
+                    success: false,
+                    message: result.message
                 };
             }
         } catch (emailError) {
-            console.error('Email service error:', emailError.message);
+            console.error('❌ Email service error:', emailError.message);
+            return {
+                success: false,
+                message: 'Failed to send pickup OTP email'
+            };
         }
-        
-        return {
-            success: true,
-            otp: otp,
-            message: "Pickup OTP ready (check console)"
-        };
        
     } catch (error) {
         console.error("Pickup OTP error:", error.message);
@@ -591,7 +596,7 @@ this.on('updateDriverLocation', async (req) => {
 // --- Secure Delivery Actions ---
 this.on('sendOTP', async (req) => {
     const { phoneNumber } = req.data;
-    console.log(`====> Sending OTP request received`);
+    console.log(`====> Sending delivery OTP request received`);
    
     try {
         const activeShipment = await SELECT.one.from(Shipments)
@@ -600,52 +605,41 @@ this.on('sendOTP', async (req) => {
             .orderBy('createdAt desc');
        
         if (!activeShipment || !activeShipment.receiverEmail) {
-            console.log('No active shipment or receiver email found, using default');
-            const email = 'riddhima12506@gmail.com';
-            const otp = Math.floor(1000 + Math.random() * 9000).toString();
-           
-            console.log(`\n📧 FALLBACK OTP for ${email}: ${otp}\n`);
+            console.log('❌ No active shipment or receiver email found');
             return {
-                success: true,
-                otp: otp,
-                message: "OTP ready (fallback mode)"
+                success: false,
+                message: "Receiver email not found. Please contact support."
             };
         }
        
         const receiverEmail = activeShipment.receiverEmail;
-        console.log(`====> Sending OTP to receiver email: ${receiverEmail}`);
-        console.log(`====> For shipment: ${activeShipment.ID} (${activeShipment.receiverCompany})`);
+        console.log(`📧 Sending delivery OTP to: ${receiverEmail}`);
+        console.log(`🏢 Receiver Company: ${activeShipment.receiverCompany}`);
+        console.log(`📦 Shipment: ${activeShipment.ID}`);
        
         const otp = Math.floor(1000 + Math.random() * 9000).toString();
+        console.log(`🔐 Generated OTP: ${otp}`);
+        
         const result = await emailService.sendOTP(receiverEmail, otp);
+        console.log(`📬 Email service result:`, result);
        
         if (result.success) {
             return {
                 success: true,
                 otp: otp,
-                message: `OTP sent to ${receiverEmail} successfully`
+                message: result.message
             };
         } else {
-            console.log(`\n📧 EMAIL OTP for ${receiverEmail}: ${otp}`);
-            console.log('💻 Use this OTP to complete delivery\n');
-           
             return {
-                success: true,
-                otp: otp,
-                message: "OTP ready (check console)"
+                success: false,
+                message: result.message
             };
         }
     } catch (error) {
-        console.error("Email OTP Service Error:", error.message);
-       
-        const otp = Math.floor(1000 + Math.random() * 9000).toString();
-        const email = 'riddhima12506@gmail.com';
-        console.log(`\n📧 FALLBACK OTP for ${email}: ${otp}\n`);
-       
+        console.error("Delivery OTP Service Error:", error.message);
         return {
-            success: true,
-            otp: otp,
-            message: "OTP ready (fallback mode)"
+            success: false,
+            message: "Failed to send delivery OTP"
         };
     }
 });

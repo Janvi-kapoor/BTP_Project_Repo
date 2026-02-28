@@ -3,26 +3,41 @@ require('dotenv').config();
 
 class EmailOTPService {
     constructor() {
+        const gmailUser = process.env.GMAIL_USER;
+        const gmailPass = process.env.GMAIL_APP_PASSWORD;
+        
+        if (!gmailUser || !gmailPass || gmailUser === 'your_gmail@gmail.com') {
+            console.warn('⚠️  Gmail credentials not configured properly in .env file');
+            this.configured = false;
+            return;
+        }
+        
         this.transporter = nodemailer.createTransport({
             service: 'gmail',
             host: 'smtp.gmail.com',
             port: 587,
             secure: false,
             auth: {
-                user: process.env.GMAIL_USER || 'your_gmail@gmail.com',
-                pass: process.env.GMAIL_APP_PASSWORD || 'your_16_digit_app_password'
+                user: gmailUser,
+                pass: gmailPass
             },
             tls: {
                 rejectUnauthorized: false
             }
         });
-        console.log('Email OTP Service initialized');
+        this.configured = true;
+        console.log('✅ Email OTP Service initialized with:', gmailUser);
     }
 
     async sendPickupOTP(email, otp, companyName = 'Customer') {
+        if (!this.configured) {
+            console.error('❌ Email service not configured');
+            return { success: false, message: 'Email service not configured' };
+        }
+        
         try {
             const mailOptions = {
-                from: process.env.GMAIL_USER || 'LogiChain <noreply@logichain.com>',
+                from: `LogiChain <${process.env.GMAIL_USER}>`,
                 to: email,
                 subject: 'LogiChain Pickup Confirmation OTP',
                 html: `
@@ -63,28 +78,36 @@ class EmailOTPService {
             const result = await this.transporter.sendMail(mailOptions);
            
             console.log('✅ Pickup OTP email sent successfully');
-            console.log('📧 Email ID:', email);
-            console.log('🔐 Pickup OTP:', otp);
+            console.log('📧 To:', email);
+            console.log('🔐 OTP:', otp);
             console.log('📬 Message ID:', result.messageId);
            
             return {
                 success: true,
-                message: 'Pickup OTP sent to email successfully'
+                message: `Pickup OTP sent to ${email}`
             };
 
         } catch (error) {
-            console.error('❌ Pickup OTP email sending error:', error.message);
+            console.error('❌ Pickup OTP email error:', error.message);
+            if (error.code === 'EAUTH') {
+                console.error('⚠️  Gmail authentication failed. Check GMAIL_APP_PASSWORD in .env');
+            }
             return {
                 success: false,
-                message: 'Failed to send pickup OTP email'
+                message: 'Failed to send pickup OTP: ' + error.message
             };
         }
     }
 
     async sendOTP(email, otp) {
+        if (!this.configured) {
+            console.error('❌ Email service not configured');
+            return { success: false, message: 'Email service not configured' };
+        }
+        
         try {
             const mailOptions = {
-                from: process.env.GMAIL_USER || 'LogiChain <noreply@logichain.com>',
+                from: `LogiChain <${process.env.GMAIL_USER}>`,
                 to: email,
                 subject: 'LogiChain Delivery OTP Verification',
                 html: `
@@ -129,21 +152,24 @@ class EmailOTPService {
 
             const result = await this.transporter.sendMail(mailOptions);
            
-            console.log('✅ Email OTP sent successfully');
-            console.log('📧 Email ID:', email);
+            console.log('✅ Delivery OTP email sent successfully');
+            console.log('📧 To:', email);
             console.log('🔐 OTP:', otp);
             console.log('📬 Message ID:', result.messageId);
            
             return {
                 success: true,
-                message: 'OTP sent to email successfully'
+                message: `Delivery OTP sent to ${email}`
             };
 
         } catch (error) {
-            console.error('❌ Email sending error:', error.message);
+            console.error('❌ Delivery OTP email error:', error.message);
+            if (error.code === 'EAUTH') {
+                console.error('⚠️  Gmail authentication failed. Check GMAIL_APP_PASSWORD in .env');
+            }
             return {
                 success: false,
-                message: 'Failed to send email OTP'
+                message: 'Failed to send delivery OTP: ' + error.message
             };
         }
     }

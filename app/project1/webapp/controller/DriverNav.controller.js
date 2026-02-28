@@ -514,7 +514,6 @@ sap.ui.define([
             var sShipmentID = oMissionModel.getProperty("/ID");
             var sStatus = oMissionModel.getProperty("/status");
             
-            // Check if shipment is in correct status for pickup
             if (sStatus !== 'In-Transit') {
                 MessageToast.show("Pickup can only be confirmed for In-Transit shipments");
                 return;
@@ -522,7 +521,6 @@ sap.ui.define([
             
             console.log("Requesting pickup OTP for shipment:", sShipmentID);
             
-            // Request pickup OTP (matches delivery pattern)
             var oModel = this.getOwnerComponent().getModel();
             var oAction = oModel.bindContext("/sendPickupOTP(...)");
             oAction.setParameter("shipmentID", sShipmentID);
@@ -556,29 +554,21 @@ sap.ui.define([
                     contentHeight: "300px",
                     draggable: true,
                     resizable: false,
-                    class: "otpDialog",
                     content: [
                         new sap.m.VBox({
-                            class: "otpDialogContent",
                             alignItems: "Center",
                             items: [
                                 new sap.m.VBox({
-                                    class: "otpTitleSection",
                                     alignItems: "Center",
                                     items: [
                                         new sap.ui.core.Icon({
                                             src: "sap-icon://email",
                                             size: "2rem",
-                                            color: "#6366f1",
-                                            class: "otpSuccessIcon"
+                                            color: "#6366f1"
                                         }),
-                                        new sap.m.Text({
-                                            text: "Enter OTP Code",
-                                            class: "otpMainTitle"
-                                        }),
+                                        new sap.m.Text({ text: "Enter OTP Code" }),
                                         new sap.m.Text({
                                             text: "OTP sent to company email. Enter the 4-digit code to confirm pickup:",
-                                            class: "otpSubTitle",
                                             textAlign: "Center"
                                         })
                                     ]
@@ -587,33 +577,25 @@ sap.ui.define([
                                     placeholder: "Enter 4-digit OTP",
                                     maxLength: 4,
                                     type: "Number",
-                                    class: "otpDigitInput",
                                     textAlign: "Center",
                                     liveChange: function(oEvent) {
                                         var sValue = oEvent.getParameter("value");
-                                        if (sValue.length === 4) {
-                                            that.byId("verifyPickupBtn").setEnabled(true);
-                                        } else {
-                                            that.byId("verifyPickupBtn").setEnabled(false);
-                                        }
+                                        that.byId("verifyPickupBtn").setEnabled(sValue.length === 4);
                                     }
                                 }),
                                 new sap.m.VBox({
-                                    class: "otpActionButtons",
                                     alignItems: "Center",
                                     items: [
                                         new sap.m.Button(this.createId("verifyPickupBtn"), {
                                             text: "✓ Verify & Confirm Pickup",
                                             type: "Emphasized",
                                             enabled: false,
-                                            class: "otpVerifyBtn",
                                             press: function() {
                                                 that._verifyPickupOTP(sShipmentID);
                                             }
                                         }),
                                         new sap.m.Button({
                                             text: "Cancel",
-                                            class: "otpCancelBtn",
                                             press: function() {
                                                 that._pickupOTPDialog.close();
                                             }
@@ -623,17 +605,13 @@ sap.ui.define([
                                 new sap.m.HBox({
                                     alignItems: "Center",
                                     justifyContent: "Center",
-                                    class: "otpLoadingSpinner",
                                     items: [
                                         new sap.ui.core.Icon({
                                             src: "sap-icon://information",
                                             size: "1rem",
                                             color: "#6b7280"
                                         }),
-                                        new sap.m.Text({
-                                            text: "Valid for 10 minutes",
-                                            class: "otpLoadingText"
-                                        })
+                                        new sap.m.Text({ text: "Valid for 10 minutes" })
                                     ]
                                 })
                             ]
@@ -643,7 +621,6 @@ sap.ui.define([
                 this.getView().addDependent(this._pickupOTPDialog);
             }
             
-            // Reset dialog state
             this.byId("pickupOtpInput").setValue("");
             this.byId("verifyPickupBtn").setEnabled(false);
             this._pickupOTPDialog.open();
@@ -670,10 +647,16 @@ sap.ui.define([
                     var oResult = oData.value || oData;
                     
                     if (oResult.success) {
+                        // Immediately hide button by updating status
+                        var oMissionModel = that.getView().getModel("missionData");
+                        if (oMissionModel) {
+                            oMissionModel.setProperty("/status", "ConfirmPickup");
+                        }
+                        
                         MessageToast.show(oResult.message);
                         that._pickupOTPDialog.close();
                         
-                        // Refresh mission data to show updated status
+                        // Refresh from backend
                         setTimeout(() => {
                             that._loadActiveMission();
                         }, 500);
@@ -687,6 +670,181 @@ sap.ui.define([
             }).catch(function(oError) {
                 console.error("Verify pickup OTP failed:", oError.message);
                 MessageToast.show("Failed to verify pickup OTP");
+            });
+        },
+
+        onConfirmDelivery: function() {
+            var oMissionModel = this.getView().getModel("missionData");
+            var that = this;
+            
+            if (!oMissionModel) {
+                MessageToast.show("No active mission found");
+                return;
+            }
+            
+            var sShipmentID = oMissionModel.getProperty("/ID");
+            var sStatus = oMissionModel.getProperty("/status");
+            
+            if (sStatus !== 'ConfirmPickup') {
+                MessageToast.show("Delivery can only be confirmed after pickup confirmation");
+                return;
+            }
+            
+            console.log("Requesting delivery OTP for shipment:", sShipmentID);
+            
+            var oModel = this.getOwnerComponent().getModel();
+            var oAction = oModel.bindContext("/sendOTP(...)");
+            oAction.setParameter("phoneNumber", "");
+            
+            oAction.execute().then(function() {
+                oAction.requestObject().then(function(oData) {
+                    var oResult = oData.value || oData;
+                    if (oResult.success) {
+                        MessageToast.show(oResult.message);
+                        that._showDeliveryOTPDialog(sShipmentID, oResult.otp);
+                    } else {
+                        MessageToast.show("Failed to send delivery OTP: " + oResult.message);
+                    }
+                }).catch(function(oError) {
+                    console.error("Send delivery OTP failed:", oError.message);
+                    MessageToast.show("Failed to request delivery OTP");
+                });
+            }).catch(function(oError) {
+                console.error("Send delivery OTP failed:", oError.message);
+                MessageToast.show("Failed to request delivery OTP");
+            });
+        },
+
+        _showDeliveryOTPDialog: function(sShipmentID, sOTP) {
+            var that = this;
+            
+            if (!this._deliveryOTPDialog) {
+                this._deliveryOTPDialog = new sap.m.Dialog({
+                    title: "🏁 Delivery Confirmation",
+                    contentWidth: "420px",
+                    contentHeight: "300px",
+                    draggable: true,
+                    resizable: false,
+                    content: [
+                        new sap.m.VBox({
+                            alignItems: "Center",
+                            items: [
+                                new sap.m.VBox({
+                                    alignItems: "Center",
+                                    items: [
+                                        new sap.ui.core.Icon({
+                                            src: "sap-icon://email",
+                                            size: "2rem",
+                                            color: "#6366f1"
+                                        }),
+                                        new sap.m.Text({ text: "Enter OTP Code" }),
+                                        new sap.m.Text({
+                                            text: "OTP sent to receiver email. Enter the 4-digit code to confirm delivery:",
+                                            textAlign: "Center"
+                                        })
+                                    ]
+                                }),
+                                new sap.m.Input(this.createId("deliveryOtpInput"), {
+                                    placeholder: "Enter 4-digit OTP",
+                                    maxLength: 4,
+                                    type: "Number",
+                                    textAlign: "Center",
+                                    liveChange: function(oEvent) {
+                                        var sValue = oEvent.getParameter("value");
+                                        that.byId("verifyDeliveryBtn").setEnabled(sValue.length === 4);
+                                    }
+                                }),
+                                new sap.m.VBox({
+                                    alignItems: "Center",
+                                    items: [
+                                        new sap.m.Button(this.createId("verifyDeliveryBtn"), {
+                                            text: "✓ Verify & Complete Delivery",
+                                            type: "Emphasized",
+                                            enabled: false,
+                                            press: function() {
+                                                that._verifyDeliveryOTP(sShipmentID, sOTP);
+                                            }
+                                        }),
+                                        new sap.m.Button({
+                                            text: "Cancel",
+                                            press: function() {
+                                                that._deliveryOTPDialog.close();
+                                            }
+                                        })
+                                    ]
+                                }),
+                                new sap.m.HBox({
+                                    alignItems: "Center",
+                                    justifyContent: "Center",
+                                    items: [
+                                        new sap.ui.core.Icon({
+                                            src: "sap-icon://information",
+                                            size: "1rem",
+                                            color: "#6b7280"
+                                        }),
+                                        new sap.m.Text({ text: "Valid for 10 minutes" })
+                                    ]
+                                })
+                            ]
+                        })
+                    ]
+                });
+                this.getView().addDependent(this._deliveryOTPDialog);
+            }
+            
+            this.byId("deliveryOtpInput").setValue("");
+            this.byId("verifyDeliveryBtn").setEnabled(false);
+            this._deliveryOTPDialog.open();
+        },
+
+        _verifyDeliveryOTP: function(sShipmentID, sExpectedOTP) {
+            var sEnteredOTP = this.byId("deliveryOtpInput").getValue();
+            var that = this;
+            
+            if (!sEnteredOTP || sEnteredOTP.length !== 4) {
+                MessageToast.show("Please enter a valid 4-digit OTP");
+                return;
+            }
+            
+            if (sEnteredOTP !== sExpectedOTP) {
+                MessageToast.show("Invalid OTP. Please try again.");
+                return;
+            }
+            
+            console.log("Completing delivery for shipment:", sShipmentID);
+            
+            var oModel = this.getOwnerComponent().getModel();
+            var oAction = oModel.bindContext("/completeDelivery(...)");
+            oAction.setParameter("shipmentId", sShipmentID);
+            oAction.setParameter("otpVerified", true);
+            
+            oAction.execute().then(function() {
+                oAction.requestObject().then(function(oData) {
+                    var oResult = oData.value || oData;
+                    
+                    if (oResult.success) {
+                        MessageToast.show(oResult.message);
+                        that._deliveryOTPDialog.close();
+                        
+                        // Immediately update local model status
+                        var oMissionModel = that.getView().getModel("missionData");
+                        if (oMissionModel) {
+                            oMissionModel.setProperty("/status", "Delivered");
+                        }
+                        
+                        setTimeout(() => {
+                            that._loadActiveMission();
+                        }, 500);
+                    } else {
+                        MessageToast.show("Delivery completion failed");
+                    }
+                }).catch(function(oError) {
+                    console.error("Complete delivery failed:", oError.message);
+                    MessageToast.show("Failed to complete delivery");
+                });
+            }).catch(function(oError) {
+                console.error("Complete delivery failed:", oError.message);
+                MessageToast.show("Failed to complete delivery");
             });
         },
 

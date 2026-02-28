@@ -119,7 +119,7 @@ sap.ui.define([
             
             console.log("=== STEP 1: LOADING ACTIVE SHIPMENTS ===");
             
-            // First get shipments with In-Transit and ConfirmPickup status (not just In-Transit)
+            // First get shipments with In-Transit and ConfirmPickup status
             const oShipmentBinding = oModel.bindList("/AdminShipments", null, [], [
                 new sap.ui.model.Filter({
                     filters: [
@@ -133,13 +133,13 @@ sap.ui.define([
             });
             
             oShipmentBinding.requestContexts().then((aShipmentContexts) => {
-                console.log("Total In-Transit shipments found:", aShipmentContexts.length);
+                console.log("Total active shipments found:", aShipmentContexts.length);
                 
                 const aFleetData = [];
                 let processedCount = 0;
                 
                 if (aShipmentContexts.length === 0) {
-                    console.log("No In-Transit shipments found");
+                    console.log("No active shipments found (In-Transit or ConfirmPickup)");
                     oFleetModel.setProperty("/activeFleet", []);
                     return;
                 }

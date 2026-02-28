@@ -38,12 +38,17 @@
                     </VBox>
                 <!-- Action Buttons -->
                     <VBox id="_IDGenVBox47" class="liveNav-actionSection">
-                        <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay"/>
+                        <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay" visible="{= ${missionData>/status} !== 'Delivered' }"/>
                         <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup" visible="{= ${missionData>/status} === 'In-Transit' }"/>
-                        <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' &amp;&amp; ${missionData>/status} !== 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                        <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
                             <core:Icon id="pickupConfirmedIcon" src="sap-icon://accept" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
                             <Text id="pickupConfirmedText" text="Pickup Confirmed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
                             <Text id="pickupConfirmedSubtext" text="Ready for delivery" class="liveNav-stepTime"/>
+                        </VBox>
+                        <VBox id="deliveryCompletedMessage" visible="{= ${missionData>/status} === 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                            <core:Icon id="deliveryCompletedIcon" src="sap-icon://complete" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
+                            <Text id="deliveryCompletedText" text="Delivery Completed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
+                            <Text id="deliveryCompletedSubtext" text="Mission accomplished" class="liveNav-stepTime"/>
                         </VBox>
                     </VBox>
                 </VBox>
