@@ -6,7 +6,6 @@
     xmlns:core="sap.ui.core"
     displayBlock="true"
     >
-
     <VBox id="_IDGenVBox11" class="mainDashboardContent">
                     <VBox>
                                 <HBox id="_IDGenHeaderBox" alignItems="Center" class="performanceHeaderBox" >

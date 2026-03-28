@@ -37,13 +37,13 @@ class EmailOTPService {
         
         try {
             const mailOptions = {
-                from: `LogiChain <${process.env.GMAIL_USER}>`,
+                from: `Cargo Connect <${process.env.GMAIL_USER}>`,
                 to: email,
-                subject: 'LogiChain Pickup Confirmation OTP',
+                subject: 'Cargo Connect Pickup Confirmation OTP',
                 html: `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                         <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 20px; text-align: center;">
-                            <h1 style="color: white; margin: 0;">LogiChain NEXUS</h1>
+                            <h1 style="color: white; margin: 0;">Cargo Connect</h1>
                             <p style="color: white; margin: 5px 0;">Pickup Confirmation</p>
                         </div>
                        
@@ -61,14 +61,14 @@ class EmailOTPService {
                            
                             <p style="color: #64748b; font-size: 14px;">
                                 • This OTP is valid for 10 minutes<br>
-                                • Share this OTP only with the LogiChain driver<br>
+                                • Share this OTP only with the Cargo Connect driver<br>
                                 • Pickup will be confirmed once OTP is verified
                             </p>
                         </div>
                        
                         <div style="background: #1e293b; padding: 20px; text-align: center;">
                             <p style="color: #94a3b8; margin: 0; font-size: 12px;">
-                                © 2024 LogiChain NEXUS. All rights reserved.
+                                © 2024 Cargo Connect. All rights reserved.
                             </p>
                         </div>
                     </div>
@@ -107,13 +107,13 @@ class EmailOTPService {
         
         try {
             const mailOptions = {
-                from: `LogiChain <${process.env.GMAIL_USER}>`,
+                from: `Cargo Connect <${process.env.GMAIL_USER}>`,
                 to: email,
-                subject: 'LogiChain Delivery OTP Verification',
+                subject: 'Cargo Connect Delivery OTP Verification',
                 html: `
                     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                         <div style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 20px; text-align: center;">
-                            <h1 style="color: white; margin: 0;">LogiChain NEXUS</h1>
+                            <h1 style="color: white; margin: 0;">Cargo Connect</h1>
                             <p style="color: white; margin: 5px 0;">Delivery Verification</p>
                         </div>
                        
@@ -136,14 +136,14 @@ class EmailOTPService {
                            
                             <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
                                 <p style="color: #92400e; margin: 0; font-size: 14px;">
-                                    <strong>Security Notice:</strong> LogiChain will never ask for your OTP over phone or email.
+                                    <strong>Security Notice:</strong> Cargo Connect will never ask for your OTP over phone or email.
                                 </p>
                             </div>
                         </div>
                        
                         <div style="background: #1e293b; padding: 20px; text-align: center;">
                             <p style="color: #94a3b8; margin: 0; font-size: 12px;">
-                                © 2024 LogiChain NEXUS. All rights reserved.
+                                © 2024 Cargo Connect. All rights reserved.
                             </p>
                         </div>
                     </div>
