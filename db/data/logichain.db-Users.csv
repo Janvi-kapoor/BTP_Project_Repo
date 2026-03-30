@@ -1,0 +1,6 @@
+ID,companyName,email,password,role,creditLine,createdAt,createdBy,modifiedAt,modifiedBy
+u1000000-0000-0000-0000-000000000001,LogiChain Admin,admin@logichain.com,Admin@123,ADMIN,0.00,2024-01-01T00:00:00Z,system,2024-01-01T00:00:00Z,system
+u2000000-0000-0000-0000-000000000001,Raj Steel Works,raj@steelworks.com,Cust@123,CUSTOMER,500000.00,2024-01-02T00:00:00Z,system,2024-01-02T00:00:00Z,system
+u2000000-0000-0000-0000-000000000002,Priya Textiles,priya@textiles.com,Cust@123,CUSTOMER,300000.00,2024-01-03T00:00:00Z,system,2024-01-03T00:00:00Z,system
+u2000000-0000-0000-0000-000000000003,Amit Chemicals,amit@chemicals.com,Cust@123,CUSTOMER,750000.00,2024-01-04T00:00:00Z,system,2024-01-04T00:00:00Z,system
+u2000000-0000-0000-0000-000000000004,Neha Pharma,neha@pharma.com,Cust@123,CUSTOMER,200000.00,2024-01-05T00:00:00Z,system,2024-01-05T00:00:00Z,system

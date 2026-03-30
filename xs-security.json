@@ -1,6 +1,28 @@
 {
-  "scopes": [],
+  "xsappname": "Route_Optimizer",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    { "name": "$XSAPPNAME.Admin",    "description": "Admin role" },
+    { "name": "$XSAPPNAME.Customer", "description": "Customer role" },
+    { "name": "$XSAPPNAME.Driver",   "description": "Driver role" }
+  ],
   "attributes": [],
-  "role-templates": [],
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "LogiChain Administrator",
+      "scope-references": [ "$XSAPPNAME.Admin" ]
+    },
+    {
+      "name": "Customer",
+      "description": "LogiChain Customer",
+      "scope-references": [ "$XSAPPNAME.Customer" ]
+    },
+    {
+      "name": "Driver",
+      "description": "LogiChain Driver",
+      "scope-references": [ "$XSAPPNAME.Driver" ]
+    }
+  ],
   "authorities-inheritance": false
 }

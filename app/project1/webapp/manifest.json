@@ -24,6 +24,21 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "logichain-display": {
+          "semanticObject": "LogiChain",
+          "action": "display",
+          "title": "LogiChain",
+          "subTitle": "Logistics Management",
+          "icon": "sap-icon://shipping-status",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
     }
   },
   "sap.ui": {
