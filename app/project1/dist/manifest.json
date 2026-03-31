@@ -10,7 +10,7 @@
 			]
 		},
 		"applicationVersion": {
-			"version": "1.0.5"
+			"version": "1.0.6"
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
@@ -30,6 +30,7 @@
 				}
 			}
 		},
+		"icon": "sap-icon://shipping-status",
 		"crossNavigation": {
 			"inbounds": {
 				"logichain-display": {
@@ -53,7 +54,7 @@
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
-			"icon": "",
+			"icon": "sap-icon://shipping-status",
 			"favIcon": "",
 			"phone": "",
 			"phone@2": "",
