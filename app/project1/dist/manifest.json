@@ -1,7 +1,7 @@
 {
 	"_version": "1.81.0",
 	"sap.app": {
-		"id": "project1",
+		"id": "com.logi.route.app",
 		"type": "application",
 		"i18n": {
 			"bundleUrl": "i18n/i18n.properties",
@@ -10,7 +10,7 @@
 			]
 		},
 		"applicationVersion": {
-			"version": "0.0.1"
+			"version": "1.0.5"
 		},
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
@@ -29,7 +29,26 @@
 					"odataVersion": "4.0"
 				}
 			}
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"logichain-display": {
+					"semanticObject": "LogiChain",
+					"action": "display",
+					"title": "LogiChain",
+					"subTitle": "Logistics Management",
+					"icon": "sap-icon://shipping-status",
+					"signature": {
+						"parameters": {},
+						"additionalParameters": "allowed"
+					}
+				}
+			}
 		}
+	},
+	"sap.cloud": {
+		"public": true,
+		"service": "routeoptimizer"
 	},
 	"sap.ui": {
 		"technology": "UI5",
@@ -64,7 +83,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "project1.i18n.i18n",
+					"bundleName": "com.logi.route.app.i18n.i18n",
 					"supportedLocales": [
 						""
 					]
@@ -116,9 +135,9 @@
 				"transition": "slide",
 				"type": "View",
 				"viewType": "XML",
-				"path": "project1.view",
+				"path": "com.logi.route.app.view",
 				"async": true,
-				"viewPath": "project1.view"
+				"viewPath": "com.logi.route.app.view"
 			},
 			"routes": [
 				{
@@ -292,7 +311,7 @@
 			}
 		},
 		"rootView": {
-			"viewName": "project1.view.App",
+			"viewName": "com.logi.route.app.view.App",
 			"type": "XML",
 			"id": "App",
 			"async": true

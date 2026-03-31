@@ -1,6 +1,9 @@
 {
-  "welcomeFile": "index.html",
+  "welcomeFile": "/comlogirouteapp/index.html",
   "authenticationMethod": "route",
+  "whitelistService": {
+    "endpoint": "/external/v1/whitelist"
+  },
   "routes": [
     {
       "source": "^/odata/v4/logi-chain/(.*)$",

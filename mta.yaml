@@ -1,7 +1,7 @@
 _schema-version: 3.3.0
 ID: Route_Optimizer
 description: A simple CAP project.
-version: 1.0.0
+version: 1.2.0
 modules:
   - name: Route_Optimizer-srv
     type: nodejs
@@ -67,14 +67,15 @@ modules:
     type: html5
     path: app/project1
     parameters:
-      app-name: project1
-      visibility: public
+      app-name: route_optimizer_final
     build-parameters:
       build-result: dist
       builder: custom
       commands:
         - npm install
         - npm run build:cf
+      requires:
+      - name: Route_Optimizer-srv
       supported-platforms:
         []
 resources:
@@ -107,29 +108,31 @@ resources:
       service-plan: lite
   - name: Route_Optimizer-destination
     type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv-api    # <--- YAHI WO MISSING LINE HAI JISKI WAJAH SE ERROR AAYA
     parameters:
       config:
-        HTML5Runtime_enabled: true
+        HTML5Runtime_enabled: true # <--- Ye Work Zone ke liye sabse zaroori hai
         init_data:
           instance:
+            existing_destinations_policy: update
             destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
+              - Name: Route_Optimizer_api
+                Description: Backend API for LogiChain
+                Authentication: NoAuthentication # Trial mein testing ke liye NoAuth rakhein pehle
                 ProxyType: Internet
                 Type: HTTP
-                URL: https://ui5.sap.com
-            existing_destinations_policy: update
+                URL: ~{srv-api/srv-url}
+                HTML5.DynamicRegistration: true # <--- Isse Work Zone ko signal milta hai
+                HTML5.ForwardAuthToken: true
       service: destination
       service-plan: lite
   - name: Route_Optimizer-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
-      service-name: Route_Optimizer-html5-service
       service-plan: app-host
-      config:
-        sizeLimit: 10
-        visibility: public
+      service-name: Route_Optimizer-html5-service-v2 # <--- Yeh likhna bahut zaroori hai
   - name: Route_Optimizer-repo-runtime # <--- Ye nayi service niche add ki hai
     type: org.cloudfoundry.managed-service
     parameters:

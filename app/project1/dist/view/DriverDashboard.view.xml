@@ -143,10 +143,10 @@
                             </HBox>
                             <!-- Action Button -->
                             <VBox class="drActive-actionContainer">
-                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://play" iconFirst="false" visible="{= ${driverData>/status} !== 'In-Transit' }"/>
-                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' }" alignItems="Center" class="drActive-successMessage">
+                                <Button id="startMissionBtn" text="START MISSION" type="Emphasized" press="onStartTrip" class="drActive-startBtn" icon="sap-icon://play" iconFirst="false" visible="{= ${driverData>/status} === 'Assigned' }"/>
+                                <VBox id="tripStartedMessage" visible="{= ${driverData>/status} === 'In-Transit' || ${driverData>/status} === 'ConfirmPickup' }" alignItems="Center" class="drActive-successMessage">
                                     <core:Icon id="_IDGenIcon17" src="sap-icon://accept" class="drActive-successIcon"/>
-                                    <Text id="_IDGenText45" text="The trip has started" class="drActive-successText"/>
+                                    <Text id="_IDGenText45" text="{= ${driverData>/status} === 'In-Transit' ? 'The trip has started' : 'Pickup confirmed - Ready for delivery' }" class="drActive-successText"/>
                                 </VBox>
                             </VBox>
                         </VBox>

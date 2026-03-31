@@ -999,13 +999,36 @@
     border: 1px solid #e2e8f0 !important;
     border-radius: 8px !important;
     width: 36px !important;
+    height: 36px !important;
     padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.liveNav-mapBtn .sapMBtnIcon {
+    display: block !important;
+    font-size: 1.2rem !important;
+    color: #64748b !important;
+}
+
+.liveNav-mapBtn.sapMBtnEmphasized .sapMBtnInner {
+    background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%) !important;
+    border-color: #6366f1 !important;
+}
+
+.liveNav-mapBtn.sapMBtnEmphasized .sapMBtnIcon {
+    color: white !important;
 }
 
 .liveNav-mapBtn:hover .sapMBtnInner {
     background: #f8fafc !important;
     color: #6366f1 !important;
     border-color: #6366f1 !important;
+}
+
+.liveNav-mapBtn.sapMBtnEmphasized:hover .sapMBtnInner {
+    background: linear-gradient(135deg, #4f46e5 0%, #6b21a8 100%) !important;
 }
 
 /* Map Inner Container */

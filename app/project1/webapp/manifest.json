@@ -1,11 +1,11 @@
 {
   "_version": "1.81.0",
   "sap.app": {
-    "id": "project1",
+    "id": "com.logi.route.app",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
-      "version": "0.0.1"
+      "version": "1.0.5"
     },
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
@@ -41,6 +41,10 @@
       }
     }
   },
+  "sap.cloud": {
+    "public": true,
+    "service": "routeoptimizer"
+  },
   "sap.ui": {
     "technology": "UI5",
     "icons": {
@@ -74,7 +78,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "project1.i18n.i18n"
+          "bundleName": "com.logi.route.app.i18n.i18n"
         }
       },
       "": {
@@ -124,9 +128,9 @@
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
-        "path": "project1.view",
+        "path": "com.logi.route.app.view",
         "async": true,
-        "viewPath": "project1.view"
+        "viewPath": "com.logi.route.app.view"
       },
       "routes": [
         {
@@ -300,7 +304,7 @@
       }
     },
     "rootView": {
-      "viewName": "project1.view.App",
+      "viewName": "com.logi.route.app.view.App",
       "type": "XML",
       "id": "App",
       "async": true

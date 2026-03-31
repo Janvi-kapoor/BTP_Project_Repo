@@ -8,7 +8,7 @@ sap.ui.define([
         
         onInit: function () {
             var oDashboardModel = new JSONModel({
-                stats: { revenue: 0, commission: 0, activeDrivers: 0 }
+                stats: { revenue: "0", commission: "0", activeDrivers: 0 }
             });
             this.getView().setModel(oDashboardModel, "dashboard");
             
@@ -17,7 +17,11 @@ sap.ui.define([
             });
             this.getView().setModel(oFleetModel, "fleet");
 
-            this._loadDashboardStats();
+            // Load stats after a delay to avoid blocking fleet data
+            setTimeout(() => {
+                this._loadDashboardStats();
+            }, 1000);
+            
             this._loadLeafletResources().then(() => {
                 this._initializeAdminMap();
                 this._loadFleetData();
@@ -58,6 +62,10 @@ sap.ui.define([
                 
             }).catch(function(err) {
                 console.error("Dashboard stats failed:", err);
+                // Set default values on error
+                oDashboardModel.setProperty("/stats/revenue", "0");
+                oDashboardModel.setProperty("/stats/commission", "0");
+                oDashboardModel.setProperty("/stats/activeDrivers", 0);
             });
         },
 
@@ -111,7 +119,7 @@ sap.ui.define([
             
             console.log("=== STEP 1: LOADING ACTIVE SHIPMENTS ===");
             
-            // First get shipments with In-Transit and ConfirmPickup status (not just In-Transit)
+            // First get shipments with In-Transit and ConfirmPickup status
             const oShipmentBinding = oModel.bindList("/AdminShipments", null, [], [
                 new sap.ui.model.Filter({
                     filters: [
@@ -125,13 +133,13 @@ sap.ui.define([
             });
             
             oShipmentBinding.requestContexts().then((aShipmentContexts) => {
-                console.log("Total In-Transit shipments found:", aShipmentContexts.length);
+                console.log("Total active shipments found:", aShipmentContexts.length);
                 
                 const aFleetData = [];
                 let processedCount = 0;
                 
                 if (aShipmentContexts.length === 0) {
-                    console.log("No In-Transit shipments found");
+                    console.log("No active shipments found (In-Transit or ConfirmPickup)");
                     oFleetModel.setProperty("/activeFleet", []);
                     return;
                 }
@@ -154,6 +162,18 @@ sap.ui.define([
                         // Get driver details
                         if (shipment.assignment.driver_ID) {
                             this._getDriverDetails(shipment.assignment.driver_ID).then((driverData) => {
+                                // Skip if driver not found
+                                if (!driverData) {
+                                    console.log("Driver not found - skipping shipment", shipment.ID);
+                                    processedCount++;
+                                    if (processedCount === aShipmentContexts.length) {
+                                        console.log("All shipments processed. Total fleet:", aFleetData.length);
+                                        oFleetModel.setProperty("/activeFleet", aFleetData);
+                                        this._addTruckMarkersToMap(aFleetData);
+                                    }
+                                    return;
+                                }
+                                
                                 // Check if driver is off-duty
                                 if (driverData.status === 'OFF_DUTY') {
                                     console.log(`Driver ${driverData.name} is OFF_DUTY - not showing location`);
@@ -179,33 +199,29 @@ sap.ui.define([
                                         this._addTruckMarkersToMap(aFleetData);
                                     }
                                 } else {
-                                    // Get truck details for on-duty drivers
-                                    if (shipment.assignment.truck_ID) {
-                                        this._getTruckDetails(shipment.assignment.truck_ID).then((truckData) => {
-                                            // Add to fleet data with driver's current location
-                                            aFleetData.push({
-                                                shipmentId: shipment.ID,
-                                                truckId: truckData.truckNo || "TRK-" + truckData.ID.slice(-4),
-                                                driverName: driverData.name,
-                                                driverInitials: this._getDriverInitials(driverData.name),
-                                                driverContact: driverData.phone,
-                                                pickupLocation: shipment.pickupLocation,
-                                                dropLocation: shipment.dropLocation,
-                                                currentLocation: "En Route",
-                                                eta: shipment.assignment.eta,
-                                                currentLat: driverData.currentLat,
-                                                currentLong: driverData.currentLong,
-                                                isOffDuty: false
-                                            });
-                                            
-                                            processedCount++;
-                                            if (processedCount === aShipmentContexts.length) {
-                                                oFleetModel.setProperty("/activeFleet", aFleetData);
-                                                this._addTruckMarkersToMap(aFleetData);
-                                            }
-                                        });
-                                    } else {
-                                        processedCount++;
+                                    // Add to fleet data with driver's current location (without truck details)
+                                    aFleetData.push({
+                                        shipmentId: shipment.ID,
+                                        truckId: shipment.assignment.truck_ID ? "TRK-" + shipment.assignment.truck_ID.slice(-4) : "TRK-XXXX",
+                                        driverName: driverData.name,
+                                        driverInitials: this._getDriverInitials(driverData.name),
+                                        driverContact: driverData.phone,
+                                        pickupLocation: shipment.pickupLocation,
+                                        dropLocation: shipment.dropLocation,
+                                        currentLocation: "En Route",
+                                        eta: shipment.assignment.eta,
+                                        currentLat: driverData.currentLat,
+                                        currentLong: driverData.currentLong,
+                                        isOffDuty: false
+                                    });
+                                    
+                                    console.log("Fleet data added:", aFleetData[aFleetData.length - 1]);
+                                    
+                                    processedCount++;
+                                    if (processedCount === aShipmentContexts.length) {
+                                        console.log("All shipments processed. Total fleet:", aFleetData.length);
+                                        oFleetModel.setProperty("/activeFleet", aFleetData);
+                                        this._addTruckMarkersToMap(aFleetData);
                                     }
                                 }
                             });
@@ -234,6 +250,9 @@ sap.ui.define([
                     currentLong: driverData.currentLong
                 });
                 return driverData;
+            }).catch((error) => {
+                console.error("Driver fetch failed for ID:", driverId, "- Skipping this shipment");
+                return null; // Return null instead of throwing error
             });
         },
         
@@ -241,7 +260,14 @@ sap.ui.define([
             const oModel = this.getOwnerComponent().getModel();
             const sTruckPath = "/Fleet_Trucks('" + truckId + "')";
             
-            return oModel.bindContext(sTruckPath).requestObject();
+            return oModel.bindContext(sTruckPath).requestObject().catch((error) => {
+                console.error("Truck details fetch failed for ID:", truckId, error);
+                // Return default truck data if fetch fails
+                return {
+                    ID: truckId,
+                    truckNo: "TRK-" + truckId.slice(-4)
+                };
+            });
         },
         
         _getDriverInitials: function(driverName) {

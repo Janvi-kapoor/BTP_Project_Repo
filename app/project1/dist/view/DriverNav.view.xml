@@ -38,12 +38,17 @@
                     </VBox>
                 <!-- Action Buttons -->
                     <VBox id="_IDGenVBox47" class="liveNav-actionSection">
-                        <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay"/>
+                        <Link id="_IDGenLink1" text="Report Delay" class="liveNav-delayLink" press="onReportDelay" visible="{= ${missionData>/status} !== 'Delivered' }"/>
                         <Button id="_IDGenButton8" text="Confirm Pickup" type="Emphasized" class="liveNav-primaryBtn" press="onConfirmPickup" visible="{= ${missionData>/status} === 'In-Transit' }"/>
-                        <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' &amp;&amp; ${missionData>/status} !== 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                        <VBox id="pickupConfirmedMessage" visible="{= ${missionData>/status} === 'ConfirmPickup' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
                             <core:Icon id="pickupConfirmedIcon" src="sap-icon://accept" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
                             <Text id="pickupConfirmedText" text="Pickup Confirmed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
                             <Text id="pickupConfirmedSubtext" text="Ready for delivery" class="liveNav-stepTime"/>
+                        </VBox>
+                        <VBox id="deliveryCompletedMessage" visible="{= ${missionData>/status} === 'Delivered' }" alignItems="Center" class="liveNav-pickupConfirmed sapUiMediumMarginTop">
+                            <core:Icon id="deliveryCompletedIcon" src="sap-icon://complete" size="2.5rem" color="#10b981" class="sapUiTinyMarginBottom"/>
+                            <Text id="deliveryCompletedText" text="Delivery Completed!" class="liveNav-stepTitle liveNav-activeStep sapUiTinyMarginBottom"/>
+                            <Text id="deliveryCompletedSubtext" text="Mission accomplished" class="liveNav-stepTime"/>
                         </VBox>
                     </VBox>
                 </VBox>
@@ -53,7 +58,7 @@
                     <HBox id="_IDGenHBox25" class="liveNav-mapHeader" justifyContent="SpaceBetween" alignItems="Center">
                         <Title id="_IDGenTitle22" text="Live Route Tracking" level="H5" class="liveNav-mapTitle"/>
                         <HBox id="_IDGenHBox26" class="liveNav-mapControls">
-                            <Button id="_IDGenButton12" icon="sap-icon://my-location" type="Transparent" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
+                            <Button id="_IDGenButton12" icon="sap-icon://locate-me" type="Emphasized" class="liveNav-mapBtn" tooltip="Update My Location" press="onUpdateLocation"/>
                             <Button id="_IDGenButton13" icon="sap-icon://refresh" type="Transparent" class="liveNav-mapBtn" tooltip="Refresh Location"/>
                             <Button id="_IDGenButton14" icon="sap-icon://full-screen" type="Transparent" class="liveNav-mapBtn" tooltip="Full Screen"/>
                         </HBox>
